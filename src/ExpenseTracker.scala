@@ -26,6 +26,7 @@ object ExpenseTracker extends App{
     val usernameInput = getUserInput()
     print("Password:")
     val passwordInput = getUserInput()
+    mainLoop()
    }
 
    case "2" =>{
@@ -42,13 +43,12 @@ object ExpenseTracker extends App{
      val s:String = usernameInput+","+passwordInput+","+emailInput
      writeFile(file,s)
     }
+
+    mainLoop()
    }
 
-
+   case _ => println("######GOODBYE#######")
   }
-
-
-  mainLoop()
  }
 
 
