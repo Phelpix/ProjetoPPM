@@ -35,6 +35,7 @@ object ExpenseTracker extends App{
     print("Password:")
     val passwordInput = getUserInput()
     print("Email:")
+    println("testar para o github")
     val emailInput = getUserInput()
 
     val list = readFile(file)
