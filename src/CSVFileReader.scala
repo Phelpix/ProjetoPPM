@@ -6,7 +6,7 @@ object CSVFileReader{
  def writeFile(file: String, to_write: String): Unit ={
   val pw = new PrintWriter(new FileWriter(file,true))
   pw.write(to_write + "\n")
-  pw.close
+  //tudoputa
  }
 
  def readFile(file: String): List[Array[String]] = {
