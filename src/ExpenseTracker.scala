@@ -42,7 +42,6 @@ object ExpenseTracker extends App{
      val s:String = usernameInput+","+passwordInput+","+emailInput
      writeFile(file,s)
     }
-
    }
 
 
