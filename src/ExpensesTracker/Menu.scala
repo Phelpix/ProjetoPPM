@@ -9,7 +9,7 @@ import java.util.Calendar
 
 import scala.::
 
-case class UserApp(name: String, balance:Double, depositList: List[(Double, String, Any)], expenseList: List[(Double, String, Any)])
+case class UserApp(name: String, balance:Double, depositList: List[(Double,String, String, Any)], expenseList: List[(Double,String, String, Any)])
 
 object Menu extends App{
 
@@ -37,7 +37,7 @@ object Menu extends App{
         mainLoop(user)
       }
       case "4" =>{
-        filtros(user)
+        filters(user)
         Thread.sleep(3000)
         mainLoop(user)
       }
