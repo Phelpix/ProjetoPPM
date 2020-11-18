@@ -4,7 +4,7 @@ import java.util.Calendar
 
 import scala.io.StdIn.readLine
 
-object MenuUtils {
+object MenuUserUtils {
 
   //show User menu
   def showPrompt(): Unit ={

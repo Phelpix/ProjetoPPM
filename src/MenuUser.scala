@@ -1,6 +1,6 @@
 import java.text.SimpleDateFormat
 import java.io.IOException
-import MenuUtils._
+import MenuUserUtils._
 
 import scala.io.StdIn.readLine
 import java.util.Calendar
