@@ -33,11 +33,11 @@ object  ExpenseTrackerUtils {
   }
  }
 
- def loginUser(email: String, password: String, lines: List[Array[String]]): String = {
+ def loginUser(email: String, password: String, lines: List[Array[String]]):String = {
   lines match {
    case x :: t => if (x(2) == email && x(1) == password) x(0) else loginUser(email, password, t)
-   case x:: Nil => if (x(2) == email && x(1) == password) x(0) else "Voce nao se econtra registado"
-   case Nil=> ""
+   case x:: Nil => if (x(2) == email && x(1) == password) x(0) else ""
+   case Nil=>""
   }
  }
 

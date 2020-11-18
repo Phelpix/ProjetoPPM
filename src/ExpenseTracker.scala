@@ -8,7 +8,7 @@ case class User(username: String, password: String, email: String)
 //teste para o picoito
 object ExpenseTracker extends App{
 
- val file = "UserCredentials.csv"
+ val file = "CSVFiles/UserCredentials.csv"
 
  mainLoop()
 
@@ -28,8 +28,9 @@ object ExpenseTracker extends App{
 
     val list = readFile(file)
 
-    loginUser(emailInput,passwordInput,list)
+    val username:String = loginUser(emailInput,passwordInput,list)
 
+    if(username == "") println("Login nao dado") else println("DEBUG: " +username)
     mainLoop()
    }
 
@@ -41,14 +42,20 @@ object ExpenseTracker extends App{
     print("Email:")
     val emailInput = getUserInput()
 
-    val list = readFile(file)
+    if(usernameInput == "" || passwordInput=="" || emailInput=="") {
+     println("\n Por favor insira dados válidos!!! \n")
+     mainLoop()
+    } else{
+     val list = readFile(file)
 
-    if(RegisterUser(usernameInput,emailInput,list) == false){
-     val s:String = usernameInput+","+passwordInput+","+emailInput
-     writeFile(file,s)
+     if(RegisterUser(usernameInput,emailInput,list) == false){
+      val s:String = usernameInput+","+passwordInput+","+emailInput+"\n"
+      writeFile(file,s)
+      writeFile("CSVFiles/"+usernameInput+".csv","")
+     }
+
+     mainLoop()
     }
-
-    mainLoop()
    }
 
    case _ => println("######GOODBYE#######")
