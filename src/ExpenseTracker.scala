@@ -21,10 +21,15 @@ object ExpenseTracker extends App{
 
   userInput match {
    case "1" =>{
-    print("Username:")
-    val usernameInput = getUserInput()
+    print("email:")
+    val emailInput = getUserInput()
     print("Password:")
     val passwordInput = getUserInput()
+
+    val list = readFile(file)
+
+    loginUser(emailInput,passwordInput,list)
+
     mainLoop()
    }
 
@@ -38,7 +43,7 @@ object ExpenseTracker extends App{
 
     val list = readFile(file)
 
-    if(findUser(usernameInput,emailInput,list) == false){
+    if(RegisterUser(usernameInput,emailInput,list) == false){
      val s:String = usernameInput+","+passwordInput+","+emailInput
      writeFile(file,s)
     }

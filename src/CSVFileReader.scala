@@ -18,7 +18,6 @@ object CSVFileReader{
    println(s"${cols(0)}|${cols(1)}|${cols(2)}")
   }
   bufferedSource.close
-  println(newList)
   newList
  }
 }
