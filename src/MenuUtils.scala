@@ -1,9 +1,6 @@
-package ExpensesTracker
 
 import java.text.SimpleDateFormat
 import java.util.Calendar
-
-import ExpensesTracker.Menu._
 
 import scala.io.StdIn.readLine
 
@@ -22,7 +19,7 @@ object MenuUtils {
   def getUserInput(): String = readLine.trim.toUpperCase
 
   //option income in user menu
-  def income(user:UserApp) {
+  def income(user:UserApp):UserApp = {
     try {
       println("\n\n\n\n **** QUANTO VAI DEPOSITAR? ****\n")
       val newDepositedValue: Double = roundAt(getUserInput().toDouble)
@@ -37,7 +34,7 @@ object MenuUtils {
       }
       println("\n\n\n\n DEPOSITO REALIZADO COM SUCESSO \n\n TEM AGORA " + newBalance + " NA SUA CONTA")
       Thread.sleep(3000)
-      mainLoop(newUserApp)
+      newUserApp
     }catch{
       case ex: NumberFormatException => {
         println("Insira um valor válido")
@@ -48,7 +45,7 @@ object MenuUtils {
   }
 
   //option expense in user menu
-  def expense(user:UserApp) {
+  def expense(user:UserApp):UserApp= {
     println("\n\n\n\n **** QUAL FOI O VALOR DA SUA COMPRA? ****\n")
 
     try {
@@ -64,7 +61,7 @@ object MenuUtils {
       }
       println("\n\n\n\n COMPRA REALIZADA COM SUCESSO \n\n TEM AGORA " + newBalance + " NA SUA CONTA")
       Thread.sleep(3000)
-      mainLoop(newUserApp)
+      newUserApp
     } catch {
       case ex: NumberFormatException => {
         println("Insira um valor válido")

@@ -1,8 +1,6 @@
-package ExpensesTracker
-
 import java.text.SimpleDateFormat
 import java.io.IOException
-import ExpensesTracker.MenuUtils._
+import MenuUtils._
 
 import scala.io.StdIn.readLine
 import java.util.Calendar
@@ -26,10 +24,12 @@ object Menu extends App{
 
     userInput match {
       case "1" => {
-        income(user)
+        val newUserApp:UserApp = income(user)
+        mainLoop(newUserApp)
       }
       case "2" => {
-        expense(user)
+        val newUserApp:UserApp = expense(user)
+        mainLoop(newUserApp)
       }
       case "3"=>{
         println("\n\n\n\n **** O VALOR DA SUA BALANCA E " + user.balance +" ****\n")
@@ -42,7 +42,7 @@ object Menu extends App{
         mainLoop(user)
       }
       case _ =>{
-        mainLoop(x)
+        mainLoop(user)
       }
     }
 
