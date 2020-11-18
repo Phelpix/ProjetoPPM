@@ -1,12 +1,11 @@
 
-
 import ExpenseTrackerUtils._
 import CSVFileReader._
 
 import scala.annotation.tailrec
 
 case class User(username: String, password: String, email: String)
-
+//teste para o picoito
 object ExpenseTracker extends App{
 
  val file = "UserCredentials.csv"
