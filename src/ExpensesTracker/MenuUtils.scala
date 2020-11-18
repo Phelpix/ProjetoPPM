@@ -36,7 +36,7 @@ object MenuUtils {
     println("\n 4-carro")
   }
 
-  def showElements(list :List[Double]): Unit ={
+  def showElements(list :List[(Double, String)]): Unit ={
     list match{
       case x ::t => {println(x)
         showElements(t)

@@ -7,7 +7,7 @@ import scala.io.StdIn.readLine
 
 import scala.::
 
-case class UserApp(name: String, balance:Double, depositList: List[Double], expenseList: List[Double])
+case class UserApp(name: String, balance:Double, depositList: List[(Double, String)], expenseList: List[(Double, String)])
 
 object Menu extends App{
 
@@ -26,8 +26,10 @@ object Menu extends App{
       case "1" => {
         println("\n\n\n\n **** QUANTO VAI DEPOSITAR? ****\n")
         val newDepositedValue:Double = getUserInput().toDouble
+        print("\n DESCRIÇAO DO SEU DEPOSITO:")
+        val DepositDescription: String = getUserInput()
         val newBalance: Double = user.balance + newDepositedValue
-        val newDepositList: List[Double] = List(newDepositedValue) ::: user.depositList
+        val newDepositList: List[(Double, String)] = List((newDepositedValue,DepositDescription)) ::: user.depositList
         val newUserApp = {
           user.copy(name = user.name, balance = newBalance, depositList = newDepositList, expenseList = user.expenseList)
         }
@@ -39,8 +41,10 @@ object Menu extends App{
       case "2" => {
         println("\n\n\n\n **** QUAL FOI O VALOR DA SUA COMPRA? ****\n")
         val newExpenseValue: Double = getUserInput().toDouble
+        print("\n DESCRIÇAO DA COMPRA:")
+        val ExpenseDescription: String = getUserInput()
         val newBalance: Double= user.balance - newExpenseValue
-        val newExpenseList: List[Double] = (List(newExpenseValue) ::: user.expenseList).reverse
+        val newExpenseList: List[(Double, String)] = ((List((newExpenseValue, ExpenseDescription)) ::: user.expenseList).reverse).reverse
         val newUserApp = {
           user.copy(name = user.name, balance = newBalance, depositList = user.depositList, expenseList = newExpenseList)
         }
