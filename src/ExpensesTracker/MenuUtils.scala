@@ -21,31 +21,6 @@ object MenuUtils {
   //wait for user's input
   def getUserInput(): String = readLine.trim.toUpperCase
 
-  //option filters in user menu
-  def filters(x:UserApp): Unit ={
-    showFilters()
-    val userFilterInput:String = getUserInput()
-
-    userFilterInput match{
-      case "1" =>{
-        showElements(x.expenseList)
-      }
-      case "2" =>{
-        showElements(x.depositList)
-      }
-
-    }
-  }
-
-  //show filters
-  def showFilters(): Unit ={
-    println("\n escolha o número:")
-    println(" 1-compras")
-    println(" 2-depositos")
-    println(" 3-comida")
-    println(" 4-carro")
-  }
-
   //option income in user menu
   def income(user:UserApp) {
     try {
@@ -99,6 +74,34 @@ object MenuUtils {
 
 
     }
+  }
+
+  //option filters in user menu
+  def filters(x:UserApp): Unit ={
+    showFilters()
+    val userFilterInput:String = getUserInput()
+
+    userFilterInput match{
+      case "1" =>{
+        showElements(x.depositList)
+      }
+      case "2" =>{
+        showElements(x.expenseList)
+      }
+      case "3" =>{
+
+      }
+
+    }
+  }
+
+  //show filters
+  def showFilters(): Unit ={
+    println("\n escolha o número:")
+    println(" 1-depositos")
+    println(" 2-compras")
+    println(" 3-comida")
+    println(" 4-carro")
   }
 
   //show incomes/expenses
@@ -172,6 +175,15 @@ object MenuUtils {
   }
 
 
+
+
+
+
+  /*
+
+  ******* Helping methods *******
+
+   */
   //rounding numbers to 2 decimals places
   def roundAt(n: Double): Double = { val s = math pow (10, 2); (math round n * s) / s }
 
