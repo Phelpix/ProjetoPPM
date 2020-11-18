@@ -1,107 +1,191 @@
+package ExpensesTracker
+
 import java.text.SimpleDateFormat
 import java.util.Calendar
-import Menu.{mainLoop, x}
+
+import ExpensesTracker.Menu._
 
 import scala.io.StdIn.readLine
 
 object MenuUtils {
- def showPrompt(): Unit = {
-  println("\n escolha o número:")
-  println("\n 1-depositar")
-  println(" 2-compra")
-  println(" 3-balanço")
-  println(" 4-filtro")
- }
 
- def getUserInput(): String = readLine.trim.toUpperCase
-
- def filtros(x: UserApp): Unit = {
-  showFilters()
-  val userFilterInput: String = getUserInput()
-
-  userFilterInput match {
-   case "1" => {
-    showElements(x.expenseList)
-   }
-   case "2" => {
-    showElements(x.depositList)
-   }
+  //show User menu
+  def showPrompt(): Unit ={
+    println("\n escolha o número:")
+    println("\n 1-depositar")
+    println(" 2-compra")
+    println(" 3-balanço")
+    println(" 4-filtro")
   }
- }
 
- def showFilters(): Unit = {
-  println("\n escolha o número:")
-  println(" 1-compras")
-  println(" 2-depositos")
-  println(" 3-comida")
-  println(" 4-carro")
- }
+  //wait for user's input
+  def getUserInput(): String = readLine.trim.toUpperCase
 
- def income(user: UserApp):UserApp = {
-  try {
-   println("\n\n\n\n **** QUANTO VAI DEPOSITAR? ****\n")
-   val newDepositedValue: Double = getUserInput().toDouble
-   print("\n DESCRIÇAO DO SEU DEPOSITO:")
-   val DepositDescription: String = getUserInput()
-   val newBalance: Double = user.balance + newDepositedValue
-   val format = new SimpleDateFormat("d-M-y H:m")
-   val newDepositList: List[(Double, String, Any)] = List((newDepositedValue, DepositDescription, format.format(Calendar.getInstance().getTime()))) ::: user.depositList
-   val newUserApp = {
-    user.copy(name = user.name, balance = newBalance, depositList = newDepositList, expenseList = user.expenseList)
-   }
-   println("\n\n\n\n DEPOSITO REALIZADO COM SUCESSO \n\n TEM AGORA " + newBalance + " NA SUA CONTA")
-   Thread.sleep(3000)
-   newUserApp
-  } catch {
-   case ex: NumberFormatException => {
-    println("Insira um valor válido")
-    income(user)
+  //option income in user menu
+  def income(user:UserApp) {
+    try {
+      println("\n\n\n\n **** QUANTO VAI DEPOSITAR? ****\n")
+      val newDepositedValue: Double = roundAt(getUserInput().toDouble)
+      print("\n DESCRIÇAO DO SEU DEPOSITO:")
+      val DepositDescription: String = getUserInput()
+      val newBalance: Double = user.balance + newDepositedValue
+      val format = new SimpleDateFormat("d-M-y H:m")
+      val category = defineCategory()
+      val newDepositList: List[(Double,String, String, Any)] = List((newDepositedValue,category, DepositDescription, format.format(Calendar.getInstance().getTime()))) ::: user.depositList
+      val newUserApp = {
+        user.copy(name = user.name, balance = newBalance, depositList = newDepositList, expenseList = user.expenseList)
+      }
+      println("\n\n\n\n DEPOSITO REALIZADO COM SUCESSO \n\n TEM AGORA " + newBalance + " NA SUA CONTA")
+      Thread.sleep(3000)
+      mainLoop(newUserApp)
+    }catch{
+      case ex: NumberFormatException => {
+        println("Insira um valor válido")
+        income(user)
 
-   }
+      }
+    }
   }
- }
 
- def expense(user: UserApp):UserApp = {
-  println("\n\n\n\n **** QUAL FOI O VALOR DA SUA COMPRA? ****\n")
+  //option expense in user menu
+  def expense(user:UserApp) {
+    println("\n\n\n\n **** QUAL FOI O VALOR DA SUA COMPRA? ****\n")
 
-  try {
-   val newExpenseValue: Double = getUserInput().toDouble
-   print("\n DESCRIÇAO DA COMPRA:")
-   val ExpenseDescription: String = getUserInput()
-   val newBalance: Double = user.balance - newExpenseValue
-   val format = new SimpleDateFormat("d-M-y H:m")
-   val newExpenseList: List[(Double, String, Any)] = ((List((newExpenseValue, ExpenseDescription, format.format(Calendar.getInstance().getTime()))) ::: user.expenseList).reverse).reverse
-   val newUserApp = {
-    user.copy(name = user.name, balance = newBalance, depositList = user.depositList, expenseList = newExpenseList)
-   }
-   println("\n\n\n\n COMPRA REALIZADA COM SUCESSO \n\n TEM AGORA " + newBalance + " NA SUA CONTA")
-   Thread.sleep(3000)
-   newUserApp
-  } catch {
-   case ex: NumberFormatException => {
-    println("Insira um valor válido")
-    expense(user)
+    try {
+      val newExpenseValue: Double = roundAt(getUserInput().toDouble)
+      print("\n DESCRIÇAO DA COMPRA:")
+      val ExpenseDescription: String = getUserInput()
+      val newBalance: Double = user.balance - newExpenseValue
+      val format = new SimpleDateFormat("d-M-y H:m")
+      val category = defineCategory()
+      val newExpenseList: List[(Double,String, String, Any)] = ((List((newExpenseValue, category, ExpenseDescription, format.format(Calendar.getInstance().getTime()))) ::: user.expenseList).reverse).reverse
+      val newUserApp = {
+        user.copy(name = user.name, balance = newBalance, depositList = user.depositList, expenseList = newExpenseList)
+      }
+      println("\n\n\n\n COMPRA REALIZADA COM SUCESSO \n\n TEM AGORA " + newBalance + " NA SUA CONTA")
+      Thread.sleep(3000)
+      mainLoop(newUserApp)
+    } catch {
+      case ex: NumberFormatException => {
+        println("Insira um valor válido")
+        expense(user)
 
-   }
+      }
 
 
+    }
   }
- }
 
- def showElements(list: List[(Double, String, Any)]): Unit = {
-  list match {
-   case x :: t => {
-    println(x)
-    showElements(t)
-   }
-   case x :: Nil => {
-    println(x)
-   }
-   case Nil => {
-    println("\n\n\n")
-   }
+  //option filters in user menu
+  def filters(x:UserApp): Unit ={
+    showFilters()
+    val userFilterInput:String = getUserInput()
+
+    userFilterInput match{
+      case "1" =>{
+        showElements(x.depositList)
+      }
+      case "2" =>{
+        showElements(x.expenseList)
+      }
+      case "3" =>{
+
+      }
+
+    }
   }
- }
+
+  //show filters
+  def showFilters(): Unit ={
+    println("\n escolha o número:")
+    println(" 1-depositos")
+    println(" 2-compras")
+    println(" 3-comida")
+    println(" 4-carro")
+  }
+
+  //show incomes/expenses
+  def showElements(list :List[(Double,String, String, Any)]): Unit ={
+    list match{
+      case x ::t => {println(x)
+        showElements(t)
+      }
+      case x :: Nil =>{ println(x) }
+      case Nil => { println("\n\n\n")}
+    }
+  }
+
+  //object category
+  object Category extends Enumeration{
+    val food = "comida"
+    val car = "carro"
+    val university = "universidade"
+    val home = "casa"
+    val others = "outros"
+  }
+
+
+  //define category of income/expense
+  def defineCategory(): String ={
+    try {
+      showCategories()
+
+      val input = getUserInput()
+
+      input match {
+        case "1" => {
+          val category = Category.food
+          category
+        }
+        case "2" => {
+          val category = Category.car
+          category
+        }
+        case "3" => {
+          val category = Category.university
+          category
+        }
+        case "4" => {
+          val category = Category.home
+          category
+        }
+        case "5" => {
+          val category = Category.others
+          category
+        }
+
+      }
+    } catch {
+      case ex: MatchError => {
+        println("Insira um valor válido")
+        defineCategory()
+      }
+    }
+  }
+
+  //show categories available
+  def showCategories(): Unit ={
+    println("*****  INIDIQUE A CATEGORIA:  ***** ")
+    println("\n escolha o número:")
+    println("1-comida")
+    println("2-carro")
+    println("3-universidade")
+    println("4-casa")
+    println("5-outros")
+  }
+
+
+
+
+
+
+  /*
+
+  ******* Helping methods *******
+
+   */
+  //rounding numbers to 2 decimals places
+  def roundAt(n: Double): Double = { val s = math pow (10, 2); (math round n * s) / s }
 
 
 }

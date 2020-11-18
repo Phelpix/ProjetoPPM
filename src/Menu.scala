@@ -1,4 +1,13 @@
-import MenuUtils._
+package ExpensesTracker
+
+import java.text.SimpleDateFormat
+import java.io.IOException
+import ExpensesTracker.MenuUtils._
+
+import scala.io.StdIn.readLine
+import java.util.Calendar
+
+import scala.::
 
 case class UserApp(name: String, balance:Double, depositList: List[(Double,String, String, Any)], expenseList: List[(Double,String, String, Any)])
 
@@ -17,12 +26,10 @@ object Menu extends App{
 
     userInput match {
       case "1" => {
-        val newUser:UserApp = income(user)
-        mainLoop(newUser)
+        income(user)
       }
       case "2" => {
-        val newUser:UserApp =expense(user)
-        mainLoop(newUser)
+        expense(user)
       }
       case "3"=>{
         println("\n\n\n\n **** O VALOR DA SUA BALANCA E " + user.balance +" ****\n")
@@ -34,9 +41,9 @@ object Menu extends App{
         Thread.sleep(3000)
         mainLoop(user)
       }
-      case "0"=> println("######GOODBYE#######")
-      case _ => mainLoop(x)
-
+      case _ =>{
+        mainLoop(x)
+      }
     }
 
 
