@@ -2,6 +2,7 @@
 import java.text.SimpleDateFormat
 import java.util.Calendar
 
+import scala.::
 import scala.io.StdIn.readLine
 
 object MenuUserUtils {
@@ -24,11 +25,14 @@ object MenuUserUtils {
       println("\n\n\n\n **** QUANTO VAI DEPOSITAR? ****\n")
       val newDepositedValue: Double = roundAt(getUserInput().toDouble)
       print("\n DESCRIÇAO DO SEU DEPOSITO:")
-      val DepositDescription: String = getUserInput()
+      val depositDescription: String = getUserInput()
       val newBalance: Double = user.balance + newDepositedValue
       val format = new SimpleDateFormat("d-M-y H:m")
+      val date:String = format.format(Calendar.getInstance().getTime())
       val category = defineCategory()
-      val newDepositList: List[(Double,String, String, Any)] = List((newDepositedValue,category, DepositDescription, format.format(Calendar.getInstance().getTime()))) ::: user.depositList
+      //val newDepositList: LazyList[Deposito] = List((newDepositedValue,category, depositDescription, format.format(Calendar.getInstance().getTime()))) ::: user.depositList
+      val newDeposit: Deposit= Deposit(newDepositedValue,category,depositDescription,date)
+      val newDepositList: LazyList[Deposit] = newDeposit#::user.depositList
       val newUserApp = {
         user.copy(name = user.name, balance = newBalance, depositList = newDepositList, expenseList = user.expenseList)
       }
@@ -54,8 +58,11 @@ object MenuUserUtils {
       val ExpenseDescription: String = getUserInput()
       val newBalance: Double = user.balance - newExpenseValue
       val format = new SimpleDateFormat("d-M-y H:m")
-      val category = defineCategory()
-      val newExpenseList: List[(Double,String, String, Any)] = ((List((newExpenseValue, category, ExpenseDescription, format.format(Calendar.getInstance().getTime()))) ::: user.expenseList).reverse).reverse
+      val date:String = format.format(Calendar.getInstance().getTime())
+      val category:String = defineCategory()
+      //val newExpenseList: List[Expense] = ((List((newExpenseValue, category, ExpenseDescription, format.format(Calendar.getInstance().getTime()))) ::: user.expenseList).reverse).reverse
+      val newExpense: Expense = Expense(newExpenseValue,category,ExpenseDescription,date)
+      val newExpenseList:LazyList[Expense] = newExpense#::user.expenseList
       val newUserApp = {
         user.copy(name = user.name, balance = newBalance, depositList = user.depositList, expenseList = newExpenseList)
       }
@@ -83,7 +90,7 @@ object MenuUserUtils {
         showElements(x.depositList)
       }
       case "2" =>{
-        showElements(x.expenseList)
+       showElements(x.expenseList)
       }
       case "3" =>{
 
@@ -102,13 +109,12 @@ object MenuUserUtils {
   }
 
   //show incomes/expenses
-  def showElements(list :List[(Double,String, String, Any)]): Unit ={
+  def showElements[A](list :LazyList[A]): Unit ={
     list match{
-      case x ::t => {println(x)
+      case x #::t => {println(x)
         showElements(t)
       }
-      case x :: Nil =>{ println(x) }
-      case Nil => { println("\n\n\n")}
+      case LazyList() => println("\n\n\n")
     }
   }
 

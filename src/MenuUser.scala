@@ -6,16 +6,14 @@ import scala.io.StdIn.readLine
 import java.util.Calendar
 
 import scala.::
+case class Deposit(value:Double, category:String, description:String, date:String)
+case class Expense(value: Double, category: String,description:String, date:String)
+case class UserApp(name: String, balance:Double, depositList:LazyList[Deposit], expenseList: LazyList[Expense])
 
-case class UserApp(name: String, balance:Double, depositList: List[(Double,String, String, Any)], expenseList: List[(Double,String, String, Any)])
+object MenuUser extends App{
 
-object Menu extends App{
 
-  val x = new UserApp("Hugo",0,Nil,Nil)
-
-  mainLoop(x)
-
-  def mainLoop(user: UserApp): Unit ={
+  def userLoop(user: UserApp): Unit ={
 
 
     showPrompt()
@@ -25,24 +23,24 @@ object Menu extends App{
     userInput match {
       case "1" => {
         val newUserApp:UserApp = income(user)
-        mainLoop(newUserApp)
+        userLoop(newUserApp)
       }
       case "2" => {
         val newUserApp:UserApp = expense(user)
-        mainLoop(newUserApp)
+        userLoop(newUserApp)
       }
       case "3"=>{
         println("\n\n\n\n **** O VALOR DA SUA BALANCA E " + user.balance +" ****\n")
         Thread.sleep(3000)
-        mainLoop(user)
+        userLoop(user)
       }
       case "4" =>{
         filters(user)
         Thread.sleep(3000)
-        mainLoop(user)
+        userLoop(user)
       }
       case _ =>{
-        mainLoop(user)
+        userLoop(user)
       }
     }
 

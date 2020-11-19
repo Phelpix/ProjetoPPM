@@ -1,5 +1,6 @@
 
 import ExpenseTrackerUtils._
+import MenuUser._
 import CSVFileReader._
 
 import scala.annotation.tailrec
@@ -30,8 +31,15 @@ object ExpenseTracker extends App{
 
     val username:String = loginUser(emailInput,passwordInput,list)
 
-    if(username == "") println("Login nao dado") else println("DEBUG: " +username)
+    if(username == ""){
+     println("Login nao dado")
+    } else{
+     val usertoapp:UserApp = readUser("CSVFiles/"+username+".csv")
+     userLoop(usertoapp)
+    }
     mainLoop()
+
+
    }
 
    case "2" =>{
