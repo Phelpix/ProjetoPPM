@@ -8,7 +8,7 @@ import java.util.Calendar
 import scala.::
 case class Deposit(value:Double, category:String, description:String, date:String)
 case class Expense(value: Double, category: String,description:String, date:String)
-case class UserApp(name: String, balance:Double, depositList:LazyList[Deposit], expenseList: LazyList[Expense])
+case class UserApp(name: String, balance:Double, depositList:LazyList[Deposit], expenseList: LazyList[Expense], userCategories: List[String])
 
 object MenuUser extends App{
 
@@ -35,7 +35,7 @@ object MenuUser extends App{
         userLoop(user)
       }
       case "4" =>{
-        filters(user)
+        history(user)
         Thread.sleep(3000)
         userLoop(user)
       }

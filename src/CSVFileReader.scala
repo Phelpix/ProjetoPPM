@@ -36,14 +36,24 @@ object CSVFileReader{
   val username:String = lines(0)
 
   if(username=="newUser"){
-   val userAppr=UserApp(usernameToWrite,0,LazyList[Deposit](),LazyList[Expense]())
+   val userAppr=UserApp(usernameToWrite,0,LazyList[Deposit](),LazyList[Expense](),List[String]("Comida","Carro","Universidade","Casa") )
    userAppr
   } else {
    val balance:Double = lines(1).toDouble
    val deposits:LazyList[Deposit] = lineToDepositList(lines(2))
    val expenses:LazyList[Expense] = lineToExpenseList(lines(3))
-   val user:UserApp = UserApp(username,balance,deposits,expenses)
+   val categories:List[String] = linetoCategoryList(lines(4))
+   val user:UserApp = UserApp(username,balance,deposits,expenses,categories)
    user
+  }
+ }
+
+ def linetoCategoryList(line:String):List[String]={
+  if(line==""){
+   val categoryList:List[String] = List[String]()
+   categoryList
+  } else {
+   line.split(",").toList
   }
  }
 
@@ -52,7 +62,7 @@ object CSVFileReader{
   if(line==""){
    expenseList
   } else {
-   val expenses = line.split(",")
+   lazy val expenses = line.split(",")
    for(expense <- expenses){
     val parameters= expense.split("/")
     var aux:Expense = Expense(parameters(0).toDouble,parameters(1),parameters(2),parameters(3))
@@ -68,7 +78,7 @@ object CSVFileReader{
   if(line==""){
    depositList
   } else {
-   val deposits = line.split(",")
+   lazy val deposits = line.split(",")
    for(deposit <- deposits){
     val parameters= deposit.split("/")
     var aux:Deposit = Deposit(parameters(0).toDouble,parameters(1),parameters(2),parameters(3))
@@ -81,15 +91,24 @@ object CSVFileReader{
  def saveUser(user:UserApp): Unit ={
   val deposits:String = depositsToString(user.depositList,"")
   val expenses:String = expensesToString(user.expenseList,"")
-  val s:String = user.name+"\n"+user.balance+"\n"+deposits+"\n"+expenses+"\n"
+  val categories:String = categoriesToString(user.userCategories)
+  println("DEBUG: "+ categories)
+  val s:String = user.name+"\n"+user.balance+"\n"+deposits+"\n"+expenses+"\n" + categories+"\n"
   writeFile("CSVFiles/"+user.name+".csv",s,false)
+ }
+
+ def categoriesToString(list:List[String]):String={
+  list match {
+   case x::t => x +"," + categoriesToString(t)
+   case x::Nil=> x
+   case Nil => ""
+  }
  }
 
  def depositsToString(list: LazyList[Deposit],s:String):String={
   list match{
    case x#::t =>{
-    val newS:String =x.value.toString+"/"+x.category+"/"+x.description+"/"+x.date+","+s
-    println("FIRST CASE: "+ newS)
+    lazy val newS:String =x.value.toString+"/"+x.category+"/"+x.description+"/"+x.date+","+s
     depositsToString(t,newS)
    }
    case LazyList() =>s
@@ -99,11 +118,10 @@ object CSVFileReader{
  def expensesToString(list: LazyList[Expense],s:String):String= {
   list match {
    case x #:: t => {
-    val newS: String = x.value.toString + "/" + x.category + "/" + x.description + "/" + x.date + "," + s
-    println("FIRST CASE: " + newS)
+    lazy val newS: String = x.value.toString + "/" + x.category + "/" + x.description + "/" + x.date + "," + s
     expensesToString(t, newS)
    }
-   case LazyList() => s
+   case LazyList() =>s
   }
  }
 

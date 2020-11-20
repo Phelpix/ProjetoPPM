@@ -14,7 +14,7 @@ object MenuUserUtils {
     println("\n 1-depositar")
     println(" 2-compra")
     println(" 3-balanço")
-    println(" 4-filtro")
+    println(" 4-historico")
     println(" 0-Exit")
   }
 
@@ -82,14 +82,16 @@ object MenuUserUtils {
     }
   }
 
-  //option filters in user menu
-  def filters(x:UserApp): Unit ={
-    showFilters()
-    val userFilterInput:String = getUserInput()
+  //option history in user menu
+  def history(x:UserApp): Unit ={
+    showHistory()
+    val userHistoryInput:String = getUserInput()
 
-    userFilterInput match{
+    userHistoryInput match{
       case "1" =>{
-        showElements(x.depositList)
+        showFilters(x.userCategories,1) //print dos filters
+        val userFilterInput:Int = getUserInput().toInt
+        showElementsFiltered(x.depositList,x.userCategories(userFilterInput-1))
       }
       case "2" =>{
        showElements(x.expenseList)
@@ -101,13 +103,26 @@ object MenuUserUtils {
     }
   }
 
-  //show filters
-  def showFilters(): Unit ={
+  def showElementsFiltered(list: LazyList[Deposit], str: String){
+    list match {
+      case x#::t=> if(x.category == str) println(x); showElementsFiltered(t,str)
+      case LazyList() =>
+    }
+  }
+
+  //show history
+  def showHistory(): Unit ={
     println("\n escolha o número:")
     println(" 1-depositos")
     println(" 2-compras")
-    println(" 3-comida")
-    println(" 4-carro")
+  }
+
+  def showFilters(list: List[String],aux:Int): Unit ={
+    list match {
+      case x :: t=> println(aux+"-"+x); showFilters(t,aux+1)
+      case x :: Nil=>println(aux+"-"+x)
+      case Nil =>
+    }
   }
 
   //show incomes/expenses
@@ -122,10 +137,10 @@ object MenuUserUtils {
 
   //object category
   object Category extends Enumeration{
-    val food = "comida"
-    val car = "carro"
-    val university = "universidade"
-    val home = "casa"
+    val food = "Comida"
+    val car = "Carro"
+    val university = "Universidade"
+    val home = "Casa"
     val others = "outros"
   }
 
