@@ -39,6 +39,13 @@ object MenuUser extends App{
         Thread.sleep(3000)
         userLoop(user)
       }
+
+      case "5" =>{
+        println("Qual a categoria que quer adicionar?")
+        val categoria = getUserInput()
+        val newUserApp = addCategory(user,categoria)
+        userLoop(newUserApp)
+      }
       case "0" => saveUser(user)
     }
 

@@ -9,17 +9,18 @@ object MenuUserUtils {
 
   //show User menu
   def showPrompt(user:UserApp): Unit ={
-    println("################\n#     "+user.name+"     #\n#   Saldo: "+user.balance+" #\n################")
+    println("########" +user.name+"##########")
     println("\n escolha o número:")
-    println("\n 1-depositar")
-    println(" 2-compra")
-    println(" 3-balanço")
-    println(" 4-historico")
+    println("\n1-depositar")
+    println("2-compra")
+    println("3-balanço")
+    println("4-historico")
+    println("5-adicionar categoria")
     println(" 0-Exit")
   }
 
   //wait for user's input
-  def getUserInput(): String = readLine.trim.toUpperCase
+  def getUserInput(): String = readLine
 
   //option income in user menu
   def income(user:UserApp):UserApp = {
@@ -31,12 +32,12 @@ object MenuUserUtils {
       val newBalance: Double = user.balance + newDepositedValue
       val format = new SimpleDateFormat("d-M-y H:m")
       val date:String = format.format(Calendar.getInstance().getTime())
-      val category = defineCategory()
+      val category = defineCategory(user)
       //val newDepositList: LazyList[Deposito] = List((newDepositedValue,category, depositDescription, format.format(Calendar.getInstance().getTime()))) ::: user.depositList
       val newDeposit: Deposit= Deposit(newDepositedValue,category,depositDescription,date)
       val newDepositList: LazyList[Deposit] = newDeposit#::user.depositList
       val newUserApp = {
-        user.copy(name = user.name, balance = newBalance, depositList = newDepositList, expenseList = user.expenseList)
+        user.copy(name = user.name, balance = newBalance, depositList = newDepositList, expenseList = user.expenseList, userCategories = user.userCategories)
       }
       println("\n\n\n\n DEPOSITO REALIZADO COM SUCESSO \n\n TEM AGORA " + newBalance + " NA SUA CONTA")
       Thread.sleep(3000)
@@ -61,12 +62,12 @@ object MenuUserUtils {
       val newBalance: Double = user.balance - newExpenseValue
       val format = new SimpleDateFormat("d-M-y H:m")
       val date:String = format.format(Calendar.getInstance().getTime())
-      val category:String = defineCategory()
+      val category:String = defineCategory(user)
       //val newExpenseList: List[Expense] = ((List((newExpenseValue, category, ExpenseDescription, format.format(Calendar.getInstance().getTime()))) ::: user.expenseList).reverse).reverse
       val newExpense: Expense = Expense(newExpenseValue,category,ExpenseDescription,date)
       val newExpenseList:LazyList[Expense] = newExpense#::user.expenseList
       val newUserApp = {
-        user.copy(name = user.name, balance = newBalance, depositList = user.depositList, expenseList = newExpenseList)
+        user.copy(name = user.name, balance = newBalance, depositList = user.depositList, expenseList = newExpenseList, userCategories = user.userCategories)
       }
       println("\n\n\n\n COMPRA REALIZADA COM SUCESSO \n\n TEM AGORA " + newBalance + " NA SUA CONTA")
       Thread.sleep(3000)
@@ -90,11 +91,23 @@ object MenuUserUtils {
     userHistoryInput match{
       case "1" =>{
         showFilters(x.userCategories,1) //print dos filters
+        println("0-Nao aplicar filtro!")
         val userFilterInput:Int = getUserInput().toInt
-        showElementsFiltered(x.depositList,x.userCategories(userFilterInput-1))
+        if(userFilterInput!=0) {
+          showDepositsFiltered(x.depositList, x.userCategories(userFilterInput - 1))
+        }else {
+          showElements(x.depositList)
+        }
       }
       case "2" =>{
-       showElements(x.expenseList)
+        showFilters(x.userCategories,1) //print dos filters
+        println("0-Nao aplicar filtro!")
+        val userFilterInput:Int = getUserInput().toInt
+        if(userFilterInput!=0) {
+          showExpensesFiltered(x.expenseList, x.userCategories(userFilterInput - 1))
+        }else {
+          showElements(x.expenseList)
+        }
       }
       case "3" =>{
 
@@ -103,9 +116,16 @@ object MenuUserUtils {
     }
   }
 
-  def showElementsFiltered(list: LazyList[Deposit], str: String){
+  def showDepositsFiltered(list: LazyList[Deposit], str: String){
     list match {
-      case x#::t=> if(x.category == str) println(x); showElementsFiltered(t,str)
+      case x#::t=> if(x.category == str) println(x); showDepositsFiltered(t,str)
+      case LazyList() =>
+    }
+  }
+
+  def showExpensesFiltered(list: LazyList[Expense], str: String){
+    list match {
+      case x#::t=> if(x.category == str) println(x); showExpensesFiltered(t,str)
       case LazyList() =>
     }
   }
@@ -135,63 +155,35 @@ object MenuUserUtils {
     }
   }
 
-  //object category
-  object Category extends Enumeration{
-    val food = "Comida"
-    val car = "Carro"
-    val university = "Universidade"
-    val home = "Casa"
-    val others = "outros"
+
+  def addCategory(user: UserApp,s:String): UserApp ={
+    val list:List[String] = s::user.userCategories
+    val newUserApp = {
+      user.copy(name = user.name, balance = user.balance, depositList = user.depositList, expenseList = user.expenseList, list)
+    }
+    newUserApp
   }
 
-
   //define category of income/expense
-  def defineCategory(): String ={
+  def defineCategory(userApp: UserApp): String ={
     try {
-      showCategories()
+      showCategories(userApp)
 
-      val input = getUserInput()
-
-      input match {
-        case "1" => {
-          val category = Category.food
-          category
-        }
-        case "2" => {
-          val category = Category.car
-          category
-        }
-        case "3" => {
-          val category = Category.university
-          category
-        }
-        case "4" => {
-          val category = Category.home
-          category
-        }
-        case "5" => {
-          val category = Category.others
-          category
-        }
-
-      }
+      val input = getUserInput().toInt
+      val cat:String = userApp.userCategories(input-1)
+      cat
     } catch {
       case ex: MatchError => {
         println("Insira um valor válido")
-        defineCategory()
+        defineCategory(userApp)
       }
     }
   }
 
   //show categories available
-  def showCategories(): Unit ={
+  def showCategories(userApp: UserApp): Unit ={
     println("*****  INIDIQUE A CATEGORIA:  ***** ")
-    println("\n escolha o número:")
-    println("1-comida")
-    println("2-carro")
-    println("3-universidade")
-    println("4-casa")
-    println("5-outros")
+    showFilters(userApp.userCategories,1)
   }
 
 
