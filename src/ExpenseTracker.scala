@@ -34,7 +34,7 @@ object ExpenseTracker extends App{
     if(username == ""){
      println("Login nao dado")
     } else{
-     val usertoapp:UserApp = readUser("CSVFiles/"+username+".csv")
+     val usertoapp:UserApp = readUser("CSVFiles/"+username+".csv",username)
      userLoop(usertoapp)
     }
     mainLoop()
@@ -58,8 +58,8 @@ object ExpenseTracker extends App{
 
      if(RegisterUser(usernameInput,emailInput,list) == false){
       val s:String = usernameInput+","+passwordInput+","+emailInput+"\n"
-      writeFile(file,s)
-      writeFile("CSVFiles/"+usernameInput+".csv","")
+      writeFile(file,s,true)
+      writeFile("CSVFiles/"+usernameInput+".csv","newUser",true)
      }
 
      mainLoop()

@@ -1,7 +1,7 @@
 import java.text.SimpleDateFormat
 import java.io.IOException
 import MenuUserUtils._
-
+import CSVFileReader._
 import scala.io.StdIn.readLine
 import java.util.Calendar
 
@@ -16,7 +16,7 @@ object MenuUser extends App{
   def userLoop(user: UserApp): Unit ={
 
 
-    showPrompt()
+    showPrompt(user)
 
     val userInput = getUserInput()
 
@@ -39,9 +39,7 @@ object MenuUser extends App{
         Thread.sleep(3000)
         userLoop(user)
       }
-      case _ =>{
-        userLoop(user)
-      }
+      case "0" => saveUser(user)
     }
 
 

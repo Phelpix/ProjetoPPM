@@ -8,12 +8,14 @@ import scala.io.StdIn.readLine
 object MenuUserUtils {
 
   //show User menu
-  def showPrompt(): Unit ={
+  def showPrompt(user:UserApp): Unit ={
+    println("################\n#     "+user.name+"     #\n#   Saldo: "+user.balance+" #\n################")
     println("\n escolha o número:")
     println("\n 1-depositar")
     println(" 2-compra")
     println(" 3-balanço")
     println(" 4-filtro")
+    println(" 0-Exit")
   }
 
   //wait for user's input
@@ -22,7 +24,7 @@ object MenuUserUtils {
   //option income in user menu
   def income(user:UserApp):UserApp = {
     try {
-      println("\n\n\n\n **** QUANTO VAI DEPOSITAR? ****\n")
+      print("\n\n\n\n **** QUANTO VAI DEPOSITAR? ****\nValor:")
       val newDepositedValue: Double = roundAt(getUserInput().toDouble)
       print("\n DESCRIÇAO DO SEU DEPOSITO:")
       val depositDescription: String = getUserInput()
