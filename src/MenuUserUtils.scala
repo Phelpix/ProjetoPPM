@@ -109,10 +109,6 @@ object MenuUserUtils {
           showElements(x.expenseList)
         }
       }
-      case "3" =>{
-
-      }
-
     }
   }
 

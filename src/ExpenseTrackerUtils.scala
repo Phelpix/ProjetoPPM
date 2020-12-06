@@ -41,4 +41,9 @@ object  ExpenseTrackerUtils {
   }
  }
 
+ def searchUser(email: String, password: String, lines: List[Array[String]]):Array[String]={
+  val a:Array[String]= Array("","","")
+  (lines foldRight )(( v:Array[String], lines) => if(v(1) == email && v(2) == password) v else{println(lines); lines})
+ }
+
 }

@@ -21,7 +21,6 @@ object CSVFileReader{
   for (line <- bufferedSource.getLines) {
    val cols = line.split(",")
    newList = newList:+ cols
-   println(s"${cols(0)}|${cols(1)}|${cols(2)}")
   }
   bufferedSource.close
   newList

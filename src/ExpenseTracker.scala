@@ -6,7 +6,7 @@ import CSVFileReader._
 import scala.annotation.tailrec
 
 case class User(username: String, password: String, email: String)
-//teste para o picoito
+
 object ExpenseTracker extends App{
 
  val file = "CSVFiles/UserCredentials.csv"
@@ -29,13 +29,13 @@ object ExpenseTracker extends App{
 
     val list = readFile(file)
 
-    val username:String = loginUser(emailInput,passwordInput,list)
+    val username:String = searchUser(emailInput,passwordInput,list)(0)  //tratar do FOLD
 
     if(username == ""){
      println("Login nao dado")
     } else{
-     val usertoapp:UserApp = readUser("CSVFiles/"+username+".csv",username)
-     userLoop(usertoapp)
+     val userToApp:UserApp = readUser("CSVFiles/"+username+".csv",username)
+     userLoop(userToApp)
     }
     mainLoop()
 

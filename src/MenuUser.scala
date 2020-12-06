@@ -6,8 +6,6 @@ import scala.io.StdIn.readLine
 import java.util.Calendar
 
 import scala.::
-case class Deposit(value:Double, category:String, description:String, date:String)
-case class Expense(value: Double, category: String,description:String, date:String)
 case class UserApp(name: String, balance:Double, depositList:LazyList[Deposit], expenseList: LazyList[Expense], userCategories: List[String])
 
 object MenuUser extends App{
