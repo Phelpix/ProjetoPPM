@@ -1,0 +1,29 @@
+import CSVFileReader.{readFile, writeFile}
+import ExpenseTracker.file
+import ExpenseTrackerUtils.RegisterUser
+import javafx.fxml.FXML
+import javafx.scene.control.{Button, TextField}
+
+class ControllerRegisto {
+  @FXML
+  private var registerButton2: Button = _
+  @FXML
+  private var usernameRegistoTF: TextField = _
+  @FXML
+  private var passwordRegistoTF: TextField = _
+  @FXML
+  private var emailRegistoTF: TextField = _
+
+  def onRegisterClicked2(): Unit = {
+    val file = "CSVFiles/UserCredentials.csv"
+    val list = readFile(file)
+    if(RegisterUser(usernameRegistoTF.getText(),emailRegistoTF.getText(),list) == false){
+      print("entrei")
+      val s:String = usernameRegistoTF.getText()+","+passwordRegistoTF.getText()+","+emailRegistoTF.getText()+"\n"
+      writeFile(file,s,true)
+      writeFile("CSVFiles/"+usernameRegistoTF.getText()+".csv","newUser",true)
+    }
+    registerButton2.getScene().getWindow.hide()
+  }
+
+}
