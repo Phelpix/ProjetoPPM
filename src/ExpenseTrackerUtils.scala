@@ -33,17 +33,9 @@ object  ExpenseTrackerUtils {
   }
  }
 
- def loginUser(email: String, password: String, lines: List[Array[String]]):String = {
-  lines match {
-   case x :: t => if (x(2) == email && x(1) == password) x(0) else loginUser(email, password, t)
-   case x:: Nil => if (x(2) == email && x(1) == password) x(0) else ""
-   case Nil=>""
-  }
- }
 
  def searchUser(email: String, password: String, lines: List[Array[String]]):Array[String]={
-  val a:Array[String]= Array("","","")
-  (lines foldRight )(( v:Array[String], lines) => if(v(1) == email && v(2) == password) v else{println(lines); lines})
+  (lines foldRight Array("","",""))(( v:Array[String], lines) => if(v(2) == email && v(1) == password) v else lines)
  }
 
 }

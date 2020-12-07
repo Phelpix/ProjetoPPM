@@ -33,7 +33,7 @@ object MenuUser extends App{
         userLoop(user)
       }
       case "4" =>{
-        history(user)
+        higherfunction(user, history)
         Thread.sleep(3000)
         userLoop(user)
       }
@@ -43,6 +43,10 @@ object MenuUser extends App{
         val categoria = getUserInput()
         val newUserApp = addCategory(user,categoria)
         userLoop(newUserApp)
+      }
+
+      case "6"=>{
+        higherfunction(user, listTotal)
       }
       case "0" => saveUser(user)
     }
