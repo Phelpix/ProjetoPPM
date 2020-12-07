@@ -16,6 +16,7 @@ object MenuUserUtils {
     println("4-historico")
     println("5-adicionar categoria")
     println("6-mostrar totais")
+    println("7-mostrar Perfil")
     println(" 0-Exit")
   }
 
@@ -64,7 +65,7 @@ object MenuUserUtils {
       val date:String = format.format(Calendar.getInstance().getTime())
       val category:String = defineCategory(user)
       //val newExpenseList: List[Expense] = ((List((newExpenseValue, category, ExpenseDescription, format.format(Calendar.getInstance().getTime()))) ::: user.expenseList).reverse).reverse
-      val newExpense: Expense = Expense(newExpenseValue,category,ExpenseDescription,date)
+      val newExpense: Expense = new Expense(newExpenseValue,category,ExpenseDescription,date)
       val newExpenseList:LazyList[Expense] = newExpense#::user.expenseList
       val newUserApp = {
         user.copy(name = user.name, balance = newBalance, depositList = user.depositList, expenseList = newExpenseList, userCategories = user.userCategories)
@@ -76,93 +77,48 @@ object MenuUserUtils {
       case ex: NumberFormatException => {
         println("Insira um valor válido")
         expense(user)
-
       }
-
-
     }
   }
 
-  /*def higherfunction(x :UserApp, f: (LazyList[Any], String) => Unit): Unit ={
+  def higherfunction(x :UserApp, f: (LazyList[UserList], String) => Unit): Unit ={
     showOptions()
-    val userOption :Int = getUserInput().toInt
-
-    showFilters(x.userCategories, userOption)
-    val filter:String = getUserInput()
-
-    x match {
-      case 1 => {
-        f( x.depositList,filter)
-      }
-      case 2 =>{
-        f( x.expenseList,filter)
-      }
-    }
-
-  }*/
-
-  //option history in user menu
- /* def history(lazyList: LazyList[Any], filter :String): Unit ={
-    x match{
+    val userOption :String  = getUserInput()
+    showFilters(x.userCategories,1)
+    val filter :Int = getUserInput().toInt
+    userOption match {
       case "1" => {
-        // val i = showElements(x.depositList) _
-        showFilters(x.userCategories, 1) //print dos filters
-        val userFilterInput: Int = getUserInput().toInt
-        //if (userFilterInput == 0) i("")
+        f( x.depositList,x.userCategories(filter-1))
       }
       case "2" =>{
-        showFilters(x.userCategories,1) //print dos filters
-        val userFilterInput:Int = getUserInput().toInt
-        if(userFilterInput!=0) {
-          showExpensesFiltered(x.expenseList, x.userCategories(userFilterInput - 1))
-        }else {
-          //showElements(x.expenseList)
-        }
+        f( x.expenseList,x.userCategories(filter-1))
       }
     }
   }
 
-
-  def listTotal(list : LazyList[Any], filter :String): Int ={
-    (list foldLeft 0)(( v, list) => if(v.category == filter)  else lines)
-  }*/
-
-  def showFiltered(list: LazyList[UserList], str: String): Unit ={
-    list match {
-      case x#::t=> if(x.category == str) println("DEU:"+ x.category ); showFiltered(t,str)
-      case LazyList() =>
-    }
+  //opcao 6 do user
+  def listTotal(list : LazyList[UserList], filter :String): Unit = {
+    val total :Double = (list foldLeft 0.0)(( v1 :Double, v2:UserList) => if(v2.category == filter) v1+v2.value else v1    )
+    println(total)
   }
 
-  def showDepositsFiltered(list: LazyList[Deposit], str: String){
-    list match {
-      case x#::t=> if(x.category == str) println(x); showDepositsFiltered(t,str)
-      case LazyList() =>
-    }
-  }
-
-  def showExpensesFiltered(list: LazyList[Expense], str: String){
-    list match {
-      case x#::t=> if(x.category == str) println(x); showExpensesFiltered(t,str)
-      case LazyList() =>
-    }
-  }
-
- /* def showElements[A](list :LazyList[A])(str:String): Unit ={
+  //opcao 4 do user
+  def showHistory(list :LazyList[UserList], filter:String): Unit = {
     list match{
       case x #::t => {
-        if( str=="") {
-          println(x)
-          showElements(t,str)
-        }else if(x.category == str){
-          println(x)
+        if( filter == "0") {
+          println(x.value)
+          showHistory(t, filter)
+        }else if(x.category == filter){
+          println(x.value)
+          showHistory(t,filter)
         }
       }
       case LazyList() => println("\n\n\n")
     }
   }
 
-  */
+
   //show history
   def showOptions(): Unit ={
     println("\n escolha o número:")
@@ -174,9 +130,8 @@ object MenuUserUtils {
     list match {
       case x :: t => println(aux + "-" +x ); showFilters(t,aux+1)
       case x :: Nil => println(aux+"-"+x)
-      case Nil =>
+      case Nil => println("0-Nao aplicar filtro!")
     }
-    println("0-Nao aplicar filtro!")
 
   }
 
@@ -195,7 +150,8 @@ object MenuUserUtils {
   //define category of income/expense
   def defineCategory(userApp: UserApp): String ={
     try {
-      showCategories(userApp)
+      println("########## INDIQUE A CATEGORIA ##########")
+      showCategories(userApp.userCategories,1)
 
       val input = getUserInput().toInt
       val cat:String = userApp.userCategories(input-1)
@@ -209,9 +165,12 @@ object MenuUserUtils {
   }
 
   //show categories available
-  def showCategories(userApp: UserApp): Unit ={
-    println("*****  INIDIQUE A CATEGORIA:  ***** ")
-    showFilters(userApp.userCategories,1)
+  def showCategories(list: List[String], aux :Int): Unit ={
+    list match {
+      case x :: t => println(aux + "-" +x ); showCategories(t,aux+1)
+      case x :: Nil => println(aux+"-"+x)
+      case Nil =>
+    }
   }
 
 

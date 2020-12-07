@@ -66,7 +66,7 @@ object CSVFileReader{
    lazy val expenses = line.split(",")
    for(expense <- expenses){
     val parameters= expense.split("/")
-    var aux:Expense = Expense(parameters(0).toDouble,parameters(1),parameters(2),parameters(3))
+    var aux:Expense = new Expense(parameters(0).toDouble,parameters(1),parameters(2),parameters(3))
     expenseList = aux+:expenseList
    }
    expenseList

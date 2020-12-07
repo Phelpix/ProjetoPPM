@@ -33,9 +33,10 @@ object MenuUser extends App{
         userLoop(user)
       }
       case "4" =>{
-        //higherfunction(user, history)
+        higherfunction(user, showHistory)
         Thread.sleep(3000)
         userLoop(user)
+
       }
 
       case "5" =>{
@@ -46,12 +47,13 @@ object MenuUser extends App{
       }
 
       case "6"=>{
-        //higherfunction(user, listTotal)
-        showFiltered(user.depositList,"Comida")
+        higherfunction(user, listTotal)
+        Thread.sleep(3000)
+        userLoop(user)
+
       }
       case "0" => saveUser(user)
     }
 
-  userLoop(user)
   }
 }
