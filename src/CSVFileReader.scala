@@ -56,6 +56,8 @@ object CSVFileReader{
   }
  }
 
+
+
  def lineToExpenseList(line:String):LazyList[Expense]={
   var expenseList:LazyList[Expense] = LazyList[Expense]()
   if(line==""){
@@ -80,7 +82,7 @@ object CSVFileReader{
    lazy val deposits = line.split(",")
    for(deposit <- deposits){
     val parameters= deposit.split("/")
-    var aux:Deposit = Deposit(parameters(0).toDouble,parameters(1),parameters(2),parameters(3))
+    var aux:Deposit = new Deposit(parameters(0).toDouble,parameters(1),parameters(2),parameters(3))
     depositList = aux+:depositList
    }
    depositList

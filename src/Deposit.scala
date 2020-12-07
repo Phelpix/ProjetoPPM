@@ -1,8 +1,10 @@
 
 
-case class Deposit(value: Double,category: String, description: String, date:String )
-
-object Deposit {
+class Deposit(xvalue: Double, xcategory: String, xdescription: String, xdate:String )  extends UserList {
+  override val category: String = xcategory;
+  override val value: Double = xvalue;
+  override val description: String = xdescription;
+  override val date: String = xdate;
 
   def getValue(deposit: Deposit): Double ={
     return deposit.value;
@@ -35,10 +37,6 @@ object Deposit {
   def setDate(deposit: Deposit, date:String): Unit ={
     new Deposit(deposit.value, deposit.category, deposit.description, date)
   }
-
-
-
-
 
 }
 

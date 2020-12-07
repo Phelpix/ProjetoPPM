@@ -1,7 +1,6 @@
 
 import java.text.SimpleDateFormat
 import java.util.Calendar
-
 import scala.::
 import scala.io.StdIn.readLine
 
@@ -35,7 +34,7 @@ object MenuUserUtils {
       val date:String = format.format(Calendar.getInstance().getTime())
       val category = defineCategory(user)
       //val newDepositList: LazyList[Deposito] = List((newDepositedValue,category, depositDescription, format.format(Calendar.getInstance().getTime()))) ::: user.depositList
-      val newDeposit: Deposit= Deposit(newDepositedValue,category,depositDescription,date)
+      val newDeposit: Deposit= new Deposit(newDepositedValue,category,depositDescription,date)
       val newDepositList: LazyList[Deposit] = newDeposit#::user.depositList
       val newUserApp = {
         user.copy(name = user.name, balance = newBalance, depositList = newDepositList, expenseList = user.expenseList, userCategories = user.userCategories)
@@ -84,7 +83,7 @@ object MenuUserUtils {
     }
   }
 
-  def higherfunction(x :UserApp, f: (LazyList[Any], String) => Unit): Unit ={
+  /*def higherfunction(x :UserApp, f: (LazyList[Any], String) => Unit): Unit ={
     showOptions()
     val userOption :Int = getUserInput().toInt
 
@@ -100,10 +99,10 @@ object MenuUserUtils {
       }
     }
 
-  }
+  }*/
 
   //option history in user menu
-  def history(lazyList: LazyList[Any], filter :String): Unit ={
+ /* def history(lazyList: LazyList[Any], filter :String): Unit ={
     x match{
       case "1" => {
         // val i = showElements(x.depositList) _
@@ -126,6 +125,13 @@ object MenuUserUtils {
 
   def listTotal(list : LazyList[Any], filter :String): Int ={
     (list foldLeft 0)(( v, list) => if(v.category == filter)  else lines)
+  }*/
+
+  def showFiltered(list: LazyList[UserList], str: String): Unit ={
+    list match {
+      case x#::t=> if(x.category == str) println("DEU:"+ x.category ); showFiltered(t,str)
+      case LazyList() =>
+    }
   }
 
   def showDepositsFiltered(list: LazyList[Deposit], str: String){
