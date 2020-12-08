@@ -36,7 +36,7 @@ object ExpenseTracker extends App{
     if(username == ""){
      loginError()
     } else{
-     val userToApp:UserApp = readUser("CSVFiles/"+username+".csv",username)
+     val userToApp:UserApp = readUser("CSVFiles/"+username+".csv",username,emailInput,passwordInput)
      userLoop(userToApp)
     }
     mainLoop()

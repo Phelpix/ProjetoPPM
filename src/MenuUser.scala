@@ -1,13 +1,16 @@
 import java.text.SimpleDateFormat
 import java.io.IOException
+
 import MenuUserUtils._
 import CSVFileReader._
 import IO._
+
 import scala.io.StdIn.readLine
 import java.util.Calendar
 
+
 import scala.::
-case class UserApp(name: String, balance:Double, depositList:LazyList[UserList], expenseList: LazyList[UserList], userCategories: List[String])
+case class UserApp(name: String,email:String,password: String, balance:Double, depositList:LazyList[UserList], expenseList: LazyList[UserList], userCategories: List[String])
 
 object MenuUser extends App{
 
@@ -58,6 +61,16 @@ object MenuUser extends App{
         userLoop(user)
 
       }
+      case "7"=>{
+        val newUser = profile(user)
+        userLoop(newUser)
+      }
+
+      case "8"=>{
+       val newUser=changeThings(user)
+       userLoop(newUser)
+      }
+
       case "0" => saveUser(user)
     }
 
