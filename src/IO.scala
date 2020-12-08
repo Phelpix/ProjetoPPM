@@ -3,7 +3,7 @@ import scala.io.StdIn.readLine
 object IO {
 
   //User IO
-  def showPrompt(user:UserApp): Unit ={println("########" +user.name+"##########");println("\n escolha o número:");println("\n1-depositar");println("2-compra");println("3-balanço");println("4-historico");println("5-adicionar categoria");println("6-mostrar totais");println("7-mostrar Perfil");println(" 0-Exit")}
+  def showPrompt(user:UserApp): Unit ={println("########  " +user.name+"  ##########");println("\n escolha o número:");println("\n1-depositar");println("2-compra");println("3-balanço");println("4-historico");println("5-adicionar categoria");println("6-mostrar totais");println("7-mostrar Perfil");println(" 0-Exit")}
 
   def getUserInput(): String = readLine
 
@@ -52,7 +52,9 @@ object IO {
 
   def whatCategory(): Unit =  println("########### INDIQUE A CATEGORIA ###########")
 
+  def showMonth():Unit = {println("\n1 - Janeiro\n2 - Fevereiro\n3 - Marco\n4 - Abril\n5 - Maio\n6 - Junho \n7 - Julho\n8 - Agosto\n9 - Setembro\n10 - Outubro\n11 - Novembro\n12 - Dezembro")}
 
+  def showYear(): Unit = {println("Indique o ano que quer aceder")}
 
   def printValue(any: Any):Unit= println(any)
 

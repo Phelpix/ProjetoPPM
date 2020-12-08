@@ -28,7 +28,6 @@ object MenuUser extends App{
         actionFinished(newUserApp.balance)
         Thread.sleep(3000)
         userLoop(newUserApp)
-
       }
       case "2" => {
         val newUserApp:UserApp = function(user.expenseList,2)
@@ -36,16 +35,17 @@ object MenuUser extends App{
         Thread.sleep(3000)
         userLoop(newUserApp)
       }
+        //interessa
       case "3"=>{
         balance(user.balance)
         Thread.sleep(3000)
         userLoop(user)
       }
+        //interessa feito
       case "4" =>{
         higherfunction(user, showHistory)
         Thread.sleep(3000)
         userLoop(user)
-
      }
 
       case "5" =>{
@@ -54,12 +54,11 @@ object MenuUser extends App{
         val newUserApp = addCategory(user,categoria)
         userLoop(newUserApp)
       }
-
+        //interessa feito
       case "6"=>{
         higherfunction(user, listTotal)
         Thread.sleep(3000)
         userLoop(user)
-
       }
       case "7"=>{
         val newUser = profile(user)

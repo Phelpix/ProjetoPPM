@@ -35,10 +35,10 @@ object  ExpenseTrackerUtils {
   (lines foldRight Array("","",""))(( v:Array[String], lines) => if(v(2) == email && v(1) == password) v else lines)
  }
 
- def searchUser2(email:String, password: String, lines: List[Array[String ]]): Option[Array[String]]={
+ def searchUser2(email:String, password: String, lines: List[Array[String ]]): Option[String]={
    lines match{
     case Nil => None
-    case x::xs => if( x(1) == password && x(2) == email) Some(x) else searchUser2(email, password,xs)
+    case x::xs => if( x(1) == password && x(2) == email) Some(x(0)) else searchUser2(email, password,xs)
    }
   }
 

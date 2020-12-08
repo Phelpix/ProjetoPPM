@@ -1,5 +1,6 @@
 
 import java.text.SimpleDateFormat
+import java.time.Year
 import java.util.Calendar
 
 import IO._
@@ -10,13 +11,14 @@ import scala.io.StdIn.readLine
 
 object MenuUserUtils {
 
+  //opcoes 1 e 2
   def transaction(user:UserApp, userList: LazyList[UserList], tipo:Int) :UserApp = {
     try {
       muchTransaction(userList)
       val newTransactionValue: Double = roundAt(getUserInput().toDouble)
       description()
       val newDescription: String = getUserInput()
-      val format = new SimpleDateFormat("d-M-y H:m")
+      val format = new SimpleDateFormat("M-y")
       val sameDate:String = format.format(Calendar.getInstance().getTime())
       val sameCategory = defineCategory(user)
       val newTransaction: UserList = new UserList {
@@ -49,33 +51,44 @@ object MenuUserUtils {
     }
   }
 
-
+  //opcoes 4 e 6
   def higherfunction(x :UserApp, f: (LazyList[UserList], String) => Unit): Unit ={
     showOptions()
     val userOption :String  = getUserInput()
     showFilters(x.userCategories,1)
     val filter :Int = getUserInput().toInt
+    showYear()
+    val year:String = getUserInput()
+    showMonth()
+    val month :String = getUserInput()
     userOption match {
       case "1" => {
+        val list:LazyList[UserList] = x.depositList.filter(x =>{x.date==(month+"-"+year)})
         if (filter!=0)
-          f( x.depositList,x.userCategories(filter-1))
+          f( list,x.userCategories(filter-1))
         else
-          f(x.depositList, "0")
+          f(list, "0")
       }
       case "2" =>{
+        val list:LazyList[UserList] = x.expenseList.filter(x => x.date==(month+"-"+year))
         if(filter!=0)
-          f( x.expenseList,x.userCategories(filter-1))
+          f(list,x.userCategories(filter-1))
         else
-          f(x.expenseList,"0")
+          f(list,"0")
       }
     }
   }
 
   //opcao 6 do user
   def listTotal(list : LazyList[UserList], filter :String): Double= {
-    val total :Double = (list foldLeft 0.0)(( v1 :Double, v2:UserList) => if(v2.category == filter) v1+v2.value else v1    )
-    printValue(total)
-    total
+    if(filter == "0") {
+      val total: Double = (list foldLeft 0.0) ((v1: Double, v2: UserList) => v1 + v2.value )
+      total
+    }
+    else{
+      val total: Double = (list foldLeft 0.0) ((v1: Double, v2: UserList) => if (v2.category == filter) v1 + v2.value else v1)
+      total
+    }
   }
 
   //opcao 4 do user
@@ -84,19 +97,15 @@ object MenuUserUtils {
       case x #::t => {
         if( filter == "0") {
           printValue(x.value)
-          showHistory(t, filter)
+          showHistory(t,filter)
         }else if(x.category == filter){
           printValue(x.value)
           showHistory(t,filter)
-        }
+        }else showHistory(t,filter)
       }
       case LazyList() =>
     }
   }
-
-
-  //show history
-
 
   def showFilters(list: List[String],aux:Int): Unit ={
     list match {
