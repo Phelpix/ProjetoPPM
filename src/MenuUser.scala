@@ -2,11 +2,12 @@ import java.text.SimpleDateFormat
 import java.io.IOException
 import MenuUserUtils._
 import CSVFileReader._
+import IO._
 import scala.io.StdIn.readLine
 import java.util.Calendar
 
 import scala.::
-case class UserApp(name: String, balance:Double, depositList:LazyList[Deposit], expenseList: LazyList[Expense], userCategories: List[String])
+case class UserApp(name: String, balance:Double, depositList:LazyList[UserList], expenseList: LazyList[UserList], userCategories: List[String])
 
 object MenuUser extends App{
 
@@ -17,18 +18,23 @@ object MenuUser extends App{
     showPrompt(user)
 
     val userInput = getUserInput()
-
+    val function = transaction(user,_:LazyList[UserList],_:Int)
     userInput match {
       case "1" => {
-        val newUserApp:UserApp = income(user)
+        val newUserApp:UserApp = function(user.depositList,1)
+        actionFinished(newUserApp.balance)
+        Thread.sleep(3000)
         userLoop(newUserApp)
+
       }
       case "2" => {
-        val newUserApp:UserApp = expense(user)
+        val newUserApp:UserApp = function(user.expenseList,2)
+        actionFinished(newUserApp.balance)
+        Thread.sleep(3000)
         userLoop(newUserApp)
       }
       case "3"=>{
-        println("\n\n\n\n **** O VALOR DA SUA BALANCA E " + user.balance +" ****\n")
+        balance(user.balance)
         Thread.sleep(3000)
         userLoop(user)
       }
@@ -40,7 +46,7 @@ object MenuUser extends App{
      }
 
       case "5" =>{
-        println("Qual a categoria que quer adicionar?")
+        category()
         val categoria = getUserInput()
         val newUserApp = addCategory(user,categoria)
         userLoop(newUserApp)

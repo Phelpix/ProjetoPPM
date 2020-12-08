@@ -1,85 +1,53 @@
 
 import java.text.SimpleDateFormat
 import java.util.Calendar
+
+import IO._
+
 import scala.::
 import scala.io.StdIn.readLine
 
 object MenuUserUtils {
 
-  //show User menu
-  def showPrompt(user:UserApp): Unit ={
-    println("########" +user.name+"##########")
-    println("\n escolha o número:")
-    println("\n1-depositar")
-    println("2-compra")
-    println("3-balanço")
-    println("4-historico")
-    println("5-adicionar categoria")
-    println("6-mostrar totais")
-    println("7-mostrar Perfil")
-    println(" 0-Exit")
-  }
-
-  //wait for user's input
-  def getUserInput(): String = readLine
-
-  //option income in user menu
-  def income(user:UserApp):UserApp = {
+  def transaction(user:UserApp, userList: LazyList[UserList], tipo:Int) :UserApp = {
     try {
-      print("\n\n\n\n **** QUANTO VAI DEPOSITAR? ****\nValor:")
-      val newDepositedValue: Double = roundAt(getUserInput().toDouble)
-      print("\n DESCRIÇAO DO SEU DEPOSITO:")
-      val depositDescription: String = getUserInput()
-      val newBalance: Double = user.balance + newDepositedValue
+      muchTransaction(userList)
+      val newTransactionValue: Double = roundAt(getUserInput().toDouble)
+      description()
+      val newDescription: String = getUserInput()
       val format = new SimpleDateFormat("d-M-y H:m")
-      val date:String = format.format(Calendar.getInstance().getTime())
-      val category = defineCategory(user)
-      //val newDepositList: LazyList[Deposito] = List((newDepositedValue,category, depositDescription, format.format(Calendar.getInstance().getTime()))) ::: user.depositList
-      val newDeposit: Deposit= new Deposit(newDepositedValue,category,depositDescription,date)
-      val newDepositList: LazyList[Deposit] = newDeposit#::user.depositList
-      val newUserApp = {
-        user.copy(name = user.name, balance = newBalance, depositList = newDepositList, expenseList = user.expenseList, userCategories = user.userCategories)
+      val sameDate:String = format.format(Calendar.getInstance().getTime())
+      val sameCategory = defineCategory(user)
+      val newTransaction: UserList = new UserList {
+        override val value: Double = newTransactionValue
+        override val category: String = sameCategory
+        override val description: String = newDescription
+        override val date: String = sameDate
       }
-      println("\n\n\n\n DEPOSITO REALIZADO COM SUCESSO \n\n TEM AGORA " + newBalance + " NA SUA CONTA")
-      Thread.sleep(3000)
-      newUserApp
-    }catch{
+      val newTransactionList : LazyList[UserList]= newTransaction#::userList
+      if (tipo == 1) {
+        val newUserApp = {
+          user.copy(name = user.name, balance = user.balance + newTransactionValue, depositList = newTransactionList, expenseList = user.expenseList, userCategories = user.userCategories)
+        }
+        newUserApp
+      }
+      else {
+        val newUserApp = {
+          user.copy(name = user.name, balance = user.balance - newTransactionValue, depositList = user.depositList, expenseList = newTransactionList, userCategories = user.userCategories)
+        }
+        newUserApp
+      }
+
+    }
+    catch{
       case ex: NumberFormatException => {
-        println("Insira um valor válido")
-        income(user)
+        error()
+        transaction(user, userList,tipo)
 
       }
     }
   }
 
-  //option expense in user menu
-  def expense(user:UserApp):UserApp= {
-    println("\n\n\n\n **** QUAL FOI O VALOR DA SUA COMPRA? ****\n")
-
-    try {
-      val newExpenseValue: Double = roundAt(getUserInput().toDouble)
-      print("\n DESCRIÇAO DA COMPRA:")
-      val ExpenseDescription: String = getUserInput()
-      val newBalance: Double = user.balance - newExpenseValue
-      val format = new SimpleDateFormat("d-M-y H:m")
-      val date:String = format.format(Calendar.getInstance().getTime())
-      val category:String = defineCategory(user)
-      //val newExpenseList: List[Expense] = ((List((newExpenseValue, category, ExpenseDescription, format.format(Calendar.getInstance().getTime()))) ::: user.expenseList).reverse).reverse
-      val newExpense: Expense = new Expense(newExpenseValue,category,ExpenseDescription,date)
-      val newExpenseList:LazyList[Expense] = newExpense#::user.expenseList
-      val newUserApp = {
-        user.copy(name = user.name, balance = newBalance, depositList = user.depositList, expenseList = newExpenseList, userCategories = user.userCategories)
-      }
-      println("\n\n\n\n COMPRA REALIZADA COM SUCESSO \n\n TEM AGORA " + newBalance + " NA SUA CONTA")
-      Thread.sleep(3000)
-      newUserApp
-    } catch {
-      case ex: NumberFormatException => {
-        println("Insira um valor válido")
-        expense(user)
-      }
-    }
-  }
 
   def higherfunction(x :UserApp, f: (LazyList[UserList], String) => Unit): Unit ={
     showOptions()
@@ -88,10 +56,16 @@ object MenuUserUtils {
     val filter :Int = getUserInput().toInt
     userOption match {
       case "1" => {
-        f( x.depositList,x.userCategories(filter-1))
+        if (filter!=0)
+          f( x.depositList,x.userCategories(filter-1))
+        else
+          f(x.depositList, "0")
       }
       case "2" =>{
-        f( x.expenseList,x.userCategories(filter-1))
+        if(filter!=0)
+          f( x.expenseList,x.userCategories(filter-1))
+        else
+          f(x.expenseList,"0")
       }
     }
   }
@@ -99,7 +73,7 @@ object MenuUserUtils {
   //opcao 6 do user
   def listTotal(list : LazyList[UserList], filter :String): Unit = {
     val total :Double = (list foldLeft 0.0)(( v1 :Double, v2:UserList) => if(v2.category == filter) v1+v2.value else v1    )
-    println(total)
+    printValue(total)
   }
 
   //opcao 4 do user
@@ -107,36 +81,29 @@ object MenuUserUtils {
     list match{
       case x #::t => {
         if( filter == "0") {
-          println(x.value)
+          printValue(x.value)
           showHistory(t, filter)
         }else if(x.category == filter){
-          println(x.value)
+          printValue(x.value)
           showHistory(t,filter)
         }
       }
-      case LazyList() => println("\n\n\n")
+      case LazyList() =>
     }
   }
 
 
   //show history
-  def showOptions(): Unit ={
-    println("\n escolha o número:")
-    println(" 1-depositos")
-    println(" 2-compras")
-  }
+
 
   def showFilters(list: List[String],aux:Int): Unit ={
     list match {
-      case x :: t => println(aux + "-" +x ); showFilters(t,aux+1)
-      case x :: Nil => println(aux+"-"+x)
-      case Nil => println("0-Nao aplicar filtro!")
+      case x :: t => printValue(aux + "-" +x ); showFilters(t,aux+1)
+      case x :: Nil => printValue(aux+"-"+x)
+      case Nil => semFiltro()
     }
 
   }
-
-  //show incomes/expenses
-
 
 
   def addCategory(user: UserApp,s:String): UserApp ={
@@ -150,7 +117,7 @@ object MenuUserUtils {
   //define category of income/expense
   def defineCategory(userApp: UserApp): String ={
     try {
-      println("########## INDIQUE A CATEGORIA ##########")
+      whatCategory()
       showCategories(userApp.userCategories,1)
 
       val input = getUserInput().toInt
@@ -158,7 +125,7 @@ object MenuUserUtils {
       cat
     } catch {
       case ex: MatchError => {
-        println("Insira um valor válido")
+        error()
         defineCategory(userApp)
       }
     }
@@ -167,8 +134,8 @@ object MenuUserUtils {
   //show categories available
   def showCategories(list: List[String], aux :Int): Unit ={
     list match {
-      case x :: t => println(aux + "-" +x ); showCategories(t,aux+1)
-      case x :: Nil => println(aux+"-"+x)
+      case x :: t => printValue(aux + "-" +x ); showCategories(t,aux+1)
+      case x :: Nil => printValue(aux+"-"+x)
       case Nil =>
     }
   }

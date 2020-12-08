@@ -2,7 +2,9 @@
 import ExpenseTrackerUtils._
 import MenuUser._
 import CSVFileReader._
+import IO._
 
+import scala.io.StdIn.readLine
 import scala.annotation.tailrec
 
 case class User(username: String, password: String, email: String)
@@ -17,22 +19,22 @@ object ExpenseTracker extends App{
  def mainLoop(): Unit ={
 
   showMenu()
-  val userInput = getUserInput()
+  val userInput:String = getUserInput()
 
 
   userInput match {
    case "1" =>{
-    print("email:")
-    val emailInput = getUserInput()
-    print("Password:")
-    val passwordInput = getUserInput()
+    email()
+    val emailInput:String = getUserInput()
+    password()
+    val passwordInput:String = getUserInput()
 
     val list = readFile(file)
 
-    val username:String = searchUser(emailInput,passwordInput,list)(0)  //tratar do FOLD
+    val username:String = searchUser2(emailInput,passwordInput,list).get(0)
 
     if(username == ""){
-     println("Login nao dado")
+     loginError()
     } else{
      val userToApp:UserApp = readUser("CSVFiles/"+username+".csv",username)
      userLoop(userToApp)
@@ -43,15 +45,15 @@ object ExpenseTracker extends App{
    }
 
    case "2" =>{
-    print("Username:")
+    username()
     val usernameInput = getUserInput()
-    print("Password:")
-    val passwordInput = getUserInput()
-    print("Email:")
-    val emailInput = getUserInput()
+    password()
+    val passwordInput :String= getUserInput()
+    email()
+    val emailInput :String= getUserInput()
 
     if(usernameInput == "" || passwordInput=="" || emailInput=="") {
-     println("\n Por favor insira dados válidos!!! \n")
+     error()
      mainLoop()
     } else{
      val list = readFile(file)
@@ -66,7 +68,7 @@ object ExpenseTracker extends App{
     }
    }
 
-   case _ => println("######GOODBYE#######")
+   case _ => closeApp()
   }
  }
 
