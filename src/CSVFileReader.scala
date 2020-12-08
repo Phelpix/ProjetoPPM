@@ -43,8 +43,8 @@ object CSVFileReader{
    userAppr
   } else {
    val balance:Double = lines(1).toDouble
-   val deposits:LazyList[Deposit] = lineToDepositList(lines(2))
-   val expenses:LazyList[Expense] = lineToExpenseList(lines(3))
+   val deposits:LazyList[UserList] = lineToTransaction(lines(2))
+   val expenses:LazyList[UserList] = lineToTransaction(lines(3))
    val categories:List[String] = linetoCategoryList(lines(4))
    val user:UserApp = UserApp(username,email,password,balance,deposits,expenses,categories)
    user
@@ -61,34 +61,24 @@ object CSVFileReader{
  }
 
 
- def lineToExpenseList(line:String):LazyList[Expense]={
-  var expenseList:LazyList[Expense] = LazyList[Expense]()
+ def lineToTransaction(line:String):LazyList[UserList]={
+  var expenseList:LazyList[UserList] = LazyList[UserList]()
   if(line==""){
    expenseList
   } else {
    lazy val expenses = line.split(",")
    for(expense <- expenses){
     val parameters= expense.split("/")
-    var aux:Expense = new Expense(parameters(0).toDouble,parameters(1),parameters(2),parameters(3))
+    //var aux:Expense = new Expense(parameters(0).toDouble,parameters(1),parameters(2),parameters(3))
+    var aux:UserList = new UserList {
+     override val value: Double = parameters(0).toDouble
+     override val category: String = parameters(1)
+     override val description: String = parameters(2)
+     override val date: String = parameters(3)
+    }
     expenseList = aux+:expenseList
    }
    expenseList
-  }
- }
-
-
- def lineToDepositList(line:String):LazyList[Deposit]={
-  var depositList:LazyList[Deposit] = LazyList[Deposit]()
-  if(line==""){
-   depositList
-  } else {
-   lazy val deposits = line.split(",")
-   for(deposit <- deposits){
-    val parameters= deposit.split("/")
-    var aux:Deposit = new Deposit(parameters(0).toDouble,parameters(1),parameters(2),parameters(3))
-    depositList = aux+:depositList
-   }
-   depositList
   }
  }
 
