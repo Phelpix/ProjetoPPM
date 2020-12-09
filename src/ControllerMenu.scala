@@ -70,10 +70,8 @@ class ControllerMenu {
     val fxmlLoader = new FXMLLoader(getClass.getResource("ControllerHistorico.fxml"))
     val mainViewRoot: Parent = fxmlLoader.load()
     val controller: ControllerTransaction = fxmlLoader.getController
-    controller.setTipo(2)
-    controller.setTitle()
     controller.setTempUser(user)
-    controller.setParent(this)
+    //controller.setParent(this)
     controller.setCategorias(user.userCategories)
     val scene = new Scene(mainViewRoot)
     secondStage.setScene(scene)
