@@ -10,7 +10,7 @@ import java.util.Calendar
 
 
 import scala.::
-case class UserApp(name: String,email:String,password: String, balance:Double, depositList:LazyList[UserList], expenseList: LazyList[UserList], userCategories: List[String])
+case class UserApp(name: String,email:String,password: String, balance:Double, depositList:LazyList[UserList], expenseList: LazyList[UserList], userCategories: List[String],monthlySavings: List[(String,Double)])
 
 object MenuUser extends App{
 
@@ -68,6 +68,12 @@ object MenuUser extends App{
       case "8"=>{
        val newUser=changeThings(user)
        userLoop(newUser)
+      }
+      case "9"=>{
+       for (element <- user.monthlySavings){
+        println("TUPLO: "+ element._1 + ", " + element._2)
+       }
+       userLoop(user)
       }
 
       case "0" => saveUser(user)
