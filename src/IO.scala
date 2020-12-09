@@ -3,7 +3,7 @@ import scala.io.StdIn.readLine
 object IO {
 
   //User IO
-  def showPrompt(user:UserApp): Unit ={println("########  " +user.name+"  ##########");println("\n escolha o número:");println("\n1-depositar");println("2-compra");println("3-balanço");println("4-historico");println("5-adicionar categoria");println("6-mostrar totais");println("7-mostrar Perfil");println("8-alterar transacao");println(" 0-Exit")}
+  def showPrompt(user:UserApp): Unit ={println("########  " +user.name+"  ##########");println("\n escolha o número:");println("\n1-depositar");println("2-compra");println("3-balanço");println("4-historico");println("5-adicionar categoria");println("6-mostrar totais");println("7-mostrar Perfil");println("8-alterar transacao");println("9-Fazer plano");println(" 0-Exit")}
 
   def getUserInput(): String = readLine
 

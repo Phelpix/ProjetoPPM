@@ -1,10 +1,9 @@
 trait Plan {
-  val id:String
   val tipo: Int
+  val list: List[categorySavings]
 
 
 
-  def setPercentage():Unit{
-
+  def setPercentage():Plan{
   }
 }

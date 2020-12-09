@@ -268,13 +268,34 @@ object MenuUserUtils {
         val date: String = format.format(Calendar.getInstance().getTime())
         val list:LazyList[UserList] = user.depositList.filter(x =>{x.date==date})
         val newList =printDeposits(user, list)
-        val newUser = user.copy(name = user.name,user.email,user.password, balance = user.balance, user.depositList, newList, user.userCategories, user.monthlySavings)
+        val newUser = user.copy(name = user.name,user.email,user.password, balance = user.balance, user.depositList, newList, user.userCategories, user.monthlySavings, user.catSavList)
         newUser
       }
     }
   }
 
+  def makePlan(user: UserApp,tipo:Int):UserApp={
+    val plan :PlanSoft = new PlanSoft(tipo,user.catSavList.filter(x=>x.value!=0.0))
+    val newPlan:PlanSoft = setPercentage(plan)
+    val newUser = user.copy(name = user.name,user.email,user.password, balance = user.balance, user.depositList, expenseList = user.expenseList, user.userCategories,user.monthlySavings, user.catSavList,newPlan)
+    newUser
+  }
+  def setPercentage(plan: PlanSoft): PlanSoft = {
+    val newl = newList(plan.list,0.10,List[categorySavings]())
+    val newp =new PlanSoft(10,newl)
+    newp
+  }
 
+  def newList(list: List[categorySavings], tipo:Double, finalList:List[categorySavings]):List[categorySavings]={
+    list match{
+      case x::t=>{
+        val newo :categorySavings = new categorySavings(x.category,(x.value-(x.value*tipo)))
+        val lets = newo+:finalList
+        newList(t,tipo,lets)
+      }
+      case Nil =>finalList
+    }
+  }
 
 
 

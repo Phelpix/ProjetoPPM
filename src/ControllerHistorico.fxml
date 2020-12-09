@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ControllerHistorico">
+   <children>
+      <GridPane prefHeight="394.0" prefWidth="600.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints maxHeight="149.4" minHeight="10.0" prefHeight="88.2" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="257.8" minHeight="10.0" prefHeight="228.39999999999998" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="208.39999999999998" minHeight="10.0" prefHeight="69.80000000000001" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Label prefHeight="31.0" prefWidth="113.0" text="Histórico" GridPane.columnIndex="1" />
+         </children>
+      </GridPane>
+   </children>
+</AnchorPane>

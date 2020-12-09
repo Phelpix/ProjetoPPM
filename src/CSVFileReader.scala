@@ -1,7 +1,7 @@
 import scala.io.Source
 import java.io._
 
-import CSVFileReader.changePassword
+import CSVFileReader.{changePassword, linesToCatSavings}
 import ExpenseTrackerUtils.checkMonth
 
 object CSVFileReader{
@@ -41,7 +41,7 @@ object CSVFileReader{
 
   if(username=="newUser"){
    val c: List[categorySavings]=linesToCatSavings(lines(6))
-   val userAppr=UserApp(usernameToWrite,email,password,0,LazyList[Deposit](),LazyList[Expense](),List[String]("Comida","Carro","Universidade","Casa"),List[(String,Double)](),c)
+   val userAppr=UserApp(usernameToWrite,email,password,0,LazyList[Deposit](),LazyList[Expense](),List[String]("Comida","Carro","Universidade","Casa"),List[(String,Double)](),c,new PlanSoft(0,List[categorySavings]()))
    userAppr
   } else {
    val balance:Double = lines(1).toDouble
@@ -50,10 +50,28 @@ object CSVFileReader{
    val categories:List[String] = linetoCategoryList(lines(4))
    val savings:List[(String,Double)] = linesToMonthlySavings(lines(5))
    val catSavings:List[categorySavings] = linesToCatSavings(lines(6))
-   val user:UserApp = UserApp(username,email,password,balance,deposits,expenses,categories,savings,catSavings)
+   val plan :PlanSoft= linesToPlan(lines(7))
+   val user:UserApp = UserApp(username,email,password,balance,deposits,expenses,categories,savings,catSavings,plan)
    val newUser =checkMonth(user)
    newUser
   }
+ }
+
+ def linesToPlan(line:String):PlanSoft={
+  if(line=="")new PlanSoft(0,List[categorySavings]())
+  else{
+   val plan = line.split(":").toList
+   val tipo:Int = plan(0).toInt
+   val list:List[categorySavings] = checkString(plan(1))
+   val planSoft= new PlanSoft(tipo,list)
+   planSoft
+  }
+
+ }
+
+ def checkString(f:String): List[categorySavings] ={
+  if(f==" ")List[categorySavings]()
+  else linesToCatSavings(f)
  }
 
  def linesToCatSavings(line:String):List[categorySavings]= {
@@ -127,8 +145,10 @@ object CSVFileReader{
   val categories:String = categoriesToString(user.userCategories)
   val savings:String = savingsToString(user.monthlySavings)
   val catSavings:String = catSavToString(user.catSavList)
+  println("EXIT:  "+ user.plan.list)
+  val plan:String = planToString(user.plan)
   println("DEBUG: "+ categories)
-  val s:String = user.name+"\n"+user.balance+"\n"+deposits+"\n"+expenses+"\n" + categories+"\n" + savings+"\n"+catSavings+"\n"
+  val s:String = user.name+"\n"+user.balance+"\n"+deposits+"\n"+expenses+"\n" + categories+"\n" + savings+"\n"+catSavings+"\n"+plan+" \n"
   writeFile("CSVFiles/"+user.name+".csv",s,false)
  }
 
@@ -139,6 +159,11 @@ object CSVFileReader{
    case Nil=> ""
   }
 
+ }
+
+ def planToString(planSoft: PlanSoft):String={
+  val str:String = planSoft.tipo.toString + ":" + catSavToString(planSoft.list)
+  str
  }
 
  def catSavToString(value: List[categorySavings]):String={

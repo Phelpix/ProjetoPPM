@@ -34,6 +34,7 @@ object ExpenseTracker extends App{
     val username:Option[String] = searchUser2(emailInput,passwordInput,list)
     username match{
      case Some(b) => {
+
       val userToApp:UserApp = readUser("CSVFiles/"+b+".csv",b,emailInput,passwordInput)
       userLoop(userToApp)
      }
