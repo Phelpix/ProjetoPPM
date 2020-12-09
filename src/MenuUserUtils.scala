@@ -1,13 +1,9 @@
 
 import java.text.SimpleDateFormat
-import java.time.Year
 import java.util.Calendar
 
 import IO._
 import CSVFileReader._
-
-import scala.::
-import scala.io.StdIn.readLine
 
 object MenuUserUtils {
 
@@ -83,10 +79,12 @@ object MenuUserUtils {
   def listTotal(list : LazyList[UserList], filter :String): Double= {
     if(filter == "0") {
       val total: Double = (list foldLeft 0.0) ((v1: Double, v2: UserList) => v1 + v2.value )
+      println(total)
       total
     }
     else{
       val total: Double = (list foldLeft 0.0) ((v1: Double, v2: UserList) => if (v2.category == filter) v1 + v2.value else v1)
+      println(total)
       total
     }
   }
@@ -151,23 +149,12 @@ object MenuUserUtils {
     }
   }
 
-  def showSettings(user:UserApp): Unit ={
-    println("#### PERFIL ####")
-    println("Name: "+ user.name)
-    println("Email: "+user.email)
-    println("###############")
-    println("#### DEFINIÇÕES ####")
-    println("1- Mudar username")
-    println("2- Mudar email")
-    println("3- Mudar password")
-  }
-
   def profile(user: UserApp): UserApp = {
     showSettings(user)
     val input = getUserInput()
     input match {
       case "1"=>{
-        print("Novo username: ")
+        newUsernamePrint()
         val newUserName = getUserInput()
         val lines = readFile(credentialsFile)
         changeUsername(user,newUserName,lines,"")
@@ -176,7 +163,7 @@ object MenuUserUtils {
       }
 
       case "2"=>{
-        print("Novo email: ")
+        newEmailPrint()
         val newEmail = getUserInput()
         val lines = readFile(credentialsFile)
         changeEmail(user,newEmail,lines,"")
@@ -186,7 +173,7 @@ object MenuUserUtils {
 
 
       case "3"=>{
-        print("Nova password: ")
+        newPasswordPrint()
         val newPassword = getUserInput()
         val lines = readFile(credentialsFile)
         changePassword(user,newPassword,lines,"")
@@ -196,9 +183,6 @@ object MenuUserUtils {
     }
 
   }
-
-
-
 
   def changeValue(list:LazyList[UserList], deposit: UserList, value: Int,index:Int,newlist: LazyList[UserList]):LazyList[UserList] ={
     list match {
@@ -218,37 +202,27 @@ object MenuUserUtils {
   }
 
   def changeDeposit(toChangeList:LazyList[UserList], index:Int):LazyList[UserList]={
-    println("INDEX: "+ index)
-    println("O que quer alterar?")
-    println("1- Valor")
-    println("2- Descrição")
-    println("3- Categoria")
     val option = getUserInput()
     option match {
       case "1"=>{
-        print("Insira novo valor: ")
         val value = getUserInput().toInt
         val newDeposit = toChangeList(index).setValue(toChangeList(index), value)
         val newlist = toChangeList.patch(index,Seq(newDeposit),1)
-        //val newlist = changeValue(user.depositList,user.depositList(index),value,index,LazyList())
         newlist
       } //case 1
 
       case "2"=>{
-        print("Insira nova descrição ")
         val value = getUserInput()
         val newDeposit = toChangeList(index).setDescription(toChangeList(index), value)
         val newlist =toChangeList.patch(index,Seq(newDeposit),1)
-        //val newlist = changeValue(user.depositList,user.depositList(index),value,index,LazyList())
         newlist
       } //case 2
 
       case "3"=>{
-        print("Insira nova categoria ")
+        newCategoryPrint()
         val value = getUserInput()
         val newDeposit = toChangeList(index).setCategory(toChangeList(index), value)
         val newlist =toChangeList.patch(index,Seq(newDeposit),1)
-        //val newlist = changeValue(user.depositList,user.depositList(index),value,index,LazyList())
         newlist
       } //case 2
 
@@ -256,37 +230,44 @@ object MenuUserUtils {
     }
   }
 
-  def printDeposits(toChangeList:LazyList[UserList]): LazyList[UserList] ={
-    println("Qual quer alterar?")
+  def printDeposits(toChangeList:LazyList[UserList],userApp: UserApp): LazyList[UserList] ={
+    changeDepositPrint()
     showHistory(toChangeList,"0")
     val input = getUserInput().toInt
     val list = changeDeposit(toChangeList,input-1)
-    val total = listTotal(list,"0")
-    println("NEW TOTAL "+ total )
     list
   }
 
 
   def changeThings(user: UserApp): UserApp ={
-    println("O que deseja alterar?")
-    println("1- Depositos")
-    println("2- Despesas")
     val input = getUserInput()
     input match {
       case "1"=>{
-        val newList =printDeposits(user.depositList)
-        val newUser = user.copy(name = user.name,user.email,user.password, balance = user.balance, newList, expenseList = user.expenseList, user.userCategories)
+        val newList =printDeposits(user.depositList,user)
+        val total = listTotal(newList,"0")
+        val newUser = user.copy(name = user.name,user.email,user.password, balance = total, newList, expenseList = user.expenseList, user.userCategories)
         newUser
       }
 
       case "2"=>{
-        val newList =printDeposits(user.expenseList)
-        val newUser = user.copy(name = user.name,user.email,user.password, balance = user.balance, user.depositList, newList, user.userCategories)
+        val newList =printDeposits(user.expenseList,user)
+        val total = listTotal(newList,"0")
+        val newUser = user.copy(name = user.name,user.email,user.password, balance = total, user.depositList, newList, user.userCategories)
         newUser
       }
     }
   }
 
+  def monthSavings(userApp: UserApp)( date:String, filter:String):Double={
+    val listIncome :LazyList[UserList] = userApp.depositList.filter(x => x.date == date)
+    val income :Double=listTotal(listIncome,filter)
+    val listExpense:LazyList[UserList] = userApp.expenseList
+    val expense:Double= listTotal(listExpense, filter)
+    if(filter =="0")
+      income-expense
+    else
+      expense
+  }
 
 
 

@@ -138,7 +138,6 @@ object CSVFileReader{
    }
    case Nil=> writeFile(credentialsFile,text,false)
   }
-
  }
 
  def changePassword(user: UserApp, newPassword:String, lines:List[Array[String]], text:String): Unit = {
@@ -182,9 +181,4 @@ object CSVFileReader{
     case Nil=> writeFile(credentialsFile,text,false)
    }
   }
-
-
-
-
-
 }
