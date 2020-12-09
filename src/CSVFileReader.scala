@@ -2,6 +2,7 @@ import scala.io.Source
 import java.io._
 
 import CSVFileReader.changePassword
+import ExpenseTrackerUtils.checkMonth
 
 object CSVFileReader{
  val credentialsFile = "CSVFiles/UserCredentials.csv"
@@ -39,16 +40,39 @@ object CSVFileReader{
   val username:String = lines(0)
 
   if(username=="newUser"){
-   val userAppr=UserApp(usernameToWrite,email,password,0,LazyList[Deposit](),LazyList[Expense](),List[String]("Comida","Carro","Universidade","Casa") )
+   val userAppr=UserApp(usernameToWrite,email,password,0,LazyList[Deposit](),LazyList[Expense](),List[String]("Comida","Carro","Universidade","Casa"),List[(String,Double)]() )
    userAppr
   } else {
    val balance:Double = lines(1).toDouble
    val deposits:LazyList[UserList] = lineToTransaction(lines(2))
    val expenses:LazyList[UserList] = lineToTransaction(lines(3))
    val categories:List[String] = linetoCategoryList(lines(4))
-   val user:UserApp = UserApp(username,email,password,balance,deposits,expenses,categories)
-   user
+   val savings:List[(String,Double)] = linesToMonthlySavings(lines(5))
+   val user:UserApp = UserApp(username,email,password,balance,deposits,expenses,categories,savings)
+   val newUser =checkMonth(user)
+   newUser
   }
+ }
+
+ def linesToMonthlySavings(line:String):List[(String,Double)]={
+  var montlyList:List[(String,Double)] = List[(String,Double)]()
+  if(line==""){
+   println("VAZIO")
+   montlyList
+  } else {
+   val tuplos = line.split(",").toList
+   for(tuplo <- tuplos){
+    val parameters= tuplo.split("/")
+    //var aux:Expense = new Expense(parameters(0).toDouble,parameters(1),parameters(2),parameters(3))
+    println(parameters(0))
+    println(parameters(1).toDouble)
+    var aux:(String,Double) = (parameters(0),parameters(1).toDouble)
+    println("AUX: "+ aux._1 + "," + aux._2)
+    montlyList = aux+:montlyList
+   }
+   montlyList
+  }
+
  }
 
  def linetoCategoryList(line:String):List[String]={
@@ -86,9 +110,19 @@ object CSVFileReader{
   val deposits:String = transactionToString(user.depositList,"")
   val expenses:String = transactionToString(user.expenseList,"")
   val categories:String = categoriesToString(user.userCategories)
+  val savings:String = savingsToString(user.monthlySavings)
   println("DEBUG: "+ categories)
-  val s:String = user.name+"\n"+user.balance+"\n"+deposits+"\n"+expenses+"\n" + categories+"\n"
+  val s:String = user.name+"\n"+user.balance+"\n"+deposits+"\n"+expenses+"\n" + categories+"\n" + savings+"\n"
   writeFile("CSVFiles/"+user.name+".csv",s,false)
+ }
+
+ def savingsToString(list: List[(String, Double)]): String ={
+  list match {
+   case x::t=> x._1 + "/" + x._2 + "," + savingsToString(t)
+   case x::Nil=> x._1+"/"+x._2
+   case Nil=> ""
+  }
+
  }
 
  def categoriesToString(list:List[String]):String={

@@ -1,8 +1,13 @@
+import java.text.SimpleDateFormat
+import java.util.Calendar
+
 import IO._
+import MenuUserUtils._
 import javax.lang.model.element.NestingKind
 import sun.security.util.Password
 
 import scala.io.StdIn.readLine
+import scala.math
 
 object  ExpenseTrackerUtils {
 
@@ -41,6 +46,47 @@ object  ExpenseTrackerUtils {
     case x::xs => if( x(1) == password && x(2) == email) Some(x(0)) else searchUser2(email, password,xs)
    }
   }
+
+ def checkMonth(user: UserApp): UserApp = {
+  val format = new SimpleDateFormat("M-y")
+  val date: String = format.format(Calendar.getInstance().getTime())
+  val lastDeposit = user.depositList.last.date.split("-")
+  val lastExpense = user.expenseList.last.date.split("-")
+  val maior = maxMonth(lastDeposit, lastExpense)
+  val maiorData = maior(0) + "-" + maior(1)
+
+  if (date != lastDeposit || date != lastExpense) {
+   val savings = monthSavings(user)(maiorData, "0")
+   val tuplo = (maiorData, savings)
+   val newUser = user.copy(name = user.name, user.email, user.password, balance = user.balance, depositList = user.depositList, expenseList = user.expenseList, user.userCategories, tuplo :: user.monthlySavings)
+   newUser
+  } else {
+   user
+  }
+ }
+
+ def maxMonth(deposit: Array[String],expense: Array[String]): Array[String] ={
+  if(deposit(1).toInt - expense(1).toInt > 1){
+   deposit
+  } else if (deposit(1).toInt - expense(1).toInt < 1){
+   expense
+  } else if(deposit(0).toInt - expense(0).toInt >= 1){
+   deposit
+   } else {
+   expense
+  }
+ }
+
+ def monthSavings(userApp: UserApp)( date:String, filter:String):Double={
+  val listIncome :LazyList[UserList] = userApp.depositList.filter(x => x.date == date)
+  val income :Double=listTotal(listIncome,filter)
+  val listExpense:LazyList[UserList] = userApp.expenseList
+  val expense:Double= listTotal(listExpense, filter)
+  if(filter =="0")
+   income-expense
+  else
+   expense
+ }
 
 
 }

@@ -120,7 +120,7 @@ object MenuUserUtils {
   def addCategory(user: UserApp,s:String): UserApp ={
     val list:List[String] = s::user.userCategories
     val newUserApp = {
-      user.copy(name = user.name,user.email,user.password, balance = user.balance, depositList = user.depositList, expenseList = user.expenseList, list)
+      user.copy(name = user.name,user.email,user.password, balance = user.balance, depositList = user.depositList, expenseList = user.expenseList, list, user.monthlySavings)
     }
     newUserApp
   }
@@ -171,7 +171,7 @@ object MenuUserUtils {
         val newUserName = getUserInput()
         val lines = readFile(credentialsFile)
         changeUsername(user,newUserName,lines,"")
-        val newUser = user.copy(name = newUserName,user.email,user.password, balance = user.balance, depositList = user.depositList, expenseList = user.expenseList, user.userCategories)
+        val newUser = user.copy(name = newUserName,user.email,user.password, balance = user.balance, depositList = user.depositList, expenseList = user.expenseList, user.userCategories,user.monthlySavings)
         newUser
       }
 
@@ -180,7 +180,7 @@ object MenuUserUtils {
         val newEmail = getUserInput()
         val lines = readFile(credentialsFile)
         changeEmail(user,newEmail,lines,"")
-        val newUser = user.copy(name = user.name,newEmail,user.password, balance = user.balance, depositList = user.depositList, expenseList = user.expenseList, user.userCategories)
+        val newUser = user.copy(name = user.name,newEmail,user.password, balance = user.balance, depositList = user.depositList, expenseList = user.expenseList, user.userCategories, user.monthlySavings)
         newUser
       }
 
@@ -190,7 +190,7 @@ object MenuUserUtils {
         val newPassword = getUserInput()
         val lines = readFile(credentialsFile)
         changePassword(user,newPassword,lines,"")
-        val newUser = user.copy(name = user.name,user.email,newPassword, balance = user.balance, depositList = user.depositList, expenseList = user.expenseList, user.userCategories)
+        val newUser = user.copy(name = user.name,user.email,newPassword, balance = user.balance, depositList = user.depositList, expenseList = user.expenseList, user.userCategories, user.monthlySavings)
         newUser
       }
     }
@@ -275,13 +275,13 @@ object MenuUserUtils {
     input match {
       case "1"=>{
         val newList =printDeposits(user.depositList)
-        val newUser = user.copy(name = user.name,user.email,user.password, balance = user.balance, newList, expenseList = user.expenseList, user.userCategories)
+        val newUser = user.copy(name = user.name,user.email,user.password, balance = user.balance, newList, expenseList = user.expenseList, user.userCategories,user.monthlySavings)
         newUser
       }
 
       case "2"=>{
         val newList =printDeposits(user.expenseList)
-        val newUser = user.copy(name = user.name,user.email,user.password, balance = user.balance, user.depositList, newList, user.userCategories)
+        val newUser = user.copy(name = user.name,user.email,user.password, balance = user.balance, user.depositList, newList, user.userCategories, user.monthlySavings)
         newUser
       }
     }
