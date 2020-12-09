@@ -58,10 +58,30 @@ object  ExpenseTrackerUtils {
   if (date != lastDeposit || date != lastExpense) {
    val savings = monthSavings(user)(maiorData, "0")
    val tuplo = (maiorData, savings)
-   val newUser = user.copy(name = user.name, user.email, user.password, balance = user.balance, depositList = user.depositList, expenseList = user.expenseList, user.userCategories, tuplo :: user.monthlySavings)
+   val newCatSavList: List[categorySavings] = monthCategory(user.catSavList,List[categorySavings](), user, maiorData)
+   val newUser = user.copy(name = user.name, user.email, user.password, balance = user.balance, depositList = user.depositList, expenseList = user.expenseList, user.userCategories, tuplo :: user.monthlySavings, newCatSavList)
    newUser
   } else {
    user
+  }
+ }
+
+ def monthCategory(lines:List[categorySavings],value: List[categorySavings], user: UserApp, date:String):List[categorySavings]={
+
+  lines match{
+   case x::t => {
+    val d =x.setValue(monthSavings(user)(date,x.category))
+    println("CATEGORIA : "+ d.category + "\nVALOR:"+d.value)
+    val lista:List[categorySavings] =(d::value.reverse).reverse
+    monthCategory(t,lista, user, date)
+   }
+   case Nil => {
+    for(a <- value){
+     println("##### LISTA NOVA:"+a.value+"    #"+a.category)
+     //Comida/0.0,Carro/0.0,Universidade/0.0,Casa/0.0,
+    }
+    value
+   }
   }
  }
 
@@ -80,7 +100,7 @@ object  ExpenseTrackerUtils {
  def monthSavings(userApp: UserApp)( date:String, filter:String):Double={
   val listIncome :LazyList[UserList] = userApp.depositList.filter(x => x.date == date)
   val income :Double=listTotal(listIncome,filter)
-  val listExpense:LazyList[UserList] = userApp.expenseList
+  val listExpense:LazyList[UserList] = userApp.expenseList.filter(x => x.date == date)
   val expense:Double= listTotal(listExpense, filter)
   if(filter =="0")
    income-expense

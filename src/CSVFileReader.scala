@@ -40,7 +40,8 @@ object CSVFileReader{
   val username:String = lines(0)
 
   if(username=="newUser"){
-   val userAppr=UserApp(usernameToWrite,email,password,0,LazyList[Deposit](),LazyList[Expense](),List[String]("Comida","Carro","Universidade","Casa"),List[(String,Double)]() )
+   val c: List[categorySavings]=linesToCatSavings(lines(6))
+   val userAppr=UserApp(usernameToWrite,email,password,0,LazyList[Deposit](),LazyList[Expense](),List[String]("Comida","Carro","Universidade","Casa"),List[(String,Double)](),c)
    userAppr
   } else {
    val balance:Double = lines(1).toDouble
@@ -48,9 +49,26 @@ object CSVFileReader{
    val expenses:LazyList[UserList] = lineToTransaction(lines(3))
    val categories:List[String] = linetoCategoryList(lines(4))
    val savings:List[(String,Double)] = linesToMonthlySavings(lines(5))
-   val user:UserApp = UserApp(username,email,password,balance,deposits,expenses,categories,savings)
+   val catSavings:List[categorySavings] = linesToCatSavings(lines(6))
+   val user:UserApp = UserApp(username,email,password,balance,deposits,expenses,categories,savings,catSavings)
    val newUser =checkMonth(user)
    newUser
+  }
+ }
+
+ def linesToCatSavings(line:String):List[categorySavings]= {
+  var catSavings: List[categorySavings] = List[categorySavings]()
+  if (line == "") {
+   println("VAZIO")
+   catSavings
+  } else {
+   val savings = line.split(",").toList
+   for (saving <- savings) {
+    val parameters = saving.split("/")
+    var aux: categorySavings = new categorySavings(parameters(0), parameters(1).toDouble)
+    catSavings = aux +: catSavings
+   }
+   catSavings
   }
  }
 
@@ -63,9 +81,6 @@ object CSVFileReader{
    val tuplos = line.split(",").toList
    for(tuplo <- tuplos){
     val parameters= tuplo.split("/")
-    //var aux:Expense = new Expense(parameters(0).toDouble,parameters(1),parameters(2),parameters(3))
-    println(parameters(0))
-    println(parameters(1).toDouble)
     var aux:(String,Double) = (parameters(0),parameters(1).toDouble)
     println("AUX: "+ aux._1 + "," + aux._2)
     montlyList = aux+:montlyList
@@ -111,8 +126,9 @@ object CSVFileReader{
   val expenses:String = transactionToString(user.expenseList,"")
   val categories:String = categoriesToString(user.userCategories)
   val savings:String = savingsToString(user.monthlySavings)
+  val catSavings:String = catSavToString(user.catSavList)
   println("DEBUG: "+ categories)
-  val s:String = user.name+"\n"+user.balance+"\n"+deposits+"\n"+expenses+"\n" + categories+"\n" + savings+"\n"
+  val s:String = user.name+"\n"+user.balance+"\n"+deposits+"\n"+expenses+"\n" + categories+"\n" + savings+"\n"+catSavings+"\n"
   writeFile("CSVFiles/"+user.name+".csv",s,false)
  }
 
@@ -123,6 +139,14 @@ object CSVFileReader{
    case Nil=> ""
   }
 
+ }
+
+ def catSavToString(value: List[categorySavings]):String={
+  value match{
+   case x::t=> x.category +"/" + x.value +","+catSavToString(t)
+   case x::Nil => x.category +"/"+x.value
+   case Nil=>""
+  }
  }
 
  def categoriesToString(list:List[String]):String={

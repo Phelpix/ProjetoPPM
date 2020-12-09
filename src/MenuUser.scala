@@ -10,7 +10,7 @@ import java.util.Calendar
 
 
 import scala.::
-case class UserApp(name: String,email:String,password: String, balance:Double, depositList:LazyList[UserList], expenseList: LazyList[UserList], userCategories: List[String],monthlySavings: List[(String,Double)])
+case class UserApp(name: String,email:String,password: String, balance:Double, depositList:LazyList[UserList], expenseList: LazyList[UserList], userCategories: List[String],monthlySavings: List[(String,Double)], catSavList: List[categorySavings])
 
 object MenuUser extends App{
 

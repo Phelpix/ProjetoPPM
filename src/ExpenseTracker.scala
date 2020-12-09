@@ -63,7 +63,7 @@ object ExpenseTracker extends App{
      if(RegisterUser(usernameInput,emailInput,list) == false){
       val s:String = usernameInput+","+passwordInput+","+emailInput+"\n"
       writeFile(file,s,true)
-      writeFile("CSVFiles/"+usernameInput+".csv","newUser",true)
+      writeFile("CSVFiles/"+usernameInput+".csv","newUser"+"\n\n\n\n\n\nComida/0.0,Carro/0.0,Universidade/0.0,Casa/0.0",true)
      }
 
      mainLoop()

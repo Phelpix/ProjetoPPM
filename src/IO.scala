@@ -56,8 +56,7 @@ object IO {
 
   def showYear(): Unit = {println("Indique o ano que quer aceder")}
 
-  def printValue(any: Any):Unit= println(any)
-
+  def printValue(any: Any):Unit={ println(any)}
 
   //Alteracoes no perfil
   def changeDepositPrint():Unit={println("Qual quer alterar?")}
