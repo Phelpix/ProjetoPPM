@@ -36,14 +36,14 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Button fx:id="Button1" mnemonicParsing="false" onMouseClicked="#onButton1Clicked" text="Depositar" GridPane.halignment="CENTER" />
-                  <Button fx:id="Button2" mnemonicParsing="false" onMouseClicked="#onButton2Clicked" text="Comprar" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
-                  <Button fx:id="Button3" mnemonicParsing="false" onMouseClicked="#onButton3Clicked" text="Ver Balanço" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
-                  <Button fx:id="Button4" mnemonicParsing="false" onMouseClicked="#onButton4Clicked" text="Ver Historico" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
-                  <Button fx:id="Button5" mnemonicParsing="false" onMouseClicked="#onButton5Clicked" text="Adicionar Categoria" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
-                  <Button fx:id="Button6" mnemonicParsing="false" onMouseClicked="#onButton6Clicked" text="Mostrar total" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
-                  <Button mnemonicParsing="false" text="Mostrar Perfil" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
-                  <Button mnemonicParsing="false" text="Alterar Transação" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
+                  <Button fx:id="Button1" mnemonicParsing="false" onMouseClicked="#onButton1Clicked" prefHeight="25.0" prefWidth="121.0" text="Depositar" GridPane.halignment="CENTER" />
+                  <Button fx:id="Button2" mnemonicParsing="false" onMouseClicked="#onButton2Clicked" prefWidth="121.0" text="Comprar" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
+                  <Button fx:id="Button3" mnemonicParsing="false" onMouseClicked="#onButton3Clicked" prefWidth="121.0" text="Ver Balanço" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+                  <Button fx:id="Button4" mnemonicParsing="false" onMouseClicked="#onButton4Clicked" prefWidth="121.0" text="Ver Historico" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+                  <Button fx:id="Button5" mnemonicParsing="false" onMouseClicked="#onButton5Clicked" prefWidth="121.0" text="Adicionar Categoria" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+                  <Button fx:id="Button6" mnemonicParsing="false" onMouseClicked="#onButton6Clicked" prefWidth="121.0" text="Mostrar total" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+                  <Button fx:id="Button7" mnemonicParsing="false" onMouseClicked="#onButton7Clicked" prefWidth="121.0" text="Mostrar Perfil" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
+                  <Button mnemonicParsing="false" prefWidth="121.0" text="Alterar Transação" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
                </children>
             </GridPane>
             <Button fx:id="logoutButton" mnemonicParsing="false" onMouseClicked="#onButtonLogoutClicked" text="Logout" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" />

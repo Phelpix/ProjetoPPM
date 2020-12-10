@@ -9,7 +9,9 @@
     <children>
         <GridPane prefHeight="400.0" prefWidth="411.0">
             <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="411.2" minWidth="10.0" prefWidth="338.2" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="411.2" minWidth="10.0" prefWidth="338.2" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="600.0" minWidth="10.0" prefWidth="600.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="411.2" minWidth="10.0" prefWidth="338.2" />
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="103.0" minWidth="0.0" prefWidth="73.0" />
             </columnConstraints>
             <rowConstraints>
@@ -18,14 +20,14 @@
                 <RowConstraints maxHeight="208.39999999999998" minHeight="10.0" prefHeight="69.80000000000001" vgrow="SOMETIMES" />
             </rowConstraints>
             <children>
-                <Label alignment="CENTER" cache="true" contentDisplay="CENTER" prefHeight="31.0" prefWidth="193.0" text="Mostrar Total" textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                <Label alignment="CENTER" cache="true" contentDisplay="CENTER" prefHeight="31.0" prefWidth="193.0" text="Mostrar Total" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                     <font>
                         <Font size="18.0" />
                     </font>
                <effect>
                   <Bloom />
                </effect></Label>
-                <GridPane GridPane.rowIndex="1">
+                <GridPane GridPane.columnIndex="1" GridPane.rowIndex="1">
                     <columnConstraints>
                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -53,12 +55,11 @@
                                 <ChoiceBox fx:id="anoCB" prefWidth="150.0" GridPane.columnIndex="1" />
                             </children>
                         </GridPane>
-                        <ChoiceBox fx:id="categoriasCB" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <ChoiceBox fx:id="categoriasCB" prefWidth="150.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
                         <Label text="Data (mês/ano):" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
                     </children>
                 </GridPane>
-                <Button fx:id="okTotalButton" mnemonicParsing="false" onMouseClicked="#onOkTotalClicked" prefHeight="26.0" prefWidth="76.0" text="Aplicar" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
-                <Button fx:id="fecharButton" mnemonicParsing="false" onMouseClicked="#onFecharClicked" text="Fechar" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+                <Button fx:id="okTotalButton" mnemonicParsing="false" onMouseClicked="#onOkTotalClicked" prefHeight="26.0" prefWidth="76.0" text="Aplicar" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
             </children>
         </GridPane>
     </children>

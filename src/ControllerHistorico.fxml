@@ -17,10 +17,6 @@
           <RowConstraints maxHeight="208.39999999999998" minHeight="10.0" prefHeight="69.80000000000001" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Label prefHeight="31.0" prefWidth="73.0" text="Histórico" textAlignment="CENTER" GridPane.halignment="CENTER">
-               <font>
-                  <Font size="18.0" />
-               </font></Label>
             <GridPane GridPane.rowIndex="1">
               <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -56,6 +52,22 @@
             <Button fx:id="okButton" mnemonicParsing="false" onMouseClicked="#onOkClicked" prefHeight="26.0" prefWidth="76.0" text="Aplicar" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
             <TextArea fx:id="histTA" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="245.0" prefWidth="215.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
             <Button fx:id="fecharButton" mnemonicParsing="false" onMouseClicked="#onFecharClicked" text="Fechar" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+         </children>
+      </GridPane>
+      <GridPane prefHeight="400.0" prefWidth="600.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints maxHeight="129.0" minHeight="10.0" prefHeight="27.9999942779541" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="239.0000057220459" minHeight="10.0" prefHeight="239.0000057220459" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Label prefHeight="31.0" prefWidth="73.0" text="Histórico" textAlignment="CENTER" GridPane.halignment="CENTER">
+               <font>
+                  <Font size="18.0" />
+               </font></Label>
          </children>
       </GridPane>
    </children>
