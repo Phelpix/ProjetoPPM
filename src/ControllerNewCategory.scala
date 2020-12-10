@@ -38,9 +38,6 @@ class ControllerNewCategory {
  }
 
 
- def onOkClicked():Unit={
-  parent.setUser()
- }
 
 
 
