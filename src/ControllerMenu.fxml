@@ -42,7 +42,7 @@
                   <Button fx:id="Button4" mnemonicParsing="false" onMouseClicked="#onButton4Clicked" text="Ver Historico" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
                   <Button fx:id="Button5" mnemonicParsing="false" onMouseClicked="#onButton5Clicked" text="Adicionar Categoria" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
                   <Button fx:id="Button6" mnemonicParsing="false" onMouseClicked="#onButton6Clicked" text="Mostrar total" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
-                  <Button mnemonicParsing="false" text="Mostrar Perfil" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
+                  <Button fx:id="Button7" mnemonicParsing="false" onMouseClicked="#onButton7Clicked" text="Mostrar Perfil" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
                   <Button mnemonicParsing="false" text="Alterar Transação" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
                </children>
             </GridPane>

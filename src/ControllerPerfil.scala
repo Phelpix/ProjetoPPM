@@ -2,7 +2,8 @@ import java.text.SimpleDateFormat
 import java.util
 import java.util.Calendar
 
-import CSVFileReader.{credentialsFile, writeFile}
+import CSVFileReader.{changeEmail, changePassword, changeUsername, credentialsFile, readFile, writeFile}
+import IO.{email, getUserInput, newEmailPrint, newPasswordPrint, newUsernamePrint, showSettings}
 import MenuUserUtils.roundAt
 import javafx.collections.{FXCollections, ObservableList}
 import javafx.fxml.FXML
@@ -36,38 +37,32 @@ class ControllerPerfil {
   def setTempUser(tempUser: UserApp): Unit ={
     this.tempUser=tempUser
   }
-/*
+
   def onConfirmButtonClicked():Unit={
-    if(usernameButton.isSelected){
-      changeUsername(parent.getUser(),textField.getText(),parent.)
-    }else if(passButton.isSelected){
+      parent.setUser(profile(tempUser,textField.getText()))
+      confirmButton.getScene().getWindow.hide()
+  }
 
-    }else if(emailButton.isSelected){
+
+  def profile(user: UserApp,novoValue:String): UserApp = {
+    if(usernameButton.isSelected) {
+        val lines = readFile(credentialsFile)
+        changeUsername(user,novoValue,lines,"")
+        val newUser:UserApp = user.copy(name = novoValue,user.email,user.password, balance = user.balance, depositList = user.depositList, expenseList = user.expenseList, user.userCategories,user.monthlySavings,user.catSavList,user.plan)
+        newUser
+      } else if (passButton.isSelected){
+        val lines = readFile(credentialsFile)
+        changeEmail(user,novoValue,lines,"")
+        val newUser:UserApp = user.copy(name = user.name,novoValue,user.password, balance = user.balance, depositList = user.depositList, expenseList = user.expenseList, user.userCategories, user.monthlySavings,user.catSavList,user.plan)
+        newUser
+      }else if(emailButton.isSelected){
+        val lines = readFile(credentialsFile)
+        changePassword(user,novoValue,lines,"")
+        val newUser :UserApp = user.copy(name = user.name,user.email,novoValue, balance = user.balance, depositList = user.depositList, expenseList = user.expenseList, userCategories=user.userCategories, monthlySavings = user.monthlySavings,catSavList =user.catSavList,user.plan)
+        newUser
+      }else user
 
     }
-
-  }
-*/
-  def changeUsername(user: UserApp,newUserName:String,lines:List[Array[String]],text:String): Unit ={
-    lines match {
-      case x::t => if( x(0)==user.name ){
-        val newText = text+ newUserName + ","+x(1)+","+x(2)+"\n"
-        changeUsername(user,newUserName,t,newText)
-      } else {
-        val newText = text+ x(0) + ","+x(1)+","+x(2)+"\n"
-        changeUsername(user,newUserName,t,newText)
-      }
-
-      case x::Nil=> if( x(0)==user.name ){
-        val newText = text+newUserName + ","+x(1)+","+x(2)+"\n"
-        changeUsername(user,newUserName,Nil,newText)
-      } else {
-        val newText = text+ x(0) + ","+x(1)+","+x(2)+"\n"
-        changeUsername(user,newUserName,Nil,newText)
-      }
-      case Nil=> writeFile(credentialsFile,text,false)
-    }
-  }
 
 
 }

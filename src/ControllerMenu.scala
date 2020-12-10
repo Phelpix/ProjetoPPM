@@ -23,6 +23,8 @@ class ControllerMenu {
   private var Button5: Button=_
   @FXML
   private var Button6: Button=_
+  @FXML
+  private var Button7: Button=_
 
 
 
@@ -114,8 +116,8 @@ class ControllerMenu {
   def onButton7Clicked():Unit={
     val secondStage: Stage = new Stage()
     secondStage.initModality(Modality.APPLICATION_MODAL)
-    secondStage.initOwner(Button6.getScene().getWindow)
-    val fxmlLoader = new FXMLLoader(getClass.getResource("ControllerTotal.fxml"))
+    secondStage.initOwner(Button7.getScene().getWindow)
+    val fxmlLoader = new FXMLLoader(getClass.getResource("ControllerPerfil.fxml"))
     val mainViewRoot: Parent = fxmlLoader.load()
     val controller: ControllerPerfil = fxmlLoader.getController
     controller.setTempUser(user)
