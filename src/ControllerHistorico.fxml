@@ -32,8 +32,8 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <RadioButton mnemonicParsing="false" text="Compra" GridPane.columnIndex="1" GridPane.valignment="BOTTOM" />
-                  <RadioButton mnemonicParsing="false" text="Depósito" GridPane.columnIndex="1" GridPane.valignment="CENTER" />
+                  <RadioButton fx:id="compraRB" mnemonicParsing="false" text="Compra" GridPane.columnIndex="1" GridPane.valignment="BOTTOM" />
+                  <RadioButton fx:id="depositoRB" mnemonicParsing="false" text="Depósito" GridPane.columnIndex="1" GridPane.valignment="CENTER" />
                   <Label text="Tipo de Transação:" GridPane.halignment="CENTER" />
                   <Label text="Categoria:" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
                   <GridPane GridPane.columnIndex="1" GridPane.rowIndex="2">
@@ -53,8 +53,9 @@
                   <Label text="Data (mês/ano):" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
                </children>
             </GridPane>
-            <Button fx:id="okButton" mnemonicParsing="false" onMouseClicked="#onOkClicked" prefHeight="26.0" prefWidth="76.0" text="Ok" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
-            <TextArea maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="245.0" prefWidth="215.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+            <Button fx:id="okButton" mnemonicParsing="false" onMouseClicked="#onOkClicked" prefHeight="26.0" prefWidth="76.0" text="Aplicar" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+            <TextArea fx:id="histTA" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="245.0" prefWidth="215.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+            <Button fx:id="fecharButton" mnemonicParsing="false" onMouseClicked="#onFecharClicked" text="Fechar" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
          </children>
       </GridPane>
    </children>
