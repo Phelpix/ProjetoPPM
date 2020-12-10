@@ -40,24 +40,6 @@ class Controller {
         loginError()
       }
     }
-    /*
-    if(username == ""){
-      println("Login nao dado")
-    } else {
-      val userToApp: UserApp = readUser("CSVFiles/" + username + ".csv", username, emailTF.getText(),passwordTF.getText())
-
-      val secondStage: Stage = new Stage()
-      secondStage.initModality(Modality.APPLICATION_MODAL)
-      secondStage.initOwner(loginButton.getScene().getWindow)
-      val fxmlLoader = new FXMLLoader(getClass.getResource("ControllerMenu.fxml"))
-      val mainViewRoot: Parent = fxmlLoader.load()
-      val c:ControllerMenu=fxmlLoader.getController
-      c.setUser(userToApp)
-      val scene = new Scene(mainViewRoot)
-      secondStage.setScene(scene)
-      secondStage.show()
-    }
-    */
 
   }
 

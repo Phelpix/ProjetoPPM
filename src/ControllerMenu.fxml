@@ -40,7 +40,7 @@
                   <Button fx:id="Button2" mnemonicParsing="false" onMouseClicked="#onButton2Clicked" text="Comprar" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
                   <Button fx:id="Button3" mnemonicParsing="false" onMouseClicked="#onButton3Clicked" text="Ver Balanço" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
                   <Button fx:id="Button4" mnemonicParsing="false" text="Ver Historico" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
-                  <Button mnemonicParsing="false" text="Adicionar Categoria" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+                  <Button fx:id="Button5" mnemonicParsing="false" onMouseClicked="#onButton5Clicked" text="Adicionar Categoria" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
                   <Button mnemonicParsing="false" text="Mostrar total" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
                   <Button mnemonicParsing="false" text="Mostrar Perfil" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
                   <Button mnemonicParsing="false" text="Alterar Transação" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" />

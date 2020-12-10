@@ -13,6 +13,8 @@ class ControllerNewCategory {
  private var novaCategoria: TextField =_
  @FXML
  private var novaLabel : Labeled =_
+ @FXML
+ private var okButton : Button=_
 
  var tempUser:UserApp =new UserApp("","","",0.0,LazyList[UserList](),LazyList[UserList](),List[String](),List[(String,Double)](),List[categorySavings](),new PlanSoft(10,List[categorySavings]()))
  var parent:ControllerMenu = new ControllerMenu
@@ -39,7 +41,9 @@ class ControllerNewCategory {
 
 
  def onOkClicked():Unit={
-  parent.setUser()
+  parent.setUser(addCategory(tempUser,novaCategoria.getText()))
+  okButton.getScene().getWindow.hide()
+  println("OK CLICKED:"+parent.getUser().userCategories)
  }
 
 
