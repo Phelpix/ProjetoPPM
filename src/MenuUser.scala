@@ -70,14 +70,14 @@ object MenuUser extends App{
        userLoop(newUser)
       }
       case "9"=>{
-
-       userLoop(makePlan(user,10) )
+       userLoop(makePlan(user,10) )  //????????
       }
 
       case "0" => {
         println("0:  "+user.plan.list)
         saveUser(user)
       }
+      case _ => userLoop(user)
     }
 
   }

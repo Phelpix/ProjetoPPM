@@ -71,7 +71,8 @@ object ExpenseTracker extends App{
     }
    }
 
-   case _ => closeApp()
+   case "0" => closeApp()
+   case _ => mainLoop()
   }
  }
 

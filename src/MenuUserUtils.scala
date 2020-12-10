@@ -83,10 +83,12 @@ object MenuUserUtils {
   def listTotal(list : LazyList[UserList], filter :String): Double= {
     if(filter == "0") {
       val total: Double = (list foldLeft 0.0) ((v1: Double, v2: UserList) => v1 + v2.value )
+      println("Total: "+total)
       total
     }
     else{
       val total: Double = (list foldLeft 0.0) ((v1: Double, v2: UserList) => if (v2.category == filter) v1 + v2.value else v1)
+      println("Total: "+ total)
       total
     }
   }
@@ -96,10 +98,10 @@ object MenuUserUtils {
     list match{
       case x #::t => {
         if( filter == "0") {
-          printValue(x.value)
+          printValue("Valor: " + x.value + "| Descrição: "+ x.description + "| Categoria: " + x.category + " | Data: " + x.date)
           showHistory(t,filter)
         }else if(x.category == filter){
-          printValue(x.value)
+          printValue("Valor: " + x.value + "| Descrição: "+ x.description + "| Categoria: " + x.category + " | Data: " + x.date)
           showHistory(t,filter)
         }else showHistory(t,filter)
       }
@@ -136,7 +138,7 @@ object MenuUserUtils {
       val cat:String = userApp.userCategories(input-1)
       cat
     } catch {
-      case ex: MatchError => {
+      case ex: Exception => {  //nao entra neste case
         error()
         defineCategory(userApp)
       }
@@ -185,6 +187,8 @@ object MenuUserUtils {
         val newUser = user.copy(name = user.name,user.email,newPassword, balance = user.balance, depositList = user.depositList, expenseList = user.expenseList, user.userCategories, user.monthlySavings)
         newUser
       }
+      case "0"=> user
+      case _ => profile(user)
     }
 
   }
@@ -233,9 +237,10 @@ object MenuUserUtils {
         val newDeposit = toChangeList(index).setCategory(toChangeList(index), value)
         val newlist =toChangeList.patch(index,Seq(newDeposit),1)
         newlist
-      } //case 2
+      } //case 3
 
-
+      case "0"=>toChangeList
+      case _=>changeDeposit(userApp, toChangeList, index)
     }
   }
 
@@ -271,6 +276,8 @@ object MenuUserUtils {
         val newUser = user.copy(name = user.name,user.email,user.password, balance = user.balance, user.depositList, newList, user.userCategories, user.monthlySavings, user.catSavList)
         newUser
       }
+      case "0" => user
+      case _=>changeThings(user)
     }
   }
 
