@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" stylesheets="@butao.css" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller">
    <children>
       <GridPane prefHeight="400.0" prefWidth="600.0">
         <columnConstraints>
@@ -32,11 +32,11 @@
                <children>
                   <Button fx:id="loginButton" mnemonicParsing="false" onMouseClicked="#onLoginClicked" text="Login" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
                   <TextField fx:id="emailTF" GridPane.columnIndex="1" />
-                  <TextField fx:id="passwordTF" prefHeight="5.0" prefWidth="212.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                   <Button fx:id="registerButton" mnemonicParsing="false" onMouseClicked="#onRegisterClicked" text="Registar" GridPane.halignment="RIGHT" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
                   <Label alignment="CENTER" contentDisplay="CENTER" text="Email:" GridPane.halignment="CENTER" />
                   <Label alignment="CENTER" contentDisplay="CENTER" layoutX="74.0" layoutY="35.0" text="Password:" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
                   <Label alignment="CENTER" contentDisplay="CENTER" layoutX="74.0" layoutY="35.0" text="Não tem conta?" GridPane.halignment="LEFT" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
+                  <PasswordField fx:id="passwordTF" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                </children>
             </GridPane>
             <Label text="Expense Tracker" GridPane.columnIndex="1" GridPane.halignment="CENTER">

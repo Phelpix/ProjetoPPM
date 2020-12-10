@@ -4,7 +4,7 @@ import IO.loginError
 import MenuUser.userLoop
 import javafx.fxml.{FXML, FXMLLoader}
 import javafx.scene.{Parent, Scene}
-import javafx.scene.control.{Button, TextField}
+import javafx.scene.control.{Button, PasswordField, TextField}
 import javafx.stage.{Modality, Stage}
 
 class Controller {
@@ -15,7 +15,7 @@ class Controller {
   @FXML
   private var emailTF: TextField = _
   @FXML
-  private var passwordTF: TextField = _
+  private var passwordTF: PasswordField = _
 
   def onLoginClicked(): Unit = {
     val file = "CSVFiles/UserCredentials.csv"

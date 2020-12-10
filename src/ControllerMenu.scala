@@ -117,7 +117,7 @@ class ControllerMenu {
     val secondStage: Stage = new Stage()
     secondStage.initModality(Modality.APPLICATION_MODAL)
     secondStage.initOwner(Button7.getScene().getWindow)
-    val fxmlLoader = new FXMLLoader(getClass.getResource("ControllerPerfil.fxml"))
+    val fxmlLoader = new FXMLLoader(getClass.getResource("ControllerPerfil2.fxml"))
     val mainViewRoot: Parent = fxmlLoader.load()
     val controller: ControllerPerfil = fxmlLoader.getController
     controller.setTempUser(user)

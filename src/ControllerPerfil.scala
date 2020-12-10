@@ -11,15 +11,11 @@ import javafx.scene.control.{Button, ChoiceBox, ComboBox, Labeled, RadioButton, 
 
 class ControllerPerfil {
   @FXML
-  private var textField: TextField = _
+  private var usernameTF: TextField = _
   @FXML
-  private var usernameButton: RadioButton=_
+  private var passwordTF: TextField=_
   @FXML
-  private var passButton: RadioButton=_
-  @FXML
-  private var emailButton: RadioButton=_
-  @FXML
-  private var novoLabel:Labeled=_
+  private var emailTF: TextField=_
   @FXML
   private var confirmButton:Button=_
 
@@ -36,16 +32,26 @@ class ControllerPerfil {
   }
   def setTempUser(tempUser: UserApp): Unit ={
     this.tempUser=tempUser
+    usernameTF.setText(tempUser.name)
+    passwordTF.setText(tempUser.password)
+    emailTF.setText(tempUser.email)
+
   }
 
   def onConfirmButtonClicked():Unit={
-      parent.setUser(profile(tempUser,textField.getText()))
+      parent.setUser(profile(tempUser))
       confirmButton.getScene().getWindow.hide()
   }
 
 
-  def profile(user: UserApp,novoValue:String): UserApp = {
-    if(usernameButton.isSelected) {
+  def profile(user: UserApp): UserApp = {
+    val lines = readFile(credentialsFile)
+    changeUsername(user,usernameTF.getText(),lines,"")
+    changeEmail(user,emailTF.getText(),lines,"")
+    changePassword(user,passwordTF.getText(),lines,"")
+    val newUser :UserApp = user.copy(name = usernameTF.getText(),emailTF.getText(),passwordTF.getText(), balance = user.balance, depositList = user.depositList, expenseList = user.expenseList, user.userCategories, user.monthlySavings,user.catSavList,user.plan)
+    newUser
+    /*if(usernameButton.isSelected) {
         val lines = readFile(credentialsFile)
         changeUsername(user,novoValue,lines,"")
         val newUser:UserApp = user.copy(name = novoValue,user.email,user.password, balance = user.balance, depositList = user.depositList, expenseList = user.expenseList, user.userCategories,user.monthlySavings,user.catSavList,user.plan)
@@ -60,7 +66,7 @@ class ControllerPerfil {
         changePassword(user,novoValue,lines,"")
         val newUser :UserApp = user.copy(name = user.name,user.email,novoValue, balance = user.balance, depositList = user.depositList, expenseList = user.expenseList, userCategories=user.userCategories, monthlySavings = user.monthlySavings,catSavList =user.catSavList,user.plan)
         newUser
-      }else user
+      }else user*/
 
     }
 
