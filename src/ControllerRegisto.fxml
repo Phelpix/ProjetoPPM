@@ -40,9 +40,9 @@
                   <Label text="Email:" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
                   <Label layoutX="10.0" layoutY="53.0" text="Username:" GridPane.halignment="CENTER" />
                   <Label layoutX="10.0" layoutY="53.0" text="Password:" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
-                  <Button fx:id="registerButton2" mnemonicParsing="false" onMouseClicked="#onRegisterClicked2" text="Registar" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
                </children>
             </GridPane>
+            <Button fx:id="registerButton2" mnemonicParsing="false" onMouseClicked="#onRegisterClicked2" text="Registar" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="TOP" />
          </children>
       </GridPane>
    </children>
