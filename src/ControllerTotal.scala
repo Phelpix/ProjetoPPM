@@ -1,0 +1,80 @@
+import javafx.fxml.FXML
+import javafx.scene.control.Alert.AlertType
+import javafx.scene.control.{Alert, Button, ButtonType, ChoiceBox, RadioButton, TextArea}
+
+class ControllerTotal {
+
+  @FXML
+  private var categoriasCB: ChoiceBox[String] = new ChoiceBox[String]()
+  @FXML
+  private var okTotalButton: Button =_
+  @FXML
+  private var mesCB: ChoiceBox[String] = new ChoiceBox[String]()
+  @FXML
+  private var anoCB: ChoiceBox[String] = new ChoiceBox[String]()
+  @FXML
+  private var depositoRB: RadioButton =_
+  @FXML
+  private var compraRB: RadioButton =_
+  @FXML
+  private var fecharButton:  Button =_
+
+  var tempUser: UserApp= new UserApp("","","",0.0,LazyList[UserList](),LazyList[UserList](),List[String](),List[(String,Double)](),List[categorySavings](),new PlanSoft(10,List[categorySavings]()))
+
+  def setTempUser(tempUser: UserApp): Unit ={
+    this.tempUser=tempUser
+  }
+
+  def setCategorias(list:List[String]): Unit = {
+    list match {
+      case Nil =>
+      case x :: t => {
+        categoriasCB.getItems.add(x)
+        setCategorias(t)
+      }
+    }
+  }
+
+  def startDates(): Unit ={
+    anoCB.getItems().add("2020")
+    anoCB.getItems().add("2019")
+    anoCB.getItems().add("2018")
+    mesCB.getItems().add("1")
+    mesCB.getItems().add("2")
+    mesCB.getItems().add("3")
+    mesCB.getItems().add("4")
+    mesCB.getItems().add("5")
+    mesCB.getItems().add("6")
+    mesCB.getItems().add("7")
+    mesCB.getItems().add("8")
+    mesCB.getItems().add("9")
+    mesCB.getItems().add("10")
+    mesCB.getItems().add("11")
+    mesCB.getItems().add("12")
+  }
+
+  def onOkTotalClicked: Unit ={
+    if(depositoRB.isSelected){
+      val list:LazyList[UserList] = tempUser.depositList.filter(x =>{x.date==(mesCB.getSelectionModel.getSelectedItem+"-"+anoCB.getSelectionModel.getSelectedItem)})
+      val textoDeposito:String=listTotal( list,categoriasCB.getSelectionModel.getSelectedItem).toString
+      val alert = new Alert(AlertType.NONE, "O valor desejado é: " + textoDeposito, ButtonType.OK)
+      alert.showAndWait
+
+    }else if(compraRB.isSelected){
+      val list:LazyList[UserList] = tempUser.expenseList.filter(x => x.date==(mesCB.getSelectionModel.getSelectedItem+"-"+anoCB.getSelectionModel.getSelectedItem))
+      val textoCompra:String=listTotal( list,categoriasCB.getSelectionModel.getSelectedItem).toString
+      val alert = new Alert(AlertType.NONE, "O valor desejado é: " + textoCompra, ButtonType.OK)
+      alert.showAndWait
+    }
+  }
+
+  def listTotal(list : LazyList[UserList], filter :String): Double= {
+      val total: Double = (list foldLeft 0.0) ((v1: Double, v2: UserList) => if (v2.category == filter) v1 + v2.value else v1)
+      total
+  }
+
+  def onFecharClicked: Unit ={
+    fecharButton.getScene().getWindow.hide()
+  }
+
+}

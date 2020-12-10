@@ -21,6 +21,8 @@ class ControllerMenu {
   private var Button4: Button = _
   @FXML
   private var Button5: Button=_
+  @FXML
+  private var Button6: Button=_
 
 
 
@@ -80,7 +82,7 @@ class ControllerMenu {
     secondStage.show()
   }
 
-  def onButton5Clicked:Unit={
+  def onButton5Clicked:Unit= {
     val secondStage: Stage = new Stage()
     secondStage.initModality(Modality.APPLICATION_MODAL)
     secondStage.initOwner(Button5.getScene().getWindow)
@@ -92,8 +94,22 @@ class ControllerMenu {
     val scene = new Scene(mainViewRoot)
     secondStage.setScene(scene)
     secondStage.show()
-
   }
+
+    def onButton6Clicked(): Unit={
+      val secondStage: Stage = new Stage()
+      secondStage.initModality(Modality.APPLICATION_MODAL)
+      secondStage.initOwner(Button6.getScene().getWindow)
+      val fxmlLoader = new FXMLLoader(getClass.getResource("ControllerTotal.fxml"))
+      val mainViewRoot: Parent = fxmlLoader.load()
+      val controller: ControllerTotal = fxmlLoader.getController
+      controller.setTempUser(user)
+      controller.setCategorias(user.userCategories)
+      controller.startDates()
+      val scene = new Scene(mainViewRoot)
+      secondStage.setScene(scene)
+      secondStage.show()
+    }
 
 
   def onButtonLogoutClicked:Unit={
