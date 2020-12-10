@@ -76,6 +76,7 @@ object MenuUserUtils {
         else
           f(list,"0")
       }
+      case _=> higherfunction(x,f)
     }
   }
 

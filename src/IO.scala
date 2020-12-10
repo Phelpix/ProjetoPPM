@@ -46,7 +46,7 @@ object IO {
   def emailRegistered() :Unit = {println("Email ja registado")}
 
   //MenuUserUtils
-  def showOptions(): Unit ={println("\n escolha o número:");println(" 1-depositos");println(" 2-compras")}
+  def showOptions(): Unit ={println("\n escolha o número:");println(" 1-depositos");println(" 2-compras");println("0-Sair")}
 
   def semFiltro():Unit=println("0-Nao aplicar filtro!")
 
