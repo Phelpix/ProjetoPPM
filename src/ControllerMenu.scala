@@ -111,6 +111,20 @@ class ControllerMenu {
       secondStage.show()
     }
 
+  def onButton7Clicked():Unit={
+    val secondStage: Stage = new Stage()
+    secondStage.initModality(Modality.APPLICATION_MODAL)
+    secondStage.initOwner(Button6.getScene().getWindow)
+    val fxmlLoader = new FXMLLoader(getClass.getResource("ControllerTotal.fxml"))
+    val mainViewRoot: Parent = fxmlLoader.load()
+    val controller: ControllerPerfil = fxmlLoader.getController
+    controller.setTempUser(user)
+    controller.setParent(this)
+    val scene = new Scene(mainViewRoot)
+    secondStage.setScene(scene)
+    secondStage.show()
+  }
+
 
   def onButtonLogoutClicked:Unit={
     println("LOGOUT:"+user.userCategories)
