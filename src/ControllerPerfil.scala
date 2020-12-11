@@ -47,10 +47,16 @@ class ControllerPerfil {
   def profile(user: UserApp): UserApp = {
     val lines = readFile(credentialsFile)
     changeUsername(user,usernameTF.getText(),lines,"")
-    changeEmail(user,emailTF.getText(),lines,"")
-    changePassword(user,passwordTF.getText(),lines,"")
-    val newUser :UserApp = user.copy(name = usernameTF.getText(),emailTF.getText(),passwordTF.getText(), balance = user.balance, depositList = user.depositList, expenseList = user.expenseList, user.userCategories, user.monthlySavings,user.catSavList,user.plan)
-    newUser
+    val newUser1 :UserApp = user.copy(name = usernameTF.getText(),user.email,user.password, balance = user.balance, depositList = user.depositList, expenseList = user.expenseList, user.userCategories, user.monthlySavings,user.catSavList,user.plan)
+    println("NEW PASSWORD: "+ passwordTF.getText())
+    val lines1 = readFile(credentialsFile)
+    changePassword(newUser1,passwordTF.getText(),lines1,"")
+    val newUser2 :UserApp = newUser1.copy(newUser1.name,newUser1.email,passwordTF.getText(), balance = user.balance, depositList = user.depositList, expenseList = user.expenseList, user.userCategories, user.monthlySavings,user.catSavList,user.plan)
+    val lines2 = readFile(credentialsFile)
+    changeEmail(newUser2,emailTF.getText(),lines2,"")
+    val newUser3 :UserApp = newUser2.copy(newUser2.name,emailTF.getText(),newUser2.password, balance = user.balance, depositList = user.depositList, expenseList = user.expenseList, user.userCategories, user.monthlySavings,user.catSavList,user.plan)
+    println("USER 3: " + newUser3.name + "" + newUser3.email + "" + newUser3.password)
+    newUser3
     /*if(usernameButton.isSelected) {
         val lines = readFile(credentialsFile)
         changeUsername(user,novoValue,lines,"")
