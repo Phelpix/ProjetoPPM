@@ -211,23 +211,42 @@ def onalteraClicked():Unit={
 
 
  def changeDeposit(userApp: UserApp,list: LazyList[UserList],toChangeList:LazyList[UserList], index:Int, option:String):LazyList[UserList]={
-    option match {
+   var count :Int=0
+   var indice:Int =0
+   option match {
       case "1"=>{
         val newDeposit = toChangeList(index).setValue(toChangeList(index), valueText.getText().toDouble)
-        val indice = list.indexOf(toChangeList(index))
+        println("CHANGE DEPOSTI:  "+ toChangeList(index).value)
+        println("INDEX:  "+list.indexOf(toChangeList))
+        for(x <- list ){
+          if(x.id == toChangeList(index).id) {
+            indice = count
+            count+=1
+          }
+        }
+
         val newlist = list.patch(indice,Seq(newDeposit),1)
         newlist
       } //case 1
       case "2"=>{
         val newDeposit = toChangeList(index).setDescription(toChangeList(index), valueText.getText())
-        val indice = list.indexOf(toChangeList(index))
+        for(x <- list ){
+          if(x.id == toChangeList(index).id) {
+            indice = count
+            count+=1
+          }
+        }
         val newlist =list.patch(indice,Seq(newDeposit),1)
         newlist
       } //case 2
       case "3"=>{
         val newDeposit = toChangeList(index).setCategory(toChangeList(index), valueText.getText())
-        val indice = list.indexOf(toChangeList(index))
-
+        for(x <- list ){
+          if(x.id == toChangeList(index).id) {
+            indice = count
+            count+=1
+          }
+        }
         val newlist =list.patch(indice,Seq(newDeposit),1)
         newlist
       } //case 2
@@ -252,6 +271,7 @@ def onalteraClicked():Unit={
     input match {
       case "1"=>{
         val newList =printDeposits(user,user.depositList,listDep,histTA.getSelectionModel().getSelectedIndex())
+        println("CHANGE THINGS:   "+ histTA.getSelectionModel().getSelectedIndex())
         val newUser = user.copy(name = user.name,user.email,user.password, balance = user.balance, newList, expenseList = user.expenseList, user.userCategories,user.monthlySavings)
         newUser
       }
