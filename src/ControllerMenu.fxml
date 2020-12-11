@@ -19,7 +19,7 @@
                <children>
                   <ImageView blendMode="SRC_ATOP" fitHeight="493.0" fitWidth="780.0" pickOnBounds="true">
                      <image>
-                        <Image url="@wp4946969.jpg" />
+                        <Image url="@fundo.jpg" />
                      </image>
                   </ImageView>
                   <GridPane prefHeight="400.0" prefWidth="600.0">

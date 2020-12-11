@@ -9,7 +9,7 @@
    <children>
       <ImageView fitHeight="400.0" fitWidth="600.0" pickOnBounds="true">
          <image>
-            <Image url="@wp4946969.jpg" />
+            <Image url="@fundo.jpg" />
          </image>
       </ImageView>
       <GridPane prefHeight="394.0" prefWidth="600.0" stylesheets="@menu.css">
