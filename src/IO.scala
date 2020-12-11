@@ -39,14 +39,14 @@ object IO {
   def balance(balance:Double): Unit={println("\n\n\n\n **** O VALOR DA SUA BALANCA E " + balance +" ****\n")}
 
   //ExpenseTracekrUtils
-  def showMenu(): Unit = {println("1-Login");println("2-Registo")}
+  def showMenu(): Unit = {println("1-Login");println("2-Registo");println("0-Sair")}
 
   def usernameRegistered():Unit ={ println("Username ja registado")}
 
   def emailRegistered() :Unit = {println("Email ja registado")}
 
   //MenuUserUtils
-  def showOptions(): Unit ={println("\n escolha o número:");println(" 1-depositos");println(" 2-compras")}
+  def showOptions(): Unit ={println("\n escolha o número:");println(" 1-depositos");println(" 2-compras");println("0-Sair")}
 
   def semFiltro():Unit=println("0-Nao aplicar filtro!")
 
@@ -61,7 +61,7 @@ object IO {
   //Alteracoes no perfil
   def changeDepositPrint():Unit={println("Qual quer alterar?")}
 
-  def changeThingsPrint():Unit ={println("O que deseja alterar?");println("1- Depositos");println("2- Despesas")}
+  def changeThingsPrint():Unit ={println("O que deseja alterar?");println("1- Depositos");println("2- Despesas");println("0- Voltar")}
 
   def newCategoryPrint():Unit ={print("Insira nova categoria: ")}
 
@@ -69,7 +69,7 @@ object IO {
 
   def newValuePrint():Unit={ print("Insira novo valor: ")}
 
-  def changeTransaction():Unit={ println("O que quer alterar?");println("1- Valor");println("2- Descrição");println("3- Categoria")}
+  def changeTransaction():Unit={ println("O que quer alterar?");println("1- Valor");println("2- Descrição");println("3- Categoria");println("0- Voltar")}
 
   def newPasswordPrint():Unit={print("Nova password: ")}
 
@@ -77,5 +77,5 @@ object IO {
 
   def newUsernamePrint():Unit={print("Novo username: ")}
 
-  def showSettings(user:UserApp): Unit ={println("#### PERFIL ####");println("Name: "+ user.name);println("Email: "+user.email);println("###############");println("#### DEFINIÇÕES ####");println("1- Mudar username");println("2- Mudar email");println("3- Mudar password")}
+  def showSettings(user:UserApp): Unit ={println("#### PERFIL ####");println("Name: "+ user.name);println("Email: "+user.email);println("###############");println("#### DEFINIÇÕES ####");println("1- Mudar username");println("2- Mudar email");println("3- Mudar password");println("0- Voltar")}
 }

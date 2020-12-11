@@ -11,15 +11,11 @@ import javafx.scene.control.{Button, ChoiceBox, ComboBox, Labeled, RadioButton, 
 
 class ControllerPerfil {
   @FXML
-  private var textField: TextField = _
+  private var usernameTF: TextField = _
   @FXML
-  private var usernameButton: RadioButton=_
+  private var passwordTF: TextField=_
   @FXML
-  private var passButton: RadioButton=_
-  @FXML
-  private var emailButton: RadioButton=_
-  @FXML
-  private var novoLabel:Labeled=_
+  private var emailTF: TextField=_
   @FXML
   private var confirmButton:Button=_
 
@@ -36,16 +32,32 @@ class ControllerPerfil {
   }
   def setTempUser(tempUser: UserApp): Unit ={
     this.tempUser=tempUser
+    usernameTF.setText(tempUser.name)
+    passwordTF.setText(tempUser.password)
+    emailTF.setText(tempUser.email)
+
   }
 
   def onConfirmButtonClicked():Unit={
-      parent.setUser(profile(tempUser,textField.getText()))
+      parent.setUser(profile(tempUser))
       confirmButton.getScene().getWindow.hide()
   }
 
 
-  def profile(user: UserApp,novoValue:String): UserApp = {
-    if(usernameButton.isSelected) {
+  def profile(user: UserApp): UserApp = {
+    val lines = readFile(credentialsFile)
+    changeUsername(user,usernameTF.getText(),lines,"")
+    val newUser1 :UserApp = user.copy(name = usernameTF.getText(),user.email,user.password, balance = user.balance, depositList = user.depositList, expenseList = user.expenseList, user.userCategories, user.monthlySavings,user.catSavList,user.plan)
+    println("NEW PASSWORD: "+ passwordTF.getText())
+    val lines1 = readFile(credentialsFile)
+    changePassword(newUser1,passwordTF.getText(),lines1,"")
+    val newUser2 :UserApp = newUser1.copy(newUser1.name,newUser1.email,passwordTF.getText(), balance = user.balance, depositList = user.depositList, expenseList = user.expenseList, user.userCategories, user.monthlySavings,user.catSavList,user.plan)
+    val lines2 = readFile(credentialsFile)
+    changeEmail(newUser2,emailTF.getText(),lines2,"")
+    val newUser3 :UserApp = newUser2.copy(newUser2.name,emailTF.getText(),newUser2.password, balance = user.balance, depositList = user.depositList, expenseList = user.expenseList, user.userCategories, user.monthlySavings,user.catSavList,user.plan)
+    println("USER 3: " + newUser3.name + "" + newUser3.email + "" + newUser3.password)
+    newUser3
+    /*if(usernameButton.isSelected) {
         val lines = readFile(credentialsFile)
         changeUsername(user,novoValue,lines,"")
         val newUser:UserApp = user.copy(name = novoValue,user.email,user.password, balance = user.balance, depositList = user.depositList, expenseList = user.expenseList, user.userCategories,user.monthlySavings,user.catSavList,user.plan)
@@ -60,7 +72,7 @@ class ControllerPerfil {
         changePassword(user,novoValue,lines,"")
         val newUser :UserApp = user.copy(name = user.name,user.email,novoValue, balance = user.balance, depositList = user.depositList, expenseList = user.expenseList, userCategories=user.userCategories, monthlySavings = user.monthlySavings,catSavList =user.catSavList,user.plan)
         newUser
-      }else user
+      }else user*/
 
     }
 

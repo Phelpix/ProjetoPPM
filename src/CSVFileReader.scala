@@ -220,6 +220,7 @@ object CSVFileReader{
  }
 
  def changePassword(user: UserApp, newPassword:String, lines:List[Array[String]], text:String): Unit = {
+  println("CHANGE PASSWORD: " + user.name +" " + user.email+ " " + user.password)
   lines match {
    case x :: t => if (x(0) == user.name) {
     val newText = text + x(0) + "," + newPassword + "," + x(2) + "\n"
@@ -241,6 +242,7 @@ object CSVFileReader{
  }
 
   def changeEmail(user: UserApp, newEmail:String, lines:List[Array[String]], text:String): Unit ={
+   println("CHANGE EMAIL: " + user.name +" " + user.email+ " " + user.password)
    lines match {
     case x::t => if( x(0)==user.name ){
      val newText = text+ x(0)+ ","+x(1)+","+newEmail+"\n"
@@ -257,7 +259,11 @@ object CSVFileReader{
      val newText = text+ x(0) + ","+x(1)+","+x(2)+"\n"
      changeEmail(user,newEmail,Nil,newText)
     }
-    case Nil=> writeFile(credentialsFile,text,false)
+    case Nil=>{
+     writeFile(credentialsFile,text,false)
+     println("TEXT:" +text)
+    }
+
    }
   }
 }
