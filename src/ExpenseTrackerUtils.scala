@@ -50,8 +50,8 @@ object  ExpenseTrackerUtils {
  def checkMonth(user: UserApp): UserApp = {
   val format = new SimpleDateFormat("M-y")
   val date: String = format.format(Calendar.getInstance().getTime())
-  val lastDeposit = user.depositList.last.date.split("-")
-  val lastExpense = user.expenseList.last.date.split("-")
+  val lastDeposit = user.depositList.head.date.split("-")
+  val lastExpense = user.expenseList.head.date.split("-")
   val maior = maxMonth(lastDeposit, lastExpense)
   val maiorData = maior(0) + "-" + maior(1)
 

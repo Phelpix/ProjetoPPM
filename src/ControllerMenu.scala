@@ -77,6 +77,7 @@ class ControllerMenu {
     val mainViewRoot: Parent = fxmlLoader.load()
     val controller: ControllerHistorico = fxmlLoader.getController
     controller.setTempUser(user)
+    controller.setParent(this)
     controller.setCategorias(user.userCategories)
     controller.startDates()
     val scene = new Scene(mainViewRoot)

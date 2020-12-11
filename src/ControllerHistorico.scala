@@ -43,18 +43,27 @@ class ControllerHistorico {
 
 
   var tempUser: UserApp= new UserApp("","","",0.0,LazyList[UserList](),LazyList[UserList](),List[String](),List[(String,Double)](),List[categorySavings](),new PlanSoft(10,List[categorySavings]()))
-
+  var parent:ControllerMenu=new ControllerMenu
   var listDep: LazyList[UserList] = LazyList[Deposit]()
   var listExp: LazyList[UserList] = LazyList[Expense]()
+  var comeOn: ObservableList[String] = FXCollections.observableArrayList()
 
   def setTempUser(tempUser: UserApp): Unit ={
     this.tempUser=tempUser
   }
 
-  /*def getString(i: Int):String={
-
+  def setParent(parent: ControllerMenu): Unit ={
+    this.parent=parent
   }
-  */
+
+  def getString(split:String,i: Int):String={
+    val str = split.split(" - ")
+    i match{
+      case 1 => str(1)
+      case 2=>str(2)
+    }
+  }
+
 
 
   def setCategorias(list:List[String]): Unit = {
@@ -86,9 +95,12 @@ class ControllerHistorico {
   }
 
   def onOkClicked: Unit ={
+    comeOn = FXCollections.observableArrayList()
+    println(comeOn)
+    listDep  = LazyList[UserList]()
     if(depositoRB.isSelected){
+      println("DEPOSITO")
       val list:LazyList[UserList] = tempUser.depositList.filter(x =>{x.date==(mesCB.getSelectionModel.getSelectedItem+"-"+anoCB.getSelectionModel.getSelectedItem)})
-      var comeOn: ObservableList[String] = FXCollections.observableArrayList()
       for(aux <- list) {
         var textoDeposito: UserList = showHistory(aux, categoriasCB.getSelectionModel.getSelectedItem)
         if(textoDeposito.category !="" ) {
@@ -96,11 +108,9 @@ class ControllerHistorico {
           listDep = textoDeposito#::listDep
         }
       }
-      val nova: ListView[String] = new ListView[String](comeOn)
       histTA.setItems(comeOn)
     }else if(compraRB.isSelected){
       val list:LazyList[UserList] = tempUser.expenseList.filter(x => x.date==(mesCB.getSelectionModel.getSelectedItem+"-"+anoCB.getSelectionModel.getSelectedItem))
-      var comeOn: ObservableList[String] = FXCollections.observableArrayList()
       for(aux <- list) {
         var textoCompra: UserList = showHistory(aux, categoriasCB.getSelectionModel.getSelectedItem)
         if(textoCompra.category != "") {
@@ -108,7 +118,6 @@ class ControllerHistorico {
           listExp= textoCompra#::listExp
         }
       }
-      val nova: ListView[String] = new ListView[String](comeOn)
       histTA.setItems(comeOn)
     }
   }
@@ -137,7 +146,7 @@ class ControllerHistorico {
       alterarValue.setSelected(true)
       alterarCat.setSelected(false)
       alterarDesc.setSelected(false)
-    //  valueText.setText(histTA.getSelectionModel().getSelectedItem.value.toString)
+      valueText.setText(getString(histTA.getSelectionModel().getSelectedItem.toString,1))
 
   }
   def onAlteraCategoriaClicked():Unit={
@@ -154,7 +163,7 @@ class ControllerHistorico {
       valueText.setText("")
       alterarCat.setSelected(false)
       alterarValue.setSelected(false)
-    //  valueText.setText(histTA.getSelectionModel().getSelectedItem.description)
+      valueText.setText(getString(histTA.getSelectionModel().getSelectedItem.toString,2))
   }
 
   def onDepositSelected():Unit={
@@ -174,7 +183,16 @@ class ControllerHistorico {
 
 
 def onalteraClicked():Unit={
-
+  if (depositoRB.isSelected) {
+    parent.setUser(changeThings(tempUser, "1"))
+    tempUser = changeThings(tempUser,"1")
+  }
+  else {
+    changeThings(tempUser,"2")
+    parent.setUser(changeThings(tempUser, "1"))
+    tempUser = changeThings(tempUser,"2")
+  }
+  onOkClicked
 }
 
   def showHistory(item: UserList, filter:String): UserList = {
@@ -197,7 +215,6 @@ def onalteraClicked():Unit={
       case "1"=>{
         val newDeposit = toChangeList(index).setValue(toChangeList(index), valueText.getText().toDouble)
         val indice = list.indexOf(toChangeList(index))
-        println(indice)
         val newlist = list.patch(indice,Seq(newDeposit),1)
         newlist
       } //case 1
@@ -210,6 +227,7 @@ def onalteraClicked():Unit={
       case "3"=>{
         val newDeposit = toChangeList(index).setCategory(toChangeList(index), valueText.getText())
         val indice = list.indexOf(toChangeList(index))
+
         val newlist =list.patch(indice,Seq(newDeposit),1)
         newlist
       } //case 2
@@ -218,13 +236,13 @@ def onalteraClicked():Unit={
 
   def printDeposits(user: UserApp,transactionList:LazyList[UserList],toChangeList:LazyList[UserList],input:Int): LazyList[UserList] ={
     if(alterarValue.isSelected()) {
-      val list = changeDeposit(user,transactionList, toChangeList, input - 1,"1")
+      val list = changeDeposit(user,transactionList, toChangeList, input ,"1")
       list
     }else if(alterarDesc.isSelected()){
-      val list = changeDeposit(user,transactionList, toChangeList, input - 1,"2")
+      val list = changeDeposit(user,transactionList, toChangeList, input ,"2")
       list
     }else{
-      val list = changeDeposit(user,transactionList, toChangeList, input - 1,"3")
+      val list = changeDeposit(user,transactionList, toChangeList, input ,"3")
       list
     }
   }
