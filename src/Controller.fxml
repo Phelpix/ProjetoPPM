@@ -39,7 +39,7 @@
                   <PasswordField fx:id="passwordTF" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                </children>
             </GridPane>
-            <Label text="Expense Tracker" GridPane.columnIndex="1" GridPane.halignment="CENTER">
+            <Label text="Expense Tracker" textFill="#0d6612" GridPane.columnIndex="1" GridPane.halignment="CENTER">
                <font>
                   <Font size="32.0" />
                </font>

@@ -6,7 +6,7 @@
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ControllerMenu">
    <children>
-      <GridPane layoutY="-1.0" prefHeight="400.0" prefWidth="600.0">
+      <GridPane layoutY="-1.0" prefHeight="400.0" prefWidth="600.0" stylesheets="@menu.css">
         <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="195.0" minWidth="10.0" prefWidth="100.0" />
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="300.00000762939453" minWidth="10.0" prefWidth="300.00000762939453" />
@@ -18,7 +18,7 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Label text="Menu" GridPane.columnIndex="1" GridPane.halignment="CENTER">
+            <Label text="Menu" textFill="#0d6612" GridPane.columnIndex="1" GridPane.halignment="CENTER">
                <font>
                   <Font size="27.0" />
                </font>
@@ -46,7 +46,7 @@
                   <Button mnemonicParsing="false" prefWidth="121.0" text="Alterar Transação" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
                </children>
             </GridPane>
-            <Button fx:id="logoutButton" mnemonicParsing="false" onMouseClicked="#onButtonLogoutClicked" text="Logout" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+            <Button fx:id="logoutButton" mnemonicParsing="false" onMouseClicked="#onButtonLogoutClicked" stylesheets="@LogoutButton.css" text="Logout" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
          </children>
       </GridPane>
    </children>

@@ -1,10 +1,5 @@
-.text-field {
-    -fx-border-color: #4a8600;
-    -fx-border-width: 2px ;
-}
-
 .button {
-    -fx-background-color: #4CAF50; /* Green */
+    -fx-background-color: #0d6612; /* Green */
     -fx-border: none;
     -fx-text-fill: white;
     -fx-padding: 6px 10px;
