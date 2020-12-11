@@ -44,8 +44,8 @@ class ControllerHistorico {
 
   var tempUser: UserApp= new UserApp("","","",0.0,LazyList[UserList](),LazyList[UserList](),List[String](),List[(String,Double)](),List[categorySavings](),new PlanSoft(10,List[categorySavings]()))
 
-  var listDep: LazyList[UserList] = new LazyList[Deposit]()
-  var listExp: LazyList[UserList] = new LazyList[Expense]()
+  var listDep: LazyList[UserList] = LazyList[Deposit]()
+  var listExp: LazyList[UserList] = LazyList[Expense]()
 
   def setTempUser(tempUser: UserApp): Unit ={
     this.tempUser=tempUser
