@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
@@ -18,7 +19,15 @@
           <RowConstraints maxHeight="588.0" minHeight="10.0" prefHeight="100.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Button fx:id="confirmButton" mnemonicParsing="false" onMouseClicked="#onConfirmButtonClicked" text="Alterar" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+            <Button fx:id="confirmButton" mnemonicParsing="false" onMouseClicked="#onConfirmButtonClicked" text="Alterar" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="2">
+               <GridPane.margin>
+                  <Insets right="50.0" />
+               </GridPane.margin></Button>
+            <Button fx:id="voltarButton" mnemonicParsing="false" onMouseClicked="#onVoltarClicked" text="Voltar" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="2">
+               <GridPane.margin>
+                  <Insets left="50.0" />
+               </GridPane.margin>
+            </Button>
             <Label text="Perfil" GridPane.columnIndex="1" GridPane.halignment="CENTER">
                <font>
                   <Font size="24.0" />

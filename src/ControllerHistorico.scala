@@ -1,5 +1,6 @@
 import javafx.collections.{FXCollections, ObservableList}
-import javafx.fxml.FXML
+import javafx.fxml.{FXML, FXMLLoader}
+import javafx.scene.Parent
 import javafx.scene.control.{Button, ChoiceBox, RadioButton, _}
 import javafx.scene.layout.GridPane
 
@@ -20,7 +21,7 @@ class ControllerHistorico {
   @FXML
   private var compraRB: RadioButton =_
   @FXML
-  private var fecharButton:  Button =_
+  private var voltarButton:  Button =_
   @FXML
   private var alterarButton: Button=_
   @FXML
@@ -130,7 +131,7 @@ class ControllerHistorico {
     historico.setVisible(false)
     altera.setVisible(false)
     okButton.setVisible(true)
-    fecharButton.setVisible(true)
+    voltarButton.setVisible(true)
   }
 
   def onAlterarButtonClicked():Unit={
@@ -139,7 +140,7 @@ class ControllerHistorico {
       historico.setVisible(true)
       altera.setVisible(true)
       okButton.setVisible(false)
-      fecharButton.setVisible(false)
+      voltarButton.setVisible(false)
       valueText.setVisible(true)
       alterarCategoriaCB.setVisible(false)
 
@@ -295,8 +296,10 @@ def onalteraClicked():Unit={
     }
   }
 
-  def onFecharClicked: Unit ={
-    fecharButton.getScene().getWindow.hide()
-  }
+ def onVoltarClicked: Unit ={
+  val fxmlLoader = new FXMLLoader(getClass.getResource("ControllerMenu.fxml"))
+  val mainViewRoot: Parent = fxmlLoader.load()
+  voltarButton.getScene.setRoot(mainViewRoot)
+ }
 
 }

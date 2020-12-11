@@ -31,9 +31,6 @@ class ControllerMenu {
 
   def onButton1Clicked: Unit ={
     //val c:ControllerTransaction=new ControllerTransaction
-    val secondStage: Stage = new Stage()
-    secondStage.initModality(Modality.APPLICATION_MODAL)
-    secondStage.initOwner(Button1.getScene().getWindow)
     val fxmlLoader = new FXMLLoader(getClass.getResource("ControllerTransaction.fxml"))
     val mainViewRoot: Parent = fxmlLoader.load()
     val controller: ControllerTransaction = fxmlLoader.getController
@@ -43,14 +40,9 @@ class ControllerMenu {
     println("OI"+ user.name)
     controller.setParent(this)
     controller.setCategorias(user.userCategories)
-    val scene = new Scene(mainViewRoot)
-    secondStage.setScene(scene)
-    secondStage.show()
+    Button1.getScene.setRoot(mainViewRoot)
   }
   def onButton2Clicked: Unit ={
-    val secondStage: Stage = new Stage()
-    secondStage.initModality(Modality.APPLICATION_MODAL)
-    secondStage.initOwner(Button2.getScene().getWindow)
     val fxmlLoader = new FXMLLoader(getClass.getResource("ControllerTransaction.fxml"))
     val mainViewRoot: Parent = fxmlLoader.load()
     val controller: ControllerTransaction = fxmlLoader.getController
@@ -59,9 +51,7 @@ class ControllerMenu {
     controller.setTempUser(user)
     controller.setParent(this)
     controller.setCategorias(user.userCategories)
-    val scene = new Scene(mainViewRoot)
-    secondStage.setScene(scene)
-    secondStage.show()
+    Button2.getScene.setRoot(mainViewRoot)
   }
 
   def onButton3Clicked: Unit ={
@@ -70,9 +60,6 @@ class ControllerMenu {
   }
 
   def onButton4Clicked: Unit={
-    val secondStage: Stage = new Stage()
-    secondStage.initModality(Modality.APPLICATION_MODAL)
-    secondStage.initOwner(Button4.getScene().getWindow)
     val fxmlLoader = new FXMLLoader(getClass.getResource("ControllerHistorico.fxml"))
     val mainViewRoot: Parent = fxmlLoader.load()
     val controller: ControllerHistorico = fxmlLoader.getController
@@ -80,52 +67,35 @@ class ControllerMenu {
     controller.setParent(this)
     controller.setCategorias(user.userCategories)
     controller.startDates()
-    val scene = new Scene(mainViewRoot)
-    secondStage.setScene(scene)
-    secondStage.show()
+    Button4.getScene.setRoot(mainViewRoot)
   }
 
   def onButton5Clicked:Unit= {
-    val secondStage: Stage = new Stage()
-    secondStage.initModality(Modality.APPLICATION_MODAL)
-    secondStage.initOwner(Button5.getScene().getWindow)
     val fxmlLoader = new FXMLLoader(getClass.getResource("ControllerNewCategory.fxml"))
     val mainViewRoot: Parent = fxmlLoader.load()
     val controller: ControllerNewCategory = fxmlLoader.getController
     controller.setParent(this)
     controller.setTempUser(user)
-    val scene = new Scene(mainViewRoot)
-    secondStage.setScene(scene)
-    secondStage.show()
+    Button5.getScene.setRoot(mainViewRoot)
   }
 
     def onButton6Clicked(): Unit={
-      val secondStage: Stage = new Stage()
-      secondStage.initModality(Modality.APPLICATION_MODAL)
-      secondStage.initOwner(Button6.getScene().getWindow)
       val fxmlLoader = new FXMLLoader(getClass.getResource("ControllerTotal.fxml"))
       val mainViewRoot: Parent = fxmlLoader.load()
       val controller: ControllerTotal = fxmlLoader.getController
       controller.setTempUser(user)
       controller.setCategorias(user.userCategories)
       controller.startDates()
-      val scene = new Scene(mainViewRoot)
-      secondStage.setScene(scene)
-      secondStage.show()
+      Button6.getScene.setRoot(mainViewRoot)
     }
 
   def onButton7Clicked():Unit={
-    val secondStage: Stage = new Stage()
-    secondStage.initModality(Modality.APPLICATION_MODAL)
-    secondStage.initOwner(Button7.getScene().getWindow)
     val fxmlLoader = new FXMLLoader(getClass.getResource("ControllerPerfil2.fxml"))
     val mainViewRoot: Parent = fxmlLoader.load()
     val controller: ControllerPerfil = fxmlLoader.getController
     controller.setTempUser(user)
     controller.setParent(this)
-    val scene = new Scene(mainViewRoot)
-    secondStage.setScene(scene)
-    secondStage.show()
+    Button7.getScene.setRoot(mainViewRoot)
   }
 
 
