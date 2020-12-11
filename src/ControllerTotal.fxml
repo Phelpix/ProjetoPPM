@@ -22,7 +22,7 @@
             <children>
                 <Label alignment="CENTER" cache="true" contentDisplay="CENTER" prefHeight="31.0" prefWidth="193.0" text="Mostrar Total" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                     <font>
-                        <Font size="18.0" />
+                        <Font size="24.0" />
                     </font>
                <effect>
                   <Bloom />
