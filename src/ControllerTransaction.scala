@@ -85,8 +85,11 @@ class ControllerTransaction {
       val newDescription: String = descricaoTF.getText()
       val format = new SimpleDateFormat("M-y")
       val sameDate:String = format.format(Calendar.getInstance().getTime())
+      val newFormat = new SimpleDateFormat("d-M-y h-m")
+      val newID:String = newFormat.format(Calendar.getInstance().getTime())
       val tempCategory =categoriasCB.getSelectionModel.getSelectedItem
       val newTransaction: UserList = new UserList {
+        override val id: String =newID
         override val value: Double = newTransactionValue
         override val category: String = tempCategory
         override val description: String = newDescription

@@ -191,7 +191,7 @@ object CSVFileReader{
  def transactionToString(list: LazyList[UserList],s:String):String={
   list match{
    case x#::t =>{
-    lazy val newS:String =x.value.toString+"/"+x.category+"/"+x.description+"/"+x.date+","+s
+    lazy val newS:String =x.id+"/"+x.value.toString+"/"+x.category+"/"+x.description+"/"+x.date+","+s
     transactionToString(t,newS)
    }
    case LazyList() =>s

@@ -13,7 +13,7 @@ class Expense(xid:String,xvalue: Double, xcategory: String, xdescription:String,
   }
 
   def setValue(expense: Expense, value:Double){
-    new Expense(value, expense.category,expense.description, expense.date)
+    new Expense(expense.id,value, expense.category,expense.description, expense.date)
   }
 
   def getCategory (expense: Expense): String={
@@ -21,7 +21,7 @@ class Expense(xid:String,xvalue: Double, xcategory: String, xdescription:String,
   }
 
   def setCategory( expense: Expense, category: String): Unit ={
-    new Expense(expense.value, category, expense.description, expense.date)
+    new Expense(expense.id,expense.value, category, expense.description, expense.date)
   }
 
   def getDescription(expense: Expense): String={
@@ -29,7 +29,7 @@ class Expense(xid:String,xvalue: Double, xcategory: String, xdescription:String,
   }
 
   def setDescription ( expense: Expense, description: String): Unit ={
-    new Expense(expense.value, expense.category, description, expense.date)
+    new Expense(expense.id,expense.value, expense.category, description, expense.date)
   }
 
   def getDate(expense: Expense): String={
@@ -37,7 +37,7 @@ class Expense(xid:String,xvalue: Double, xcategory: String, xdescription:String,
   }
 
   def setDate(expense: Expense, date:String): Unit ={
-    new Expense(expense.value, expense.category, expense.description, date)
+    new Expense(expense.id,expense.value, expense.category, expense.description, date)
   }
 
 

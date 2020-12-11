@@ -36,7 +36,7 @@ class Deposit(xid: String,xvalue: Double, xcategory: String, xdescription: Strin
   }
 
   def setDate(deposit: Deposit, date:String): Unit ={
-    new Deposit(deposit.value, deposit.category, deposit.description, date)
+    new Deposit(deposit.id,deposit.value, deposit.category, deposit.description, date)
   }
 
 }

@@ -62,7 +62,8 @@
                <children>
                   <Button fx:id="okButton" mnemonicParsing="false" onMouseClicked="#onOkClicked" prefHeight="26.0" prefWidth="76.0" text="Aplicar" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
                   <Button fx:id="fecharButton" mnemonicParsing="false" onMouseClicked="#onFecharClicked" prefWidth="76.0" text="Fechar" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
-                  <Button fx:id="altera" mnemonicParsing="false" prefWidth="76.0" text="Aplicar" visible="false" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+                  <Button fx:id="altera" mnemonicParsing="false" onMouseClicked="#onalteraClicked" prefWidth="76.0" text="Aplicar" visible="false" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+                  <Button fx:id="historico" mnemonicParsing="false" onMouseClicked="#onHistoricoButton" prefWidth="76.0" text="Historico" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
                </children>
             </GridPane>
             <ListView fx:id="histTA" cache="true" cacheHint="QUALITY" editable="true" maxHeight="-Infinity" maxWidth="-Infinity" onEditCancel="#elementSelected" onEditCommit="#elementSelected" onMouseClicked="#elementSelected" onMouseDragOver="#elementSelected" prefHeight="245.0" prefWidth="197.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
@@ -89,7 +90,6 @@
                   <ToggleButton fx:id="alterarValue" mnemonicParsing="false" onMouseClicked="#onAlteraValorClicked" prefWidth="67.0" text="Valor" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                   <ToggleButton fx:id="alterarDesc" mnemonicParsing="false" onMouseClicked="#onAlteraDescricaoClicked" prefWidth="67.0" text="Descrição" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
                   <ToggleButton fx:id="alterarCat" mnemonicParsing="false" onMouseClicked="#onAlteraCategoriaClicked" prefWidth="67.0" text="Categoria" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="2" />
-                  <Button fx:id="historico" mnemonicParsing="false" onMouseClicked="#onHistoricoButton" prefWidth="76.0" text="Historico" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
                </children>
             </GridPane>
          </children>

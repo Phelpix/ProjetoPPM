@@ -1,24 +1,7 @@
-import java.text.SimpleDateFormat
-import java.util.Calendar
-
-import IO.{changeThingsPrint, changeTransaction, getUserInput, newCategoryPrint, newDescriptionPrint, newValuePrint}
-import MenuUserUtils.{defineCategory, listTotal, showHistory}
-import javafx.beans.Observable
 import javafx.collections.{FXCollections, ObservableList}
 import javafx.fxml.FXML
-import javafx.scene.control.{Button, ChoiceBox, RadioButton, TextArea}
-import javafx.application.Application
-import javafx.collections.FXCollections
-import javafx.collections.ObservableList
-import javafx.scene.Scene
-import javafx.scene.control._
-import javafx.scene.control.cell.ComboBoxListCell
-import javafx.scene.layout.{GridPane, StackPane}
-import javafx.stage.Stage
-
-import scala.collection.immutable
-import scala.collection.immutable.Nil.:::
-import scala.math.Fractional.Implicits.infixFractionalOps
+import javafx.scene.control.{Button, ChoiceBox, RadioButton, _}
+import javafx.scene.layout.GridPane
 
 class ControllerHistorico {
 
@@ -61,8 +44,8 @@ class ControllerHistorico {
 
   var tempUser: UserApp= new UserApp("","","",0.0,LazyList[UserList](),LazyList[UserList](),List[String](),List[(String,Double)](),List[categorySavings](),new PlanSoft(10,List[categorySavings]()))
 
-  var listDep: LazyList[Deposit] = new LazyList[Deposit]()
-  var listExp: LazyList[Expense] = new LazyList[Expense]()
+  var listDep: LazyList[UserList] = new LazyList[Deposit]()
+  var listExp: LazyList[UserList] = new LazyList[Expense]()
 
   def setTempUser(tempUser: UserApp): Unit ={
     this.tempUser=tempUser
@@ -109,7 +92,8 @@ class ControllerHistorico {
       for(aux <- list) {
         var textoDeposito: UserList = showHistory(aux, categoriasCB.getSelectionModel.getSelectedItem)
         if(textoDeposito.category !="" ) {
-          comeOn.add(textoDeposito.value+" - "+textoDeposito.description)
+          comeOn.add(textoDeposito.id+" - "+textoDeposito.value+" - "+textoDeposito.description)
+          listDep = textoDeposito#::listDep
         }
       }
       val nova: ListView[String] = new ListView[String](comeOn)
@@ -119,8 +103,10 @@ class ControllerHistorico {
       var comeOn: ObservableList[String] = FXCollections.observableArrayList()
       for(aux <- list) {
         var textoCompra: UserList = showHistory(aux, categoriasCB.getSelectionModel.getSelectedItem)
-        if(textoCompra.category != "")
-          comeOn.add(textoCompra.value+" - "+ textoCompra.description)
+        if(textoCompra.category != "") {
+          comeOn.add(textoCompra.id+" - "+textoCompra.value+" - "+ textoCompra.description)
+          listExp= textoCompra#::listExp
+        }
       }
       val nova: ListView[String] = new ListView[String](comeOn)
       histTA.setItems(comeOn)
@@ -133,6 +119,7 @@ class ControllerHistorico {
     historico.setVisible(false)
     altera.setVisible(false)
     okButton.setVisible(true)
+    fecharButton.setVisible(true)
   }
 
   def onAlterarButtonClicked():Unit={
@@ -141,6 +128,7 @@ class ControllerHistorico {
       historico.setVisible(true)
       altera.setVisible(true)
       okButton.setVisible(false)
+      fecharButton.setVisible(false)
   }
 
   def onAlteraValorClicked():Unit={
@@ -185,7 +173,9 @@ class ControllerHistorico {
   }
 
 
+def onalteraClicked():Unit={
 
+}
 
   def showHistory(item: UserList, filter:String): UserList = {
     if(item.category == filter){
@@ -202,55 +192,54 @@ class ControllerHistorico {
 
 
 
-  def changeDeposit(userApp: UserApp,list: LazyList[UserList],toChangeList:LazyList[UserList], index:Int, option:String):LazyList[UserList]={
+ def changeDeposit(userApp: UserApp,list: LazyList[UserList],toChangeList:LazyList[UserList], index:Int, option:String):LazyList[UserList]={
     option match {
       case "1"=>{
         val newDeposit = toChangeList(index).setValue(toChangeList(index), valueText.getText().toDouble)
-        val newlist = toChangeList.patch(index,Seq(newDeposit),1)
+        val indice = list.indexOf(toChangeList(index))
+        println(indice)
+        val newlist = list.patch(indice,Seq(newDeposit),1)
         newlist
       } //case 1
       case "2"=>{
         val newDeposit = toChangeList(index).setDescription(toChangeList(index), valueText.getText())
-        val newlist =list.indexOf().patch(index,Seq(newDeposit),1)
+        val indice = list.indexOf(toChangeList(index))
+        val newlist =list.patch(indice,Seq(newDeposit),1)
         newlist
       } //case 2
       case "3"=>{
         val newDeposit = toChangeList(index).setCategory(toChangeList(index), valueText.getText())
-        val newlist =toChangeList.patch(index,Seq(newDeposit),1)
+        val indice = list.indexOf(toChangeList(index))
+        val newlist =list.patch(indice,Seq(newDeposit),1)
         newlist
       } //case 2
     }
   }
 
-  def printDeposits(user: UserApp,toChangeList:LazyList[UserList]): LazyList[UserList] ={
-    println("Qual quer alterar?")
-    //showHistory(toChangeList,"0")
-    val input = getUserInput().toInt
-    val list = changeDeposit(user,toChangeList,input-1)
-    val total = listTotal(list,"0")
-    println("NEW TOTAL "+ total )
-    list
+  def printDeposits(user: UserApp,transactionList:LazyList[UserList],toChangeList:LazyList[UserList],input:Int): LazyList[UserList] ={
+    if(alterarValue.isSelected()) {
+      val list = changeDeposit(user,transactionList, toChangeList, input - 1,"1")
+      list
+    }else if(alterarDesc.isSelected()){
+      val list = changeDeposit(user,transactionList, toChangeList, input - 1,"2")
+      list
+    }else{
+      val list = changeDeposit(user,transactionList, toChangeList, input - 1,"3")
+      list
+    }
   }
 
 
-  def changeThings(user: UserApp): UserApp ={
-    changeThingsPrint()
-    val input = getUserInput()
+  def changeThings(user: UserApp, input:String): UserApp ={
     input match {
       case "1"=>{
-        val format = new SimpleDateFormat("M-y")
-        val date: String = format.format(Calendar.getInstance().getTime())
-        val list:LazyList[UserList] = user.depositList.filter(x =>{x.date==date})
-        val newList =printDeposits(user,list)
+        val newList =printDeposits(user,user.depositList,listDep,histTA.getSelectionModel().getSelectedIndex())
         val newUser = user.copy(name = user.name,user.email,user.password, balance = user.balance, newList, expenseList = user.expenseList, user.userCategories,user.monthlySavings)
         newUser
       }
 
       case "2"=>{
-        val format = new SimpleDateFormat("M-y")
-        val date: String = format.format(Calendar.getInstance().getTime())
-        val list:LazyList[UserList] = user.depositList.filter(x =>{x.date==date})
-        val newList =printDeposits(user, list)
+        val newList =printDeposits(user,user.expenseList, listExp,histTA.getSelectionModel().getSelectedIndex())
         val newUser = user.copy(name = user.name,user.email,user.password, balance = user.balance, user.depositList, newList, user.userCategories, user.monthlySavings, user.catSavList)
         newUser
       }
