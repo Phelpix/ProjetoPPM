@@ -6,7 +6,7 @@
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ControllerHistorico">
    <children>
-      <GridPane prefHeight="394.0" prefWidth="600.0">
+      <GridPane prefHeight="394.0" prefWidth="600.0" stylesheets="@menu.css">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="302.99999237060547" minWidth="10.0" prefWidth="302.99999237060547" />
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />

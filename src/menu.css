@@ -4,5 +4,18 @@
 }
 
 .button {
-    -fx-background-color: #4a8600;
+    -fx-background-color: #4CAF50; /* Green */
+    -fx-border: none;
+    -fx-text-fill: white;
+    -fx-padding: 6px 10px;
+    -fx-text-align: center;
+    -fx-text-decoration: none;
+    -fx-display: inline-block;
+    -fx-font-size: 10px;
 }
+
+.choice-box {
+    -fx-background-color: black;
+    -fx-mark-color: #4CAF50 ; // arrow color
+}
+.choice-box > .label { -fx-text-fill: white; }

@@ -37,7 +37,7 @@ object MenuUser extends App{
       }
         //interessa
       case "3"=>{
-        balance(user.balance)
+        balance(user.balance) 
         Thread.sleep(3000)
         userLoop(user)
       }
