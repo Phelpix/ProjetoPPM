@@ -13,3 +13,9 @@
     -fx-display: inline-block;
     -fx-font-size: 10px;
 }
+
+.choice-box {
+    -fx-background-color: black;
+    -fx-mark-color: #4CAF50 ; // arrow color
+}
+.choice-box > .label { -fx-text-fill: white; }
