@@ -1,11 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ControllerHistorico">
    <children>
+      <ImageView fitHeight="400.0" fitWidth="600.0" pickOnBounds="true">
+         <image>
+            <Image url="@wp4946969.jpg" />
+         </image>
+      </ImageView>
       <GridPane prefHeight="394.0" prefWidth="600.0" stylesheets="@menu.css">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="302.99999237060547" minWidth="10.0" prefWidth="302.99999237060547" />
@@ -28,10 +34,10 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <RadioButton fx:id="compraRB" mnemonicParsing="false" onMouseClicked="#onCompraSelected" text="Compra" GridPane.columnIndex="1" GridPane.valignment="BOTTOM" />
-                  <RadioButton fx:id="depositoRB" mnemonicParsing="false" onMouseClicked="#onDepositSelected" text="Depósito" GridPane.columnIndex="1" GridPane.valignment="CENTER" />
-                  <Label text="Tipo de Transação:" GridPane.halignment="CENTER" />
-                  <Label text="Categoria:" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+                  <RadioButton fx:id="compraRB" mnemonicParsing="false" onMouseClicked="#onCompraSelected" text="Compra" textFill="WHITE" GridPane.columnIndex="1" GridPane.valignment="BOTTOM" />
+                  <RadioButton fx:id="depositoRB" mnemonicParsing="false" onMouseClicked="#onDepositSelected" text="Depósito" textFill="WHITE" GridPane.columnIndex="1" GridPane.valignment="CENTER" />
+                  <Label text="Tipo de Transação:" textFill="WHITE" GridPane.halignment="CENTER" />
+                  <Label text="Categoria:" textFill="WHITE" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
                   <GridPane GridPane.columnIndex="1" GridPane.rowIndex="2">
                     <columnConstraints>
                       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -46,7 +52,7 @@
                      </children>
                   </GridPane>
                   <ChoiceBox fx:id="categoriasCB" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                  <Label text="Data (mês/ano):" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+                  <Label text="Data (mês/ano):" textFill="WHITE" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
                </children>
             </GridPane>
             <GridPane prefHeight="400.0" prefWidth="600.0" GridPane.rowIndex="2">
@@ -61,13 +67,13 @@
               </rowConstraints>
                <children>
                   <Button fx:id="okButton" mnemonicParsing="false" onMouseClicked="#onOkClicked" prefHeight="26.0" prefWidth="76.0" text="Aplicar" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
-                  <Button fx:id="fecharButton" mnemonicParsing="false" onMouseClicked="#onFecharClicked" prefWidth="76.0" text="Fechar" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+                  <Button fx:id="fecharButton" mnemonicParsing="false" onMouseClicked="#onFecharClicked" prefWidth="76.0" stylesheets="@LogoutButton.css" text="Fechar" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
                   <Button fx:id="altera" mnemonicParsing="false" onMouseClicked="#onalteraClicked" prefWidth="76.0" text="Aplicar" visible="false" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
                   <Button fx:id="historico" mnemonicParsing="false" onMouseClicked="#onHistoricoButton" prefWidth="76.0" text="Historico" visible="false" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
                </children>
             </GridPane>
             <ListView fx:id="histTA" cache="true" cacheHint="QUALITY" editable="true" maxHeight="-Infinity" maxWidth="-Infinity" onEditCancel="#elementSelected" onEditCommit="#elementSelected" onMouseClicked="#elementSelected" onMouseDragOver="#elementSelected" prefHeight="245.0" prefWidth="197.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
-            <Label prefHeight="31.0" prefWidth="73.0" text="Histórico" textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+            <Label prefHeight="31.0" prefWidth="73.0" text="Histórico" textAlignment="CENTER" textFill="WHITE" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                <font>
                   <Font size="18.0" />
                </font>
@@ -86,6 +92,7 @@
                   <RowConstraints maxHeight="56.400000000000006" minHeight="10.0" prefHeight="16.400000000000006" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
+                  <ChoiceBox fx:id="alterarCategoriaCB" prefHeight="30.0" prefWidth="273.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="BOTTOM" />
                   <TextField fx:id="valueText" GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.valignment="BOTTOM" />
                   <ToggleButton fx:id="alterarValue" mnemonicParsing="false" onMouseClicked="#onAlteraValorClicked" prefWidth="67.0" text="Valor" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                   <ToggleButton fx:id="alterarDesc" mnemonicParsing="false" onMouseClicked="#onAlteraDescricaoClicked" prefWidth="67.0" text="Descrição" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" />

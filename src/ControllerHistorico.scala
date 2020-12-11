@@ -39,7 +39,8 @@ class ControllerHistorico {
   private var GridPane2:GridPane=_
   @FXML
   private var historico:Button=_
-
+  @FXML
+  private var alterarCategoriaCB:ChoiceBox[String]=new ChoiceBox[String]()
 
 
   var tempUser: UserApp= new UserApp("","","",0.0,LazyList[UserList](),LazyList[UserList](),List[String](),List[(String,Double)](),List[categorySavings](),new PlanSoft(10,List[categorySavings]()))
@@ -71,6 +72,7 @@ class ControllerHistorico {
       case Nil =>
       case x :: t => {
         categoriasCB.getItems.add(x)
+        alterarCategoriaCB.getItems.add(x)
         setCategorias(t)
       }
     }
@@ -138,6 +140,9 @@ class ControllerHistorico {
       altera.setVisible(true)
       okButton.setVisible(false)
       fecharButton.setVisible(false)
+      valueText.setVisible(true)
+      alterarCategoriaCB.setVisible(false)
+
   }
 
   def onAlteraValorClicked():Unit={
@@ -146,15 +151,19 @@ class ControllerHistorico {
       alterarValue.setSelected(true)
       alterarCat.setSelected(false)
       alterarDesc.setSelected(false)
+      valueText.setVisible(true)
+      alterarCategoriaCB.setVisible(false)
       valueText.setText(getString(histTA.getSelectionModel().getSelectedItem.toString,1))
 
   }
   def onAlteraCategoriaClicked():Unit={
     if(!alterarCat.isSelected)
-      valueText.setText("")
+
       alterarCat.setSelected(true)
       alterarValue.setSelected(false)
       alterarDesc.setSelected(false)
+      valueText.setVisible(false)
+      alterarCategoriaCB.setVisible(true)
      // valueText.setText(getString(histTA.getSelectionModel().getSelectedIndex()))
 
   }
@@ -163,6 +172,8 @@ class ControllerHistorico {
       valueText.setText("")
       alterarCat.setSelected(false)
       alterarValue.setSelected(false)
+      valueText.setVisible(true)
+      alterarCategoriaCB.setVisible(false)
       valueText.setText(getString(histTA.getSelectionModel().getSelectedItem.toString,2))
   }
 
@@ -240,7 +251,7 @@ def onalteraClicked():Unit={
         newlist
       } //case 2
       case "3"=>{
-        val newDeposit = toChangeList(index).setCategory(toChangeList(index), valueText.getText())
+        val newDeposit = toChangeList(index).setCategory(toChangeList(index), alterarCategoriaCB.getSelectionModel.getSelectedItem)
         for(x <- list ){
           if(x.id == toChangeList(index).id) {
             indice = count

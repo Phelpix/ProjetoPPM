@@ -1,11 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller">
    <children>
+      <ImageView fitHeight="400.0" fitWidth="600.0" pickOnBounds="true">
+         <image>
+            <Image url="@wp4946969.jpg" />
+         </image>
+      </ImageView>
       <GridPane prefHeight="400.0" prefWidth="600.0" stylesheets="@login.css">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="195.0" minWidth="10.0" prefWidth="112.0" />
@@ -30,12 +36,12 @@
                   <RowConstraints maxHeight="55.0" minHeight="10.0" prefHeight="33.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Button fx:id="loginButton" mnemonicParsing="false" onMouseClicked="#onLoginClicked" text="Login" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
+                  <Button fx:id="loginButton" mnemonicParsing="false" onMouseClicked="#onLoginClicked" stylesheets="@login.css" text="Login" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
                   <TextField fx:id="emailTF" GridPane.columnIndex="1" />
-                  <Button fx:id="registerButton" mnemonicParsing="false" onMouseClicked="#onRegisterClicked" text="Registar" GridPane.halignment="RIGHT" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
-                  <Label alignment="CENTER" contentDisplay="CENTER" text="Email:" GridPane.halignment="CENTER" />
-                  <Label alignment="CENTER" contentDisplay="CENTER" layoutX="74.0" layoutY="35.0" text="Password:" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
-                  <Label alignment="CENTER" contentDisplay="CENTER" layoutX="74.0" layoutY="35.0" text="Não tem conta?" GridPane.halignment="LEFT" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
+                  <Button fx:id="registerButton" mnemonicParsing="false" onMouseClicked="#onRegisterClicked" stylesheets="@login.css" text="Registar" GridPane.halignment="RIGHT" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
+                  <Label alignment="CENTER" contentDisplay="CENTER" text="Email:" textFill="WHITE" GridPane.halignment="CENTER" />
+                  <Label alignment="CENTER" contentDisplay="CENTER" layoutX="74.0" layoutY="35.0" text="Password:" textFill="WHITE" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+                  <Label alignment="CENTER" contentDisplay="CENTER" layoutX="74.0" layoutY="35.0" text="Não tem conta?" textFill="WHITE" GridPane.halignment="LEFT" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
                   <PasswordField fx:id="passwordTF" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                </children>
             </GridPane>
