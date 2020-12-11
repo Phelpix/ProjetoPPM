@@ -1,4 +1,5 @@
 trait UserList{
+ val id: String
  val value: Double
  val category: String
  val description: String
@@ -6,6 +7,7 @@ trait UserList{
 
  def setValue(sum:UserList, newvalue:Double): UserList ={
   new UserList {
+   override val id: String = sum.id
    override val value: Double = newvalue
    override val category: String = sum.category
    override val description: String = sum.description
@@ -15,6 +17,7 @@ trait UserList{
 
  def setDescription(sum:UserList,desc:String):UserList={
   new UserList {
+   override val id: String = sum.id
    override val value: Double = sum.value
    override val category: String = sum.category
    override val description: String = desc
@@ -24,6 +27,7 @@ trait UserList{
 
  def setCategory(sum:UserList,cat:String):UserList={
   new UserList {
+   override val id: String = sum.id
    override val value: Double = sum.value
    override val category: String = cat
    override val description: String = sum.description

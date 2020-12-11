@@ -1,6 +1,7 @@
 
 
-class Deposit(xvalue: Double, xcategory: String, xdescription: String, xdate:String )  extends UserList {
+class Deposit(xid: String,xvalue: Double, xcategory: String, xdescription: String, xdate:String )  extends UserList {
+  override val id: String = xid
   override val category: String = xcategory;
   override val value: Double = xvalue;
   override val description: String = xdescription;

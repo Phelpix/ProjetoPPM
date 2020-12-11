@@ -17,7 +17,7 @@
           <RowConstraints maxHeight="208.39999999999998" minHeight="10.0" prefHeight="69.80000000000001" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <GridPane GridPane.rowIndex="1">
+            <GridPane fx:id="GridPane1" GridPane.rowIndex="1">
               <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -28,8 +28,8 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <RadioButton fx:id="compraRB" mnemonicParsing="false" text="Compra" GridPane.columnIndex="1" GridPane.valignment="BOTTOM" />
-                  <RadioButton fx:id="depositoRB" mnemonicParsing="false" text="Depósito" GridPane.columnIndex="1" GridPane.valignment="CENTER" />
+                  <RadioButton fx:id="compraRB" mnemonicParsing="false" onMouseClicked="#onCompraSelected" text="Compra" GridPane.columnIndex="1" GridPane.valignment="BOTTOM" />
+                  <RadioButton fx:id="depositoRB" mnemonicParsing="false" onMouseClicked="#onDepositSelected" text="Depósito" GridPane.columnIndex="1" GridPane.valignment="CENTER" />
                   <Label text="Tipo de Transação:" GridPane.halignment="CENTER" />
                   <Label text="Categoria:" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
                   <GridPane GridPane.columnIndex="1" GridPane.rowIndex="2">
@@ -49,25 +49,49 @@
                   <Label text="Data (mês/ano):" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
                </children>
             </GridPane>
-            <Button fx:id="okButton" mnemonicParsing="false" onMouseClicked="#onOkClicked" prefHeight="26.0" prefWidth="76.0" text="Aplicar" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
-            <TextArea fx:id="histTA" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="245.0" prefWidth="215.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
-            <Button fx:id="fecharButton" mnemonicParsing="false" onMouseClicked="#onFecharClicked" text="Fechar" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
-         </children>
-      </GridPane>
-      <GridPane prefHeight="400.0" prefWidth="600.0">
-        <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-        </columnConstraints>
-        <rowConstraints>
-          <RowConstraints maxHeight="129.0" minHeight="10.0" prefHeight="27.9999942779541" vgrow="SOMETIMES" />
-          <RowConstraints maxHeight="239.0000057220459" minHeight="10.0" prefHeight="239.0000057220459" vgrow="SOMETIMES" />
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-        </rowConstraints>
-         <children>
-            <Label prefHeight="31.0" prefWidth="73.0" text="Histórico" textAlignment="CENTER" GridPane.halignment="CENTER">
+            <GridPane prefHeight="400.0" prefWidth="600.0" GridPane.rowIndex="2">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints maxHeight="129.0" minHeight="10.0" prefHeight="27.9999942779541" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="239.0000057220459" minHeight="10.0" prefHeight="239.0000057220459" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <Button fx:id="okButton" mnemonicParsing="false" onMouseClicked="#onOkClicked" prefHeight="26.0" prefWidth="76.0" text="Aplicar" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+                  <Button fx:id="fecharButton" mnemonicParsing="false" onMouseClicked="#onFecharClicked" prefWidth="76.0" text="Fechar" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+                  <Button fx:id="altera" mnemonicParsing="false" prefWidth="76.0" text="Aplicar" visible="false" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+               </children>
+            </GridPane>
+            <ListView fx:id="histTA" cache="true" cacheHint="QUALITY" editable="true" maxHeight="-Infinity" maxWidth="-Infinity" onEditCancel="#elementSelected" onEditCommit="#elementSelected" onMouseClicked="#elementSelected" onMouseDragOver="#elementSelected" prefHeight="245.0" prefWidth="197.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+            <Label prefHeight="31.0" prefWidth="73.0" text="Histórico" textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                <font>
                   <Font size="18.0" />
-               </font></Label>
+               </font>
+            </Label>
+            <Button fx:id="alterarButton" mnemonicParsing="false" onMouseClicked="#onAlterarButtonClicked" prefHeight="26.0" prefWidth="76.0" text="Alterar" visible="false" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
+            <GridPane fx:id="GridPane2" visible="false" GridPane.rowIndex="1">
+              <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="95.0" minWidth="10.0" prefWidth="14.600003814697267" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="272.5999961853027" minWidth="10.0" prefWidth="272.5999961853027" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="96.0" minWidth="0.0" prefWidth="16.199984741210926" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints maxHeight="60.40000762939453" minHeight="10.0" prefHeight="60.40000762939453" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="101.4" minHeight="10.0" prefHeight="85.59999237060546" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="106.39999999999999" minHeight="10.0" prefHeight="55.39999999999998" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="56.400000000000006" minHeight="10.0" prefHeight="16.400000000000006" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <TextField fx:id="valueText" GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.valignment="BOTTOM" />
+                  <ToggleButton fx:id="alterarValue" mnemonicParsing="false" onMouseClicked="#onAlteraValorClicked" prefWidth="67.0" text="Valor" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <ToggleButton fx:id="alterarDesc" mnemonicParsing="false" onMouseClicked="#onAlteraDescricaoClicked" prefWidth="67.0" text="Descrição" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+                  <ToggleButton fx:id="alterarCat" mnemonicParsing="false" onMouseClicked="#onAlteraCategoriaClicked" prefWidth="67.0" text="Categoria" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="2" />
+                  <Button fx:id="historico" mnemonicParsing="false" onMouseClicked="#onHistoricoButton" prefWidth="76.0" text="Historico" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
+               </children>
+            </GridPane>
          </children>
       </GridPane>
    </children>

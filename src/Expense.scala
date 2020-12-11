@@ -1,11 +1,12 @@
 
 
 
-class Expense(xvalue: Double, xcategory: String, xdescription:String, xdate:String) extends UserList {
-    override  val value :Double = xvalue
-    override  val category :String = xcategory
-    override  val description: String = xdescription
-    override  val date :String = xdate
+class Expense(xid:String,xvalue: Double, xcategory: String, xdescription:String, xdate:String) extends UserList {
+  override val id: String = xid
+  override  val value :Double = xvalue
+  override  val category :String = xcategory
+  override  val description: String = xdescription
+  override  val date :String = xdate
 
   def getValue(expense: Expense): Double ={
     return expense.value;

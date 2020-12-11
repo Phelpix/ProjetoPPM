@@ -17,11 +17,14 @@ object MenuUserUtils {
       muchTransaction(userList)
       val newTransactionValue: Double = roundAt(getUserInput().toDouble)
       description()
+      val newFormat = new SimpleDateFormat("d-M-y h-m")
+      val newID:String = newFormat.format(Calendar.getInstance().getTime())
       val newDescription: String = getUserInput()
       val format = new SimpleDateFormat("M-y")
       val sameDate:String = format.format(Calendar.getInstance().getTime())
       val sameCategory = defineCategory(user)
       val newTransaction: UserList = new UserList {
+        override val id: String = newID
         override val value: Double = newTransactionValue
         override val category: String = sameCategory
         override val description: String = newDescription
@@ -215,7 +218,6 @@ object MenuUserUtils {
         val value = getUserInput().toInt
         val newDeposit = toChangeList(index).setValue(toChangeList(index), value)
         val newlist = toChangeList.patch(index,Seq(newDeposit),1)
-        //val newlist = changeValue(user.depositList,user.depositList(index),value,index,LazyList())
         newlist
       } //case 1
 

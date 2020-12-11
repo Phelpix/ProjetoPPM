@@ -132,10 +132,11 @@ object CSVFileReader{
     val parameters= expense.split("/")
     //var aux:Expense = new Expense(parameters(0).toDouble,parameters(1),parameters(2),parameters(3))
     var aux:UserList = new UserList {
-     override val value: Double = parameters(0).toDouble
-     override val category: String = parameters(1)
-     override val description: String = parameters(2)
-     override val date: String = parameters(3)
+     override val id: String = parameters(0)
+     override val value: Double = parameters(1).toDouble
+     override val category: String = parameters(2)
+     override val description: String = parameters(3)
+     override val date: String = parameters(4)
     }
     expenseList = aux+:expenseList
    }
