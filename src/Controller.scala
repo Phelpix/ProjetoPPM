@@ -4,7 +4,7 @@ import IO.loginError
 import MenuUser.userLoop
 import javafx.fxml.{FXML, FXMLLoader}
 import javafx.scene.{Parent, Scene}
-import javafx.scene.control.{Button, PasswordField, TextField}
+import javafx.scene.control.{Button, Labeled, PasswordField, TextField}
 import javafx.stage.{Modality, Stage}
 
 class Controller {
@@ -16,6 +16,8 @@ class Controller {
   private var emailTF: TextField = _
   @FXML
   private var passwordTF: PasswordField = _
+  @FXML
+  private var errorLabel: Labeled =_
 
   def onLoginClicked(): Unit = {
     val file = "CSVFiles/UserCredentials.csv"
@@ -24,6 +26,7 @@ class Controller {
     username match{
       case Some(b) => {
         println(b)
+        errorLabel.setVisible(false)
         val userToApp: UserApp = readUser("CSVFiles/" + b + ".csv", b, emailTF.getText(),passwordTF.getText())
         val secondStage: Stage = new Stage()
         secondStage.initModality(Modality.APPLICATION_MODAL)
@@ -37,7 +40,7 @@ class Controller {
         secondStage.show()
       }
       case None =>{
-        loginError()
+        errorLabel.setVisible(true)
       }
     }
 

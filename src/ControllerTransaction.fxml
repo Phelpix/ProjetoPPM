@@ -70,6 +70,18 @@
                   </Button>
                </children>
             </GridPane>
+            <Label fx:id="confirmLabel" text="Deposito Efetuado" textFill="WHITE" visible="false" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="TOP">
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+               <GridPane.margin>
+                  <Insets />
+               </GridPane.margin></Label>
+            <Label fx:id="errorLabel" text="Campo mal preenchido" textFill="RED" visible="false" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="TOP">
+               <GridPane.margin>
+                  <Insets />
+               </GridPane.margin>
+            </Label>
          </children>
       </GridPane>
    </children>

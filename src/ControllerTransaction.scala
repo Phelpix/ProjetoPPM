@@ -10,6 +10,7 @@ import javafx.scene.control.{Button, ChoiceBox, ComboBox, Labeled, TextField}
 import javafx.stage.Stage
 import javax.swing.ButtonModel
 
+
 class ControllerTransaction {
   @FXML
   private var valorTF: TextField = _
@@ -23,6 +24,11 @@ class ControllerTransaction {
   private var voltarButton:Button =_
   @FXML
   private var titleLable: Labeled =_
+  @FXML
+  private var confirmLabel: Labeled=_
+  @FXML
+  private var errorLabel: Labeled=_
+
 
   var tipo :Int = 0
   var tempUser: UserApp= new UserApp("","","",0.0,LazyList[UserList](),LazyList[UserList](),List[String](),List[(String,Double)](),List[categorySavings](),new PlanSoft(10,List[categorySavings]()))
@@ -90,6 +96,11 @@ class ControllerTransaction {
       val sameDate:String = format.format(Calendar.getInstance().getTime())
       val newFormat = new SimpleDateFormat("d-M-y h-m-s")
       val newID:String = newFormat.format(Calendar.getInstance().getTime())
+      if(categoriasCB.getSelectionModel.getSelectedItem==null){
+        confirmLabel.setVisible(false)
+        errorLabel.setVisible(true)
+        throw new Exception
+      }
       val tempCategory =categoriasCB.getSelectionModel.getSelectedItem
       val newTransaction: UserList = new UserList {
         override val id: String =newID
@@ -103,13 +114,24 @@ class ControllerTransaction {
         val newUserApp = {
           user.copy(name = user.name, balance = user.balance + newTransactionValue, depositList = newTransactionList, expenseList = user.expenseList, userCategories = user.userCategories)
         }
+        errorLabel.setVisible(false)
+        confirmLabel.setVisible(true)
         newUserApp
       }
       else {
         val newUserApp = {
           user.copy(name = user.name, balance = user.balance - newTransactionValue, depositList = user.depositList, expenseList = newTransactionList, userCategories = user.userCategories)
         }
+        errorLabel.setVisible(false)
+        confirmLabel.setVisible(true)
         newUserApp
+      }
+
+    }catch {
+      case ex: Exception => {
+        confirmLabel.setVisible(false)
+        errorLabel.setVisible(true)
+        user
       }
 
     }
