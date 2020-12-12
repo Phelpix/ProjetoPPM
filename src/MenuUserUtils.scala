@@ -5,6 +5,7 @@ import java.util.Calendar
 
 import IO._
 import CSVFileReader._
+import ExpenseTrackerUtils.RegisterUser
 
 import scala.::
 import scala.io.StdIn.readLine
@@ -174,18 +175,28 @@ object MenuUserUtils {
         newUsernamePrint()
         val newUserName = getUserInput()
         val lines = readFile(credentialsFile)
-        changeUsername(user,newUserName,lines,"")
-        val newUser = user.copy(name = newUserName,user.email,user.password, balance = user.balance, depositList = user.depositList, expenseList = user.expenseList, user.userCategories,user.monthlySavings)
-        newUser
+        if(RegisterUser(newUserName,user.email,lines) == false) {
+          changeUsername(user, newUserName, lines, "")
+          val newUser = user.copy(name = newUserName, user.email, user.password, balance = user.balance, depositList = user.depositList, expenseList = user.expenseList, user.userCategories, user.monthlySavings)
+          newUser
+        } else {
+          println("Já existe um user com este username")
+          user
+        }
       }
 
       case "2"=>{
         newEmailPrint()
         val newEmail = getUserInput()
         val lines = readFile(credentialsFile)
-        changeEmail(user,newEmail,lines,"")
-        val newUser = user.copy(name = user.name,newEmail,user.password, balance = user.balance, depositList = user.depositList, expenseList = user.expenseList, user.userCategories, user.monthlySavings)
-        newUser
+        if(RegisterUser(user.name,newEmail,lines) == false) {
+          changeEmail(user, newEmail, lines, "")
+          val newUser = user.copy(name = user.name, newEmail, user.password, balance = user.balance, depositList = user.depositList, expenseList = user.expenseList, user.userCategories, user.monthlySavings)
+          newUser
+        } else {
+          println("Ja existe um user com este email")
+          user
+        }
       }
 
 

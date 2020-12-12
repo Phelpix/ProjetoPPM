@@ -58,6 +58,10 @@
                   <TextField fx:id="passwordTF" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                </children>
             </GridPane>
+            <Label fx:id="errorLabel" prefHeight="18.0" prefWidth="249.0" text="Label" textAlignment="CENTER" textFill="RED" visible="false" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+               <GridPane.margin>
+                  <Insets bottom="70.0" />
+               </GridPane.margin></Label>
          </children>
       </GridPane>
    </children>
