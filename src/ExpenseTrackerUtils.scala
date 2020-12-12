@@ -49,16 +49,19 @@ object  ExpenseTrackerUtils {
 
  def checkMonth(user: UserApp): UserApp = {
   var str =Array("","")
+  var lastDeposit =Array("","")
+  var lastExpense =Array("","")
   val format = new SimpleDateFormat("M-y")
   val date: String = format.format(Calendar.getInstance().getTime())
-  val lastDeposit = user.depositList.head.date.split("-")
-  val lastExpense = user.expenseList.head.date.split("-")
-  val maior = maxMonth(lastDeposit, lastExpense)
-  val maiorData = maior(0) + "-" + maior(1)
-  println(user.monthlySavings)
   if (user.monthlySavings != List()) {
    str = user.monthlySavings.head._1.split("-")
   }
+  if(!user.depositList.isEmpty)
+  lastDeposit = user.depositList.head.date.split("-")
+  if(!user.expenseList.isEmpty)
+   lastExpense = user.expenseList.head.date.split("-")
+  val maior = maxMonth(lastDeposit, lastExpense)
+  val maiorData = maior(0) + "-" + maior(1)
    if (date != maiorData && str(0)!=maior(0)) {
     val savings = monthSavings(user)(maiorData, "0")
     val tuplo = (maiorData, savings)
@@ -75,29 +78,32 @@ object  ExpenseTrackerUtils {
   lines match{
    case x::t => {
     val d =x.setValue(monthSavings(user)(date,x.category))
-    println("CATEGORIA : "+ d.category + "\nVALOR:"+d.value)
     val lista:List[categorySavings] =(d::value.reverse).reverse
     monthCategory(t,lista, user, date)
    }
    case Nil => {
-    for(a <- value){
-     println("##### LISTA NOVA:"+a.value+"    #"+a.category)
-     //Comida/0.0,Carro/0.0,Universidade/0.0,Casa/0.0,
-    }
     value
    }
   }
  }
 
  def maxMonth(deposit: Array[String],expense: Array[String]): Array[String] ={
-  if(deposit(1).toInt - expense(1).toInt > 1){
-   deposit
-  } else if (deposit(1).toInt - expense(1).toInt < 1){
+  if(deposit(0) == "") {
    expense
-  } else if(deposit(0).toInt - expense(0).toInt >= 1){
+  } else if (expense(0)=="") {
    deposit
+  }else if(deposit(0)=="" && expense==""){
+   Array("","")
+  }else {
+   if (deposit(1).toInt - expense(1).toInt > 1) {
+    deposit
+   } else if (deposit(1).toInt - expense(1).toInt < 1) {
+    expense
+   } else if (deposit(0).toInt - expense(0).toInt >= 1) {
+    deposit
    } else {
-   expense
+    expense
+   }
   }
  }
 

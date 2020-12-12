@@ -52,12 +52,8 @@ object CSVFileReader{
    val catSavings:List[categorySavings] = linesToCatSavings(lines(6))
    val plan :PlanSoft= linesToPlan(lines(7))
    val user:UserApp = UserApp(username,email,password,balance,deposits,expenses,categories,savings,catSavings,plan)
-   if(deposits.isEmpty || expenses.isEmpty){
-    user
-   } else {
-    val newUser =checkMonth(user)
-    newUser
-   }
+   val newUser =checkMonth(user)
+   newUser
   }
  }
 
