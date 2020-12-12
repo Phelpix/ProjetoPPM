@@ -114,6 +114,7 @@ class ControllerTransaction {
         val newUserApp = {
           user.copy(name = user.name, balance = user.balance + newTransactionValue, depositList = newTransactionList, expenseList = user.expenseList, userCategories = user.userCategories)
         }
+        confirmLabel.setText("Deposito efetuado")
         errorLabel.setVisible(false)
         confirmLabel.setVisible(true)
         newUserApp
@@ -122,6 +123,7 @@ class ControllerTransaction {
         val newUserApp = {
           user.copy(name = user.name, balance = user.balance - newTransactionValue, depositList = user.depositList, expenseList = newTransactionList, userCategories = user.userCategories)
         }
+        confirmLabel.setText("Compra efetuada")
         errorLabel.setVisible(false)
         confirmLabel.setVisible(true)
         newUserApp

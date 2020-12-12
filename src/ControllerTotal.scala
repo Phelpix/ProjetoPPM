@@ -1,7 +1,7 @@
 import javafx.fxml.{FXML, FXMLLoader}
 import javafx.scene.Parent
 import javafx.scene.control.Alert.AlertType
-import javafx.scene.control.{Alert, Button, ButtonType, ChoiceBox, RadioButton, TextArea}
+import javafx.scene.control.{Alert, Button, ButtonType, ChoiceBox, Labeled, RadioButton, TextArea}
 
 class ControllerTotal {
 
@@ -19,6 +19,8 @@ class ControllerTotal {
   private var compraRB: RadioButton =_
   @FXML
   private var voltarButton:  Button =_
+  @FXML
+  private var errorLabel :Labeled =_
 
   var tempUser: UserApp= new UserApp("","","",0.0,LazyList[UserList](),LazyList[UserList](),List[String](),List[(String,Double)](),List[categorySavings](),new PlanSoft(10,List[categorySavings]()))
 
@@ -55,13 +57,25 @@ class ControllerTotal {
   }
 
   def onOkTotalClicked: Unit ={
-    if(depositoRB.isSelected){
+
+    if (!depositoRB.isSelected && !compraRB.isSelected){
+      errorLabel.setText("Selecione uma das opções")
+      errorLabel.setVisible(true)
+    } else if (categoriasCB.getSelectionModel.getSelectedItem == null) {
+      errorLabel.setText("Selecione uma categoria")
+      errorLabel.setVisible(true)
+    } else if(mesCB.getSelectionModel.getSelectedItem==null||anoCB.getSelectionModel.getSelectedItem==null){
+      errorLabel.setText("Indique o mês e ano")
+      errorLabel.setVisible(true)
+    } else if(depositoRB.isSelected){
+      errorLabel.setVisible(false)
       val list:LazyList[UserList] = tempUser.depositList.filter(x =>{x.date==(mesCB.getSelectionModel.getSelectedItem+"-"+anoCB.getSelectionModel.getSelectedItem)})
       val textoDeposito:String=listTotal( list,categoriasCB.getSelectionModel.getSelectedItem).toString
       val alert = new Alert(AlertType.NONE, "O valor desejado é: " + textoDeposito, ButtonType.OK)
       alert.showAndWait
 
     }else if(compraRB.isSelected){
+      errorLabel.setVisible(false)
       val list:LazyList[UserList] = tempUser.expenseList.filter(x => x.date==(mesCB.getSelectionModel.getSelectedItem+"-"+anoCB.getSelectionModel.getSelectedItem))
       val textoCompra:String=listTotal( list,categoriasCB.getSelectionModel.getSelectedItem).toString
       val alert = new Alert(AlertType.NONE, "O valor desejado é: " + textoCompra, ButtonType.OK)
