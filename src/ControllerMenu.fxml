@@ -46,7 +46,7 @@
                      </font></Button>
                   <Button fx:id="Button6" mnemonicParsing="false" onMouseClicked="#onButton6Clicked" prefWidth="121.0" text="Mostrar total" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
                   <Button fx:id="Button7" mnemonicParsing="false" onMouseClicked="#onButton7Clicked" prefWidth="121.0" text="Mostrar Perfil" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
-                  <Button mnemonicParsing="false" prefWidth="121.0" text="Alterar Transação" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
+                  <Button mnemonicParsing="false" onMouseClicked="#onButton8Clicked" prefWidth="121.0" text="Fazer Plano" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
                </children>
             </GridPane>
             <Button fx:id="logoutButton" mnemonicParsing="false" onMouseClicked="#onButtonLogoutClicked" stylesheets="@LogoutButton.css" text="Logout" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
