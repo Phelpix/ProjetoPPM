@@ -1,6 +1,8 @@
 .text-field {
     -fx-border-color: #4a8600;
     -fx-border-width: 2px ;
+    -fx-text-fill: white;
+    -fx-background-color: black;
 }
 
 .button {
@@ -33,4 +35,26 @@
 .list-cell:filled:hover {
     -fx-background-color: #0093ff;
     -fx-text-fill: white;
+}
+
+.toggle-button {
+    -fx-background-color: #60d968; /* Green */
+    -fx-border: none;
+    -fx-text-fill: black;
+    -fx-padding: 6px 10px;
+    -fx-text-align: center;
+    -fx-text-decoration: none;
+    -fx-display: inline-block;
+    -fx-font-size: 11px;
+}
+
+.toggle-button:selected {
+    -fx-background-color: #2d6d32; /* Green */
+    -fx-border: none;
+    -fx-text-fill: black;
+    -fx-padding: 6px 10px;
+    -fx-text-align: center;
+    -fx-text-decoration: none;
+    -fx-display: inline-block;
+    -fx-font-size: 11px;
 }
