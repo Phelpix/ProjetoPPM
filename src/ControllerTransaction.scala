@@ -69,12 +69,10 @@ class ControllerTransaction {
       case "1" => {
         println("ENTREI")
         parent.setUser(transaction(tempUser,tempUser.depositList,tipo))
-        confirmarButton.getScene().getWindow.hide()
       }
       case "2" => {
         println("ENTREI 2")
         parent.setUser(transaction(tempUser,tempUser.expenseList,tipo))
-        confirmarButton.getScene().getWindow.hide()
       }
     }
 
@@ -120,6 +118,8 @@ class ControllerTransaction {
   def onVoltarClicked: Unit ={
     val fxmlLoader = new FXMLLoader(getClass.getResource("ControllerMenu.fxml"))
     val mainViewRoot: Parent = fxmlLoader.load()
+    val controller: ControllerMenu = fxmlLoader.getController
+    controller.setUser(tempUser)
     voltarButton.getScene.setRoot(mainViewRoot)
   }
 }
