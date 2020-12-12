@@ -1,6 +1,7 @@
 import javafx.collections.{FXCollections, ObservableList}
 import javafx.fxml.{FXML, FXMLLoader}
 import javafx.scene.Parent
+import javafx.scene.control.Alert.AlertType
 import javafx.scene.control.{Button, ChoiceBox, RadioButton, _}
 import javafx.scene.layout.GridPane
 
@@ -147,36 +148,62 @@ class ControllerHistorico {
   }
 
   def onAlteraValorClicked():Unit={
-    if(alterarValue.isSelected)
-      valueText.setText("")
-      alterarValue.setSelected(true)
+    try{
+      if(!alterarValue.isSelected) {
+        valueText.setText("")
+      }
       alterarCat.setSelected(false)
       alterarDesc.setSelected(false)
       valueText.setVisible(true)
       alterarCategoriaCB.setVisible(false)
-      valueText.setText(getString(histTA.getSelectionModel().getSelectedItem.toString,1))
+      valueText.setText(getString(histTA.getSelectionModel().getSelectedItem.toString, 1))
+
+    } catch {
+      case ex: Exception=>{
+        val alert = new Alert(AlertType.NONE, "Tem de selecionar um elemento da lista", ButtonType.OK)
+        alert.showAndWait
+      }
+
+    }
 
   }
   def onAlteraCategoriaClicked():Unit={
-    if(!alterarCat.isSelected)
+    try {
+      if (!alterarCat.isSelected) {
 
-      alterarCat.setSelected(true)
+      }
       alterarValue.setSelected(false)
       alterarDesc.setSelected(false)
       valueText.setVisible(false)
       alterarCategoriaCB.setVisible(true)
-     // valueText.setText(getString(histTA.getSelectionModel().getSelectedIndex()))
+    } catch {
+      case ex: Exception=>{
+        val alert = new Alert(AlertType.NONE, "Tem de selecionar um elemento da lista", ButtonType.OK)
+        alert.showAndWait
+      }
 
+    }
   }
-  def onAlteraDescricaoClicked():Unit={
-    if(!alterarDesc.isSelected())
+
+  def onAlteraDescricaoClicked():Unit= {
+    try{
+    if (!alterarDesc.isSelected()) {
       valueText.setText("")
-      alterarCat.setSelected(false)
-      alterarValue.setSelected(false)
-      valueText.setVisible(true)
-      alterarCategoriaCB.setVisible(false)
-      valueText.setText(getString(histTA.getSelectionModel().getSelectedItem.toString,2))
+    }
+    valueText.setVisible(true)
+    alterarCat.setSelected(false)
+    alterarValue.setSelected(false)
+    alterarCategoriaCB.setVisible(false)
+    valueText.setText(getString(histTA.getSelectionModel().getSelectedItem.toString, 2))
+    } catch {
+      case ex: Exception=>{
+        val alert = new Alert(AlertType.NONE, "Tem de selecionar um elemento da lista", ButtonType.OK)
+        alert.showAndWait
+      }
+
+    }
   }
+
 
   def onDepositSelected():Unit={
     depositoRB.setSelected(true)
@@ -196,6 +223,7 @@ class ControllerHistorico {
 
   def onalteraClicked():Unit={
     val str = histTA.getSelectionModel.getSelectedItem.split(" - ")
+    var i = histTA.getSelectionModel.getSelectedIndex
     println("STR:  "+str(0))
     if (depositoRB.isSelected) {
       for (x <- tempUser.depositList) {
@@ -218,7 +246,11 @@ class ControllerHistorico {
         }
       }
     }
+    alterarCat.setSelected(false)
+    alterarValue.setSelected(false)
+    alterarDesc.setSelected(false)
     onOkClicked
+
   }
 
   def showHistory(item: UserList, filter:String): UserList = {
@@ -250,6 +282,7 @@ class ControllerHistorico {
       } //case 2
       case "3"=>{
         val newDeposit = userList.setCategory(userList, alterarCategoriaCB.getSelectionModel.getSelectedItem)
+        println("CATEGORIA:   "+ newDeposit.category)
         val newlist = list.patch(index,Seq(newDeposit),1)
         newlist
       } //case 2
