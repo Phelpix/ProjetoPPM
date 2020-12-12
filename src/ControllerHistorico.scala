@@ -249,7 +249,7 @@ class ControllerHistorico {
         newlist
       } //case 2
       case "3"=>{
-        val newDeposit = userList.setCategory(userList, valueText.getText())
+        val newDeposit = userList.setCategory(userList, alterarCategoriaCB.getSelectionModel.getSelectedItem)
         val newlist = list.patch(index,Seq(newDeposit),1)
         newlist
       } //case 2

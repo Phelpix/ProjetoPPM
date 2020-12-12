@@ -29,9 +29,7 @@ class ControllerRegisto {
     registerButton2.getScene().getWindow.hide()
   }
   def backClicked: Unit ={
-    val fxmlLoader = new FXMLLoader(getClass.getResource("ControllerMenu.fxml"))
-    val mainViewRoot: Parent = fxmlLoader.load()
-    backButton.getScene.setRoot(mainViewRoot)
+    backButton.getScene().getWindow.hide()
   }
 
 }
