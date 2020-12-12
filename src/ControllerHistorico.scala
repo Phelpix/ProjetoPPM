@@ -194,18 +194,32 @@ class ControllerHistorico {
   }
 
 
-def onalteraClicked():Unit={
-  if (depositoRB.isSelected) {
-    parent.setUser(changeThings(tempUser, "1"))
-    tempUser = changeThings(tempUser,"1")
+  def onalteraClicked():Unit={
+    val str = histTA.getSelectionModel.getSelectedItem.split(" - ")
+    println("STR:  "+str(0))
+    if (depositoRB.isSelected) {
+      for (x <- tempUser.depositList) {
+        if (x.id == str(0)) {
+          val n =tempUser.depositList.indexOf(x)
+          val user = changeThings(tempUser,"1", n,x)
+          println(tempUser.depositList.indexOf())
+          parent.setUser(user)
+          tempUser = user
+        }
+      }
+    }
+    else {
+      for (x <- tempUser.depositList) {
+        if (x.id == str(0)) {
+          val n = tempUser.depositList.indexOf(x)
+          val user = changeThings(tempUser, "2", n, x)
+          parent.setUser(user)
+          tempUser = user
+        }
+      }
+    }
+    onOkClicked
   }
-  else {
-    changeThings(tempUser,"2")
-    parent.setUser(changeThings(tempUser, "1"))
-    tempUser = changeThings(tempUser,"2")
-  }
-  onOkClicked
-}
 
   def showHistory(item: UserList, filter:String): UserList = {
     if(item.category == filter){
@@ -222,74 +236,51 @@ def onalteraClicked():Unit={
 
 
 
- def changeDeposit(userApp: UserApp,list: LazyList[UserList],toChangeList:LazyList[UserList], index:Int, option:String):LazyList[UserList]={
-   var count :Int=0
-   var indice:Int =0
-   option match {
+  def changeDeposit(userApp: UserApp,list: LazyList[UserList],userList: UserList, index:Int, option:String):LazyList[UserList]={
+    option match {
       case "1"=>{
-        val newDeposit = toChangeList(index).setValue(toChangeList(index), valueText.getText().toDouble)
-        println("CHANGE DEPOSTI:  "+ toChangeList(index).value)
-        println("INDEX:  "+list.indexOf(toChangeList))
-        for(x <- list ){
-          if(x.id == toChangeList(index).id) {
-            indice = count
-            count+=1
-          }
-        }
-
-        val newlist = list.patch(indice,Seq(newDeposit),1)
+        val newDeposit = userList.setValue(userList, valueText.getText().toDouble)
+        val newlist = list.patch(index,Seq(newDeposit),1)
         newlist
       } //case 1
       case "2"=>{
-        val newDeposit = toChangeList(index).setDescription(toChangeList(index), valueText.getText())
-        for(x <- list ){
-          if(x.id == toChangeList(index).id) {
-            indice = count
-            count+=1
-          }
-        }
-        val newlist =list.patch(indice,Seq(newDeposit),1)
+        val newDeposit = userList.setDescription(userList, valueText.getText())
+        val newlist = list.patch(index,Seq(newDeposit),1)
         newlist
       } //case 2
       case "3"=>{
-        val newDeposit = toChangeList(index).setCategory(toChangeList(index), alterarCategoriaCB.getSelectionModel.getSelectedItem)
-        for(x <- list ){
-          if(x.id == toChangeList(index).id) {
-            indice = count
-            count+=1
-          }
-        }
-        val newlist =list.patch(indice,Seq(newDeposit),1)
+        val newDeposit = userList.setCategory(userList, valueText.getText())
+        val newlist = list.patch(index,Seq(newDeposit),1)
         newlist
       } //case 2
     }
   }
 
-  def printDeposits(user: UserApp,transactionList:LazyList[UserList],toChangeList:LazyList[UserList],input:Int): LazyList[UserList] ={
+  def printDeposits(user: UserApp,transactionList:LazyList[UserList],input:Int,userList: UserList): LazyList[UserList] ={
     if(alterarValue.isSelected()) {
-      val list = changeDeposit(user,transactionList, toChangeList, input ,"1")
+      val list = changeDeposit(user,transactionList,userList, input ,"1")
       list
     }else if(alterarDesc.isSelected()){
-      val list = changeDeposit(user,transactionList, toChangeList, input ,"2")
+      val list = changeDeposit(user,transactionList,userList, input ,"2")
       list
     }else{
-      val list = changeDeposit(user,transactionList, toChangeList, input ,"3")
+      val list = changeDeposit(user,transactionList,userList, input ,"3")
       list
     }
   }
 
 
-  def changeThings(user: UserApp, input:String): UserApp ={
+  def changeThings(user: UserApp, input:String, indice:Int, userList: UserList): UserApp ={
     input match {
       case "1"=>{
-        val newList =printDeposits(user,user.depositList,listDep,histTA.getSelectionModel().getSelectedIndex())
+        val newList =printDeposits(user,user.depositList,indice,userList)
         println("CHANGE THINGS:   "+ histTA.getSelectionModel().getSelectedIndex())
         val newUser = user.copy(name = user.name,user.email,user.password, balance = user.balance, newList, expenseList = user.expenseList, user.userCategories,user.monthlySavings)
         newUser
       }
 
       case "2"=>{
-        val newList =printDeposits(user,user.expenseList, listExp,histTA.getSelectionModel().getSelectedIndex())
+        val newList =printDeposits(user,user.expenseList, indice,userList)
         val newUser = user.copy(name = user.name,user.email,user.password, balance = user.balance, user.depositList, newList, user.userCategories, user.monthlySavings, user.catSavList)
         newUser
       }
