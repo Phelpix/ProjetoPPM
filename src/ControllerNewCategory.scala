@@ -18,6 +18,8 @@ class ControllerNewCategory {
  private var okButton : Button=_
  @FXML
  private var voltarButton:Button =_
+ @FXML
+ private var errorLabel : Labeled =_
 
  var tempUser:UserApp =new UserApp("","","",0.0,LazyList[UserList](),LazyList[UserList](),List[String](),List[(String,Double)](),List[categorySavings](),new PlanSoft(10,List[categorySavings]()))
  var parent:ControllerMenu = new ControllerMenu
@@ -44,9 +46,14 @@ class ControllerNewCategory {
 
 
  def onOkClicked():Unit={
-  tempUser = addCategory(tempUser,novaCategoria.getText())
-  //okButton.getScene().getWindow.hide()
-  println("OK CLICKED:"+parent.getUser().userCategories)
+  if(novaCategoria.getText()==""){
+   errorLabel.setText("Indique uma categoria")
+   errorLabel.setVisible(true)
+  }else {
+   tempUser = addCategory(tempUser, novaCategoria.getText())
+   //okButton.getScene().getWindow.hide()
+   println("OK CLICKED:" + parent.getUser().userCategories)
+  }
  }
 
  def onVoltarClicked: Unit ={
