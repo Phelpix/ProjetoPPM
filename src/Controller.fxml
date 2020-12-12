@@ -36,7 +36,7 @@
                   <RowConstraints maxHeight="55.0" minHeight="10.0" prefHeight="33.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Button fx:id="loginButton" mnemonicParsing="false" onMouseClicked="#onLoginClicked" stylesheets="@login.css" text="Login" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
+                  <Button fx:id="loginButton" mnemonicParsing="false" onKeyPressed="#onLoginClicked" onMouseClicked="#onLoginClicked" stylesheets="@login.css" text="Login" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
                   <TextField fx:id="emailTF" GridPane.columnIndex="1" />
                   <Button fx:id="registerButton" mnemonicParsing="false" onMouseClicked="#onRegisterClicked" stylesheets="@login.css" text="Registar" GridPane.halignment="RIGHT" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
                   <Label alignment="CENTER" contentDisplay="CENTER" text="Email:" textFill="WHITE" GridPane.halignment="CENTER" />
@@ -45,7 +45,7 @@
                   <PasswordField fx:id="passwordTF" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                </children>
             </GridPane>
-            <Label text="Expense Tracker" textFill="#0d6612" GridPane.columnIndex="1" GridPane.halignment="CENTER">
+            <Label text="Expense Tracker" textFill="#60d968" GridPane.columnIndex="1" GridPane.halignment="CENTER">
                <font>
                   <Font size="32.0" />
                </font>
