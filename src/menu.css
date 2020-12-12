@@ -14,9 +14,10 @@
     -fx-font-size: 11px;
 }
 
+
 .choice-box {
     -fx-background-color: black;
-    -fx-mark-color: #4CAF50 ; // arrow color
+    -fx-mark-color: #60d968 ; // arrow color
 }
 .choice-box > .label { -fx-text-fill: white; }
 
@@ -31,5 +32,5 @@
 
 .list-cell:filled:hover {
     -fx-background-color: #0093ff;
-    -fx-text-fill: white;++++++
+    -fx-text-fill: white;
 }

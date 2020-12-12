@@ -69,11 +69,11 @@
                   <Button fx:id="okButton" mnemonicParsing="false" onMouseClicked="#onOkClicked" prefHeight="26.0" prefWidth="76.0" text="Aplicar" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
                   <Button fx:id="voltarButton" mnemonicParsing="false" onMouseClicked="#onVoltarClicked" prefWidth="76.0" stylesheets="@LogoutButton.css" text="Voltar" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
                   <Button fx:id="altera" mnemonicParsing="false" onMouseClicked="#onalteraClicked" prefWidth="76.0" text="Aplicar" visible="false" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
-                  <Button fx:id="historico" mnemonicParsing="false" onMouseClicked="#onHistoricoButton" prefWidth="76.0" text="Historico" visible="false" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+                  <Button fx:id="historico" mnemonicParsing="false" onMouseClicked="#onHistoricoButton" prefWidth="76.0" stylesheets="@LogoutButton.css" text="Historico" visible="false" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
                </children>
             </GridPane>
             <ListView fx:id="histTA" cache="true" cacheHint="QUALITY" editable="true" maxHeight="-Infinity" maxWidth="-Infinity" onEditCancel="#elementSelected" onEditCommit="#elementSelected" onMouseClicked="#elementSelected" onMouseDragOver="#elementSelected" prefHeight="245.0" prefWidth="197.0" stylesheets="@menu.css" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
-            <Label prefHeight="31.0" prefWidth="73.0" text="Histórico" textAlignment="CENTER" textFill="WHITE" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+            <Label prefHeight="31.0" prefWidth="73.0" text="Histórico" textAlignment="CENTER" textFill="#62d967" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                <font>
                   <Font size="18.0" />
                </font>
