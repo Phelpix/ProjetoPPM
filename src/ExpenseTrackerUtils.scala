@@ -48,21 +48,23 @@ object  ExpenseTrackerUtils {
   }
 
  def checkMonth(user: UserApp): UserApp = {
+  var str =Array("","")
   val format = new SimpleDateFormat("M-y")
   val date: String = format.format(Calendar.getInstance().getTime())
   val lastDeposit = user.depositList.head.date.split("-")
   val lastExpense = user.expenseList.head.date.split("-")
   val maior = maxMonth(lastDeposit, lastExpense)
   val maiorData = maior(0) + "-" + maior(1)
-
-  val str =
-
-  if (date != lastDeposit && date != lastExpense && date !=) {
-   val savings = monthSavings(user)(maiorData, "0")
-   val tuplo = (maiorData, savings)
-   val newCatSavList: List[categorySavings] = monthCategory(user.catSavList,List[categorySavings](), user, maiorData)
-   val newUser = user.copy(name = user.name, user.email, user.password, balance = user.balance, depositList = user.depositList, expenseList = user.expenseList, user.userCategories, tuplo :: user.monthlySavings, newCatSavList)
-   newUser
+  println(user.monthlySavings)
+  if (user.monthlySavings != List()) {
+   str = user.monthlySavings.head._1.split("-")
+  }
+   if (date != lastDeposit && date != lastExpense && str(0)!=maior(0)) {
+    val savings = monthSavings(user)(maiorData, "0")
+    val tuplo = (maiorData, savings)
+    val newCatSavList: List[categorySavings] = monthCategory(user.catSavList,List[categorySavings](), user, maiorData)
+    val newUser = user.copy(name = user.name, user.email, user.password, balance = user.balance, depositList = user.depositList, expenseList = user.expenseList, user.userCategories, tuplo :: user.monthlySavings, newCatSavList)
+    newUser
   } else {
    user
   }

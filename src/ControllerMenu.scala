@@ -102,13 +102,6 @@ class ControllerMenu {
   def onButton8Clicked():Unit={
     val newUser = makePlan(user,10)
     this.setUser(newUser)
-    var str:String ="O seu plano é:\n"
-    for(x <-user.plan.list){
-      str += x.category + ":  " + x.value +"€" +"\n"
-    }
-    str += "Tente não exceder estes valores. Boa sorte!!!"
-    val alert = new Alert(AlertType.NONE, str, ButtonType.OK)
-    alert.showAndWait
   }
 
 
@@ -128,11 +121,24 @@ class ControllerMenu {
   }
 
   def makePlan(user: UserApp,tipo:Int):UserApp={
-    val plan :PlanSoft = new PlanSoft(tipo,user.catSavList.filter(x=>x.value!=0.0))
-    val newPlan:PlanSoft = setPercentage(plan)
-    val newUser = user.copy(name = user.name,user.email,user.password, balance = user.balance, user.depositList, expenseList = user.expenseList, user.userCategories,user.monthlySavings, user.catSavList,newPlan)
-
-    newUser
+    if(user.monthlySavings !=List()) {
+      val plan: PlanSoft = new PlanSoft(tipo, user.catSavList.filter(x => x.value != 0.0))
+      val newPlan: PlanSoft = setPercentage(plan)
+      val newUser = user.copy(name = user.name, user.email, user.password, balance = user.balance, user.depositList, expenseList = user.expenseList, user.userCategories, user.monthlySavings, user.catSavList, newPlan)
+      var str:String ="O seu plano é:\n"
+      for(x <-user.plan.list){
+        str += x.category + ":  " + x.value +"€" +"\n"
+      }
+      str += "Tente não exceder estes valores. Boa sorte!!!"
+      val alert = new Alert(AlertType.NONE, str, ButtonType.OK)
+      alert.showAndWait
+      newUser
+    }
+    else{
+      val alert = new Alert(AlertType.NONE, "Tem de completar um mês para poder usar esta funcionalidade!", ButtonType.OK)
+      alert.showAndWait
+      user
+    }
   }
   def setPercentage(plan: PlanSoft): PlanSoft = {
     val newl = newList(plan.list,0.10,List[categorySavings]())
