@@ -273,15 +273,14 @@ class ControllerHistorico {
             val n = tempUser.depositList.indexOf(x)
             val user = changeThings(tempUser, "1", n, x)
             println(tempUser.depositList.indexOf())
-            //parent.setUser(user)
             tempUser = user
           }
         }
       }
       else {
-        for (x <- tempUser.depositList) {
+        for (x <- tempUser.expenseList) {
           if (x.id == str(0)) {
-            val n = tempUser.depositList.indexOf(x)
+            val n = tempUser.expenseList.indexOf(x)
             val user = changeThings(tempUser, "2", n, x)
             //parent.setUser(user)
             tempUser = user

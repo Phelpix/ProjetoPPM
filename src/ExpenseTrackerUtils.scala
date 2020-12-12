@@ -59,7 +59,7 @@ object  ExpenseTrackerUtils {
   if (user.monthlySavings != List()) {
    str = user.monthlySavings.head._1.split("-")
   }
-   if (date != lastDeposit && date != lastExpense && str(0)!=maior(0)) {
+   if (date != maiorData && str(0)!=maior(0)) {
     val savings = monthSavings(user)(maiorData, "0")
     val tuplo = (maiorData, savings)
     val newCatSavList: List[categorySavings] = monthCategory(user.catSavList,List[categorySavings](), user, maiorData)
