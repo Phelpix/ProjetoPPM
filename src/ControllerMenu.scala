@@ -46,6 +46,7 @@ class ControllerMenu {
     val fxmlLoader = new FXMLLoader(getClass.getResource("ControllerTransaction.fxml"))
     val mainViewRoot: Parent = fxmlLoader.load()
     val controller: ControllerTransaction = fxmlLoader.getController
+    println("TOU A FAZER")
     controller.setTipo(2)
     controller.setTitle()
     controller.setTempUser(user)
