@@ -25,6 +25,11 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
+            <Label fx:id="titleLable" textFill="#60d968" GridPane.columnIndex="1" GridPane.halignment="CENTER">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
             <GridPane GridPane.columnIndex="1" GridPane.rowIndex="1">
               <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -44,11 +49,6 @@
                   <ChoiceBox fx:id="categoriasCB" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                </children>
             </GridPane>
-            <Label fx:id="titleLable" textFill="#60d968" GridPane.columnIndex="1" GridPane.halignment="CENTER">
-               <font>
-                  <Font size="24.0" />
-               </font>
-            </Label>
             <GridPane GridPane.columnIndex="1" GridPane.rowIndex="2">
               <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
