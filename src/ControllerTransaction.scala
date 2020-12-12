@@ -4,8 +4,11 @@ import java.util.Calendar
 
 import MenuUserUtils.roundAt
 import javafx.collections.{FXCollections, ObservableList}
-import javafx.fxml.FXML
+import javafx.fxml.{FXML, FXMLLoader}
+import javafx.scene.Parent
 import javafx.scene.control.{Button, ChoiceBox, ComboBox, Labeled, TextField}
+import javafx.stage.Stage
+import javax.swing.ButtonModel
 
 class ControllerTransaction {
   @FXML
@@ -16,6 +19,8 @@ class ControllerTransaction {
   private var categoriasCB: ChoiceBox[String] = new ChoiceBox[String]()
   @FXML
   private var confirmarButton: Button = _
+  @FXML
+  private var voltarButton:Button =_
   @FXML
   private var titleLable: Labeled =_
 
@@ -110,5 +115,11 @@ class ControllerTransaction {
       }
 
     }
+  }
+
+  def onVoltarClicked: Unit ={
+    val fxmlLoader = new FXMLLoader(getClass.getResource("ControllerMenu.fxml"))
+    val mainViewRoot: Parent = fxmlLoader.load()
+    voltarButton.getScene.setRoot(mainViewRoot)
   }
 }

@@ -6,7 +6,8 @@ import CSVFileReader.{changeEmail, changePassword, changeUsername, credentialsFi
 import IO.{email, getUserInput, newEmailPrint, newPasswordPrint, newUsernamePrint, showSettings}
 import MenuUserUtils.roundAt
 import javafx.collections.{FXCollections, ObservableList}
-import javafx.fxml.FXML
+import javafx.fxml.{FXML, FXMLLoader}
+import javafx.scene.Parent
 import javafx.scene.control.{Button, ChoiceBox, ComboBox, Labeled, RadioButton, TextField}
 
 class ControllerPerfil {
@@ -18,6 +19,8 @@ class ControllerPerfil {
   private var emailTF: TextField=_
   @FXML
   private var confirmButton:Button=_
+  @FXML
+  private var voltarButton:Button =_
 
   var tempUser: UserApp= new UserApp("","","",0.0,LazyList[UserList](),LazyList[UserList](),List[String](),List[(String,Double)](),List[categorySavings](),new PlanSoft(10,List[categorySavings]()))
   var parent:ControllerMenu=new ControllerMenu
@@ -75,6 +78,12 @@ class ControllerPerfil {
       }else user*/
 
     }
+
+  def onVoltarClicked: Unit ={
+    val fxmlLoader = new FXMLLoader(getClass.getResource("ControllerMenu.fxml"))
+    val mainViewRoot: Parent = fxmlLoader.load()
+    voltarButton.getScene.setRoot(mainViewRoot)
+  }
 
 
 }

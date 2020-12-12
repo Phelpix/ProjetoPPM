@@ -1,4 +1,5 @@
-import javafx.fxml.FXML
+import javafx.fxml.{FXML, FXMLLoader}
+import javafx.scene.Parent
 import javafx.scene.control.Alert.AlertType
 import javafx.scene.control.{Alert, Button, ButtonType, ChoiceBox, RadioButton, TextArea}
 
@@ -17,7 +18,7 @@ class ControllerTotal {
   @FXML
   private var compraRB: RadioButton =_
   @FXML
-  private var fecharButton:  Button =_
+  private var voltarButton:  Button =_
 
   var tempUser: UserApp= new UserApp("","","",0.0,LazyList[UserList](),LazyList[UserList](),List[String](),List[(String,Double)](),List[categorySavings](),new PlanSoft(10,List[categorySavings]()))
 
@@ -73,8 +74,10 @@ class ControllerTotal {
       total
   }
 
-  def onFecharClicked: Unit ={
-    fecharButton.getScene().getWindow.hide()
+  def onVoltarClicked: Unit ={
+    val fxmlLoader = new FXMLLoader(getClass.getResource("ControllerMenu.fxml"))
+    val mainViewRoot: Parent = fxmlLoader.load()
+    voltarButton.getScene.setRoot(mainViewRoot)
   }
 
 }

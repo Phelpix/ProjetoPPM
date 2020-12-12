@@ -1,17 +1,18 @@
 .button {
-    -fx-background-color: #4CAF50; /* Green */
+    -fx-background-color: #60d968; /* Green */
     -fx-border: none;
-    -fx-text-fill: white;
+    -fx-text-fill: black;
     -fx-padding: 6px 10px;
     -fx-text-align: center;
     -fx-text-decoration: none;
     -fx-display: inline-block;
-    -fx-font-size: 15px;
+    -fx-font-size: 11px;
 }
 
 
 .text-field {
-    -fx-background-color: -fx-text-box-border, -fx-background ;
+    -fx-background-color: black;
+    -fx-text-fill: white;
     -fx-background-insets: 0, 0 0 1 0 ;
     -fx-background-radius: 0 ;
 }

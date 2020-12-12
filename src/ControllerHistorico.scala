@@ -1,5 +1,6 @@
 import javafx.collections.{FXCollections, ObservableList}
-import javafx.fxml.FXML
+import javafx.fxml.{FXML, FXMLLoader}
+import javafx.scene.Parent
 import javafx.scene.control.{Button, ChoiceBox, RadioButton, _}
 import javafx.scene.layout.GridPane
 
@@ -20,7 +21,7 @@ class ControllerHistorico {
   @FXML
   private var compraRB: RadioButton =_
   @FXML
-  private var fecharButton:  Button =_
+  private var voltarButton:  Button =_
   @FXML
   private var alterarButton: Button=_
   @FXML
@@ -39,11 +40,14 @@ class ControllerHistorico {
   private var GridPane2:GridPane=_
   @FXML
   private var historico:Button=_
-
+  @FXML
+  private var alterarCategoriaCB:ChoiceBox[String]=new ChoiceBox[String]()
 
 
   var tempUser: UserApp= new UserApp("","","",0.0,LazyList[UserList](),LazyList[UserList](),List[String](),List[(String,Double)](),List[categorySavings](),new PlanSoft(10,List[categorySavings]()))
   var parent:ControllerMenu=new ControllerMenu
+  var listDep: LazyList[UserList] = LazyList[Deposit]()
+  var listExp: LazyList[UserList] = LazyList[Expense]()
   var comeOn: ObservableList[String] = FXCollections.observableArrayList()
 
   def setTempUser(tempUser: UserApp): Unit ={
@@ -69,6 +73,7 @@ class ControllerHistorico {
       case Nil =>
       case x :: t => {
         categoriasCB.getItems.add(x)
+        alterarCategoriaCB.getItems.add(x)
         setCategorias(t)
       }
     }
@@ -95,7 +100,7 @@ class ControllerHistorico {
   def onOkClicked: Unit ={
     comeOn = FXCollections.observableArrayList()
     println(comeOn)
-   // listDep  = List[UserList]()
+    listDep  = LazyList[UserList]()
     if(depositoRB.isSelected){
       println("DEPOSITO")
       val list:LazyList[UserList] = tempUser.depositList.filter(x =>{x.date==(mesCB.getSelectionModel.getSelectedItem+"-"+anoCB.getSelectionModel.getSelectedItem)})
@@ -103,6 +108,7 @@ class ControllerHistorico {
         var textoDeposito: UserList = showHistory(aux, categoriasCB.getSelectionModel.getSelectedItem)
         if(textoDeposito.category !="" ) {
           comeOn.add(textoDeposito.id+" - "+textoDeposito.value+" - "+textoDeposito.description)
+          listDep = textoDeposito#::listDep
         }
       }
       histTA.setItems(comeOn)
@@ -112,6 +118,7 @@ class ControllerHistorico {
         var textoCompra: UserList = showHistory(aux, categoriasCB.getSelectionModel.getSelectedItem)
         if(textoCompra.category != "") {
           comeOn.add(textoCompra.id+" - "+textoCompra.value+" - "+ textoCompra.description)
+          listExp= textoCompra#::listExp
         }
       }
       histTA.setItems(comeOn)
@@ -124,7 +131,7 @@ class ControllerHistorico {
     historico.setVisible(false)
     altera.setVisible(false)
     okButton.setVisible(true)
-    fecharButton.setVisible(true)
+    voltarButton.setVisible(true)
   }
 
   def onAlterarButtonClicked():Unit={
@@ -133,7 +140,10 @@ class ControllerHistorico {
       historico.setVisible(true)
       altera.setVisible(true)
       okButton.setVisible(false)
-      fecharButton.setVisible(false)
+      voltarButton.setVisible(false)
+      valueText.setVisible(true)
+      alterarCategoriaCB.setVisible(false)
+
   }
 
   def onAlteraValorClicked():Unit={
@@ -142,15 +152,19 @@ class ControllerHistorico {
       alterarValue.setSelected(true)
       alterarCat.setSelected(false)
       alterarDesc.setSelected(false)
+      valueText.setVisible(true)
+      alterarCategoriaCB.setVisible(false)
       valueText.setText(getString(histTA.getSelectionModel().getSelectedItem.toString,1))
 
   }
   def onAlteraCategoriaClicked():Unit={
     if(!alterarCat.isSelected)
-      valueText.setText("")
+
       alterarCat.setSelected(true)
       alterarValue.setSelected(false)
       alterarDesc.setSelected(false)
+      valueText.setVisible(false)
+      alterarCategoriaCB.setVisible(true)
      // valueText.setText(getString(histTA.getSelectionModel().getSelectedIndex()))
 
   }
@@ -159,6 +173,8 @@ class ControllerHistorico {
       valueText.setText("")
       alterarCat.setSelected(false)
       alterarValue.setSelected(false)
+      valueText.setVisible(true)
+      alterarCategoriaCB.setVisible(false)
       valueText.setText(getString(histTA.getSelectionModel().getSelectedItem.toString,2))
   }
 
@@ -178,32 +194,32 @@ class ControllerHistorico {
   }
 
 
-def onalteraClicked():Unit={
-  val str = histTA.getSelectionModel.getSelectedItem.split(" - ")
-  println("STR:  "+str(0))
-  if (depositoRB.isSelected) {
-    for (x <- tempUser.depositList) {
-      if (x.id == str(0)) {
-        val n =tempUser.depositList.indexOf(x)
-        val user = changeThings(tempUser,"1", n,x)
-        println(tempUser.depositList.indexOf())
-        parent.setUser(user)
-        tempUser = user
+  def onalteraClicked():Unit={
+    val str = histTA.getSelectionModel.getSelectedItem.split(" - ")
+    println("STR:  "+str(0))
+    if (depositoRB.isSelected) {
+      for (x <- tempUser.depositList) {
+        if (x.id == str(0)) {
+          val n =tempUser.depositList.indexOf(x)
+          val user = changeThings(tempUser,"1", n,x)
+          println(tempUser.depositList.indexOf())
+          parent.setUser(user)
+          tempUser = user
+        }
       }
     }
-  }
-  else {
-    for (x <- tempUser.depositList) {
-      if (x.id == str(0)) {
-        val n = tempUser.depositList.indexOf(x)
-        val user = changeThings(tempUser, "2", n, x)
-        parent.setUser(user)
-        tempUser = user
+    else {
+      for (x <- tempUser.depositList) {
+        if (x.id == str(0)) {
+          val n = tempUser.depositList.indexOf(x)
+          val user = changeThings(tempUser, "2", n, x)
+          parent.setUser(user)
+          tempUser = user
+        }
       }
     }
+    onOkClicked
   }
-  onOkClicked
-}
 
   def showHistory(item: UserList, filter:String): UserList = {
     if(item.category == filter){
@@ -220,8 +236,8 @@ def onalteraClicked():Unit={
 
 
 
- def changeDeposit(userApp: UserApp,list: LazyList[UserList],userList: UserList, index:Int, option:String):LazyList[UserList]={
-   option match {
+  def changeDeposit(userApp: UserApp,list: LazyList[UserList],userList: UserList, index:Int, option:String):LazyList[UserList]={
+    option match {
       case "1"=>{
         val newDeposit = userList.setValue(userList, valueText.getText().toDouble)
         val newlist = list.patch(index,Seq(newDeposit),1)
@@ -271,8 +287,10 @@ def onalteraClicked():Unit={
     }
   }
 
-  def onFecharClicked: Unit ={
-    fecharButton.getScene().getWindow.hide()
-  }
+ def onVoltarClicked: Unit ={
+  val fxmlLoader = new FXMLLoader(getClass.getResource("ControllerMenu.fxml"))
+  val mainViewRoot: Parent = fxmlLoader.load()
+  voltarButton.getScene.setRoot(mainViewRoot)
+ }
 
 }
