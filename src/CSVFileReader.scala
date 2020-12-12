@@ -62,7 +62,7 @@ object CSVFileReader{
  }
 
  def linesToPlan(line:String):PlanSoft={
-  if(line=="")new PlanSoft(0,List[categorySavings]())
+  if(line==""||line=="0:")new PlanSoft(0,List[categorySavings]())
   else{
    val plan = line.split(":").toList
    val tipo:Int = plan(0).toInt

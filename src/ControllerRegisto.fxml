@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
@@ -61,6 +62,11 @@
                   <Button fx:id="voltarButton" mnemonicParsing="false" onMouseClicked="#backClicked" stylesheets="@LogoutButton.css" text="Voltar" GridPane.halignment="CENTER" GridPane.valignment="TOP" />
                </children>
             </GridPane>
+            <Label fx:id="errorLabel" text="Campo mal preenchido" textFill="RED" visible="false" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
+               <GridPane.margin>
+                  <Insets bottom="10.0" />
+               </GridPane.margin>
+            </Label>
          </children>
       </GridPane>
    </children>

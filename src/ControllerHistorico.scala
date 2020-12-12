@@ -2,7 +2,7 @@ import javafx.collections.{FXCollections, ObservableList}
 import javafx.fxml.{FXML, FXMLLoader}
 import javafx.scene.Parent
 import javafx.scene.control.Alert.AlertType
-import javafx.scene.control.{Button, ChoiceBox, RadioButton, _}
+import javafx.scene.control.{Button, ChoiceBox, Labeled, ListView, RadioButton, TextField, ToggleButton}
 import javafx.scene.layout.GridPane
 
 class ControllerHistorico {
@@ -43,6 +43,9 @@ class ControllerHistorico {
   private var historico:Button=_
   @FXML
   private var alterarCategoriaCB:ChoiceBox[String]=new ChoiceBox[String]()
+  @FXML
+  private var errorLabel :Labeled =_
+
 
 
   var tempUser: UserApp= new UserApp("","","",0.0,LazyList[UserList](),LazyList[UserList](),List[String](),List[(String,Double)](),List[categorySavings](),new PlanSoft(10,List[categorySavings]()))
@@ -104,25 +107,53 @@ class ControllerHistorico {
     listDep  = LazyList[UserList]()
     if(depositoRB.isSelected){
       println("DEPOSITO")
-      val list:LazyList[UserList] = tempUser.depositList.filter(x =>{x.date==(mesCB.getSelectionModel.getSelectedItem+"-"+anoCB.getSelectionModel.getSelectedItem)})
-      for(aux <- list) {
-        var textoDeposito: UserList = showHistory(aux, categoriasCB.getSelectionModel.getSelectedItem)
-        if(textoDeposito.category !="" ) {
-          comeOn.add(textoDeposito.id+" - "+textoDeposito.value+" - "+textoDeposito.description)
-          listDep = textoDeposito#::listDep
-        }
+      if(mesCB.getSelectionModel.getSelectedItem==null||anoCB.getSelectionModel.getSelectedItem==null){
+        errorLabel.setText("Indique o mês e ano")
+        errorLabel.setVisible(true)
+      }else {
+        val list: LazyList[UserList] = tempUser.depositList.filter(x => {
+          x.date == (mesCB.getSelectionModel.getSelectedItem + "-" + anoCB.getSelectionModel.getSelectedItem)
+        })
+        if (categoriasCB.getSelectionModel.getSelectedItem != null) {
+        for (aux <- list) {
+          var textoDeposito: UserList = showHistory(aux, categoriasCB.getSelectionModel.getSelectedItem)
+          if (textoDeposito.category != "") {
+            errorLabel.setVisible(false)
+            comeOn.add(textoDeposito.id + " - " + textoDeposito.value + " - " + textoDeposito.description)
+            listDep = textoDeposito #:: listDep
+          }}}
+          else {
+            errorLabel.setText("Escolha uma categoria")
+            errorLabel.setVisible(true)
+          }
+
+        histTA.setItems(comeOn)
       }
-      histTA.setItems(comeOn)
     }else if(compraRB.isSelected){
-      val list:LazyList[UserList] = tempUser.expenseList.filter(x => x.date==(mesCB.getSelectionModel.getSelectedItem+"-"+anoCB.getSelectionModel.getSelectedItem))
-      for(aux <- list) {
-        var textoCompra: UserList = showHistory(aux, categoriasCB.getSelectionModel.getSelectedItem)
-        if(textoCompra.category != "") {
-          comeOn.add(textoCompra.id+" - "+textoCompra.value+" - "+ textoCompra.description)
-          listExp= textoCompra#::listExp
+      if(mesCB.getSelectionModel.getSelectedItem==null||anoCB.getSelectionModel.getSelectedItem==null){
+        errorLabel.setText("Indique o mês e ano")
+        errorLabel.setVisible(true)
+      }else {
+        val list: LazyList[UserList] = tempUser.expenseList.filter(x => x.date == (mesCB.getSelectionModel.getSelectedItem + "-" + anoCB.getSelectionModel.getSelectedItem))
+        if (categoriasCB.getSelectionModel.getSelectedItem != null) {
+        for (aux <- list) {
+          var textoCompra: UserList = showHistory(aux, categoriasCB.getSelectionModel.getSelectedItem)
+          if (textoCompra.category != "") {
+            errorLabel.setVisible(false)
+            comeOn.add(textoCompra.id + " - " + textoCompra.value + " - " + textoCompra.description)
+            listExp = textoCompra #:: listExp
+          }
         }
+        }else {
+            errorLabel.setText("Escolha a categoria")
+            errorLabel.setVisible(true)
+
+        }
+        histTA.setItems(comeOn)
       }
-      histTA.setItems(comeOn)
+    }else{
+      errorLabel.setText("Escolha o tipo de transação")
+      errorLabel.setVisible(true)
     }
   }
 
@@ -133,6 +164,7 @@ class ControllerHistorico {
     altera.setVisible(false)
     okButton.setVisible(true)
     voltarButton.setVisible(true)
+    errorLabel.setVisible(false)
   }
 
   def onAlterarButtonClicked():Unit={
@@ -144,6 +176,7 @@ class ControllerHistorico {
       voltarButton.setVisible(false)
       valueText.setVisible(true)
       alterarCategoriaCB.setVisible(false)
+
 
   }
 
@@ -157,11 +190,12 @@ class ControllerHistorico {
       valueText.setVisible(true)
       alterarCategoriaCB.setVisible(false)
       valueText.setText(getString(histTA.getSelectionModel().getSelectedItem.toString, 1))
+      errorLabel.setVisible(false)
 
     } catch {
       case ex: Exception=>{
-        val alert = new Alert(AlertType.NONE, "Tem de selecionar um elemento da lista", ButtonType.OK)
-        alert.showAndWait
+        errorLabel.setText("Tem de selecionar um elemento da lista")
+        errorLabel.setVisible(true)
       }
 
     }
@@ -176,10 +210,11 @@ class ControllerHistorico {
       alterarDesc.setSelected(false)
       valueText.setVisible(false)
       alterarCategoriaCB.setVisible(true)
+      errorLabel.setVisible(false)
     } catch {
       case ex: Exception=>{
-        val alert = new Alert(AlertType.NONE, "Tem de selecionar um elemento da lista", ButtonType.OK)
-        alert.showAndWait
+        errorLabel.setText("Tem de selecionar um elemento da lista")
+        errorLabel.setVisible(true)
       }
 
     }
@@ -195,10 +230,11 @@ class ControllerHistorico {
     alterarValue.setSelected(false)
     alterarCategoriaCB.setVisible(false)
     valueText.setText(getString(histTA.getSelectionModel().getSelectedItem.toString, 2))
+    errorLabel.setVisible(false)
     } catch {
       case ex: Exception=>{
-        val alert = new Alert(AlertType.NONE, "Tem de selecionar um elemento da lista", ButtonType.OK)
-        alert.showAndWait
+        errorLabel.setText("Tem de selecionar um elemento da lista")
+        errorLabel.setVisible(true)
       }
 
     }
@@ -218,42 +254,49 @@ class ControllerHistorico {
   def elementSelected():Unit={
     if(histTA.getSelectionModel().isSelected(histTA.getSelectionModel().getSelectedIndex()))
       alterarButton.setVisible(true)
+      errorLabel.setVisible(false)
   }
 
 
   def onalteraClicked():Unit={
-    val str = histTA.getSelectionModel.getSelectedItem.split(" - ")
-    var i = histTA.getSelectionModel.getSelectedIndex
-    println("STR:  "+str(0))
-    if (depositoRB.isSelected) {
-      for (x <- tempUser.depositList) {
-        if (x.id == str(0)) {
-          val n =tempUser.depositList.indexOf(x)
-          val user = changeThings(tempUser,"1", n,x)
-          println(tempUser.depositList.indexOf())
-          //parent.setUser(user)
-          tempUser = user
+    if(alterarValue.isSelected==false && alterarCat.isSelected==false && alterarDesc.isSelected==false){
+      errorLabel.setText("Selecione o campo que quer alterar")
+      errorLabel.setVisible(true)
+    }else {
+      errorLabel.setVisible(false)
+      val str = histTA.getSelectionModel.getSelectedItem.split(" - ")
+      var i = histTA.getSelectionModel.getSelectedIndex
+      println("STR:  " + str(0))
+      if (depositoRB.isSelected) {
+        for (x <- tempUser.depositList) {
+          if (x.id == str(0)) {
+            val n = tempUser.depositList.indexOf(x)
+            val user = changeThings(tempUser, "1", n, x)
+            println(tempUser.depositList.indexOf())
+            //parent.setUser(user)
+            tempUser = user
+          }
         }
       }
-    }
-    else {
-      for (x <- tempUser.depositList) {
-        if (x.id == str(0)) {
-          val n = tempUser.depositList.indexOf(x)
-          val user = changeThings(tempUser, "2", n, x)
-          //parent.setUser(user)
-          tempUser = user
+      else {
+        for (x <- tempUser.depositList) {
+          if (x.id == str(0)) {
+            val n = tempUser.depositList.indexOf(x)
+            val user = changeThings(tempUser, "2", n, x)
+            //parent.setUser(user)
+            tempUser = user
+          }
         }
       }
+      alterarCat.setSelected(false)
+      alterarValue.setSelected(false)
+      alterarDesc.setSelected(false)
+      onOkClicked
     }
-    alterarCat.setSelected(false)
-    alterarValue.setSelected(false)
-    alterarDesc.setSelected(false)
-    onOkClicked
-
   }
 
   def showHistory(item: UserList, filter:String): UserList = {
+
     if(item.category == filter){
       item
     }
