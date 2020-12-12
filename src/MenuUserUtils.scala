@@ -58,28 +58,34 @@ object MenuUserUtils {
   def higherfunction(x :UserApp, f: (LazyList[UserList], String) => Unit): Unit ={
     showOptions()
     val userOption :String  = getUserInput()
-    showFilters(x.userCategories,1)
-    val filter :Int = getUserInput().toInt
-    showYear()
-    val year:String = getUserInput()
-    showMonth()
-    val month :String = getUserInput()
-    userOption match {
-      case "1" => {
-        val list:LazyList[UserList] = x.depositList.filter(x =>{x.date==(month+"-"+year)})
-        if (filter!=0)
-          f( list,x.userCategories(filter-1))
-        else
-          f(list, "0")
+    if(userOption!="0") {
+      showFilters(x.userCategories, 1)
+      val filter: Int = getUserInput().toInt
+      showYear()
+      val year: String = getUserInput()
+      showMonth()
+      val month: String = getUserInput()
+      userOption match {
+        case "1" => {
+          println("ENTREI")
+          val list: LazyList[UserList] = x.depositList.filter(x => {
+            x.date == (month + "-" + year)
+          })
+          if (filter != 0)
+            f(list, x.userCategories(filter - 1))
+          else
+            f(list, "0")
+        }
+        case "2" => {
+          println("ENTREI 2")
+          val list: LazyList[UserList] = x.expenseList.filter(x => x.date == (month + "-" + year))
+          if (filter != 0)
+            f(list, x.userCategories(filter - 1))
+          else
+            f(list, "0")
+        }
+        case _ => higherfunction(x, f)
       }
-      case "2" =>{
-        val list:LazyList[UserList] = x.expenseList.filter(x => x.date==(month+"-"+year))
-        if(filter!=0)
-          f(list,x.userCategories(filter-1))
-        else
-          f(list,"0")
-      }
-      case _=> higherfunction(x,f)
     }
   }
 
