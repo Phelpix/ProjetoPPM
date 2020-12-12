@@ -348,15 +348,17 @@ class ControllerHistorico {
   def changeThings(user: UserApp, input:String, indice:Int, userList: UserList): UserApp ={
     input match {
       case "1"=>{
+        val value = userList.value - valueText.getText().toDouble
         val newList =printDeposits(user,user.depositList,indice,userList)
         println("CHANGE THINGS:   "+ histTA.getSelectionModel().getSelectedIndex())
-        val newUser = user.copy(name = user.name,user.email,user.password, balance = user.balance, newList, expenseList = user.expenseList, user.userCategories,user.monthlySavings)
+        val newUser = user.copy(name = user.name,user.email,user.password, balance = user.balance + value, newList, expenseList = user.expenseList, user.userCategories,user.monthlySavings)
         newUser
       }
 
       case "2"=>{
+        val value = userList.value - valueText.getText().toDouble
         val newList =printDeposits(user,user.expenseList, indice,userList)
-        val newUser = user.copy(name = user.name,user.email,user.password, balance = user.balance, user.depositList, newList, user.userCategories, user.monthlySavings, user.catSavList)
+        val newUser = user.copy(name = user.name,user.email,user.password, balance = user.balance + value, user.depositList, newList, user.userCategories, user.monthlySavings, user.catSavList)
         newUser
       }
     }
