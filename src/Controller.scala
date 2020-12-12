@@ -44,7 +44,6 @@ class Controller {
   }
 
   def onRegisterClicked(): Unit = {
-
     val fxmlLoader = new FXMLLoader(getClass.getResource("ControllerRegisto.fxml"))
     val mainViewRoot: Parent = fxmlLoader.load()
     registerButton.getScene.setRoot(mainViewRoot)

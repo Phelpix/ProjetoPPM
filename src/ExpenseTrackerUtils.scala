@@ -55,7 +55,9 @@ object  ExpenseTrackerUtils {
   val maior = maxMonth(lastDeposit, lastExpense)
   val maiorData = maior(0) + "-" + maior(1)
 
-  if (date != lastDeposit && date != lastExpense) {
+  val str =
+
+  if (date != lastDeposit && date != lastExpense && date !=) {
    val savings = monthSavings(user)(maiorData, "0")
    val tuplo = (maiorData, savings)
    val newCatSavList: List[categorySavings] = monthCategory(user.catSavList,List[categorySavings](), user, maiorData)

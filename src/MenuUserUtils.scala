@@ -291,7 +291,7 @@ object MenuUserUtils {
   }
 
   def makePlan(user: UserApp,tipo:Int):UserApp={
-    val plan :PlanSoft = new PlanSoft(tipo,user.catSavList.filter(x=>x.value!=0.0))
+    val plan :PlanSoft = new PlanSoft(tipo,user.filter(x=>x.value!=0.0))
     val newPlan:PlanSoft = setPercentage(plan)
     val newUser = user.copy(name = user.name,user.email,user.password, balance = user.balance, user.depositList, expenseList = user.expenseList, user.userCategories,user.monthlySavings, user.catSavList,newPlan)
     newUser

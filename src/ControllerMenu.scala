@@ -102,7 +102,12 @@ class ControllerMenu {
   def onButton8Clicked():Unit={
     val newUser = makePlan(user,10)
     this.setUser(newUser)
-    val alert = new Alert(AlertType.NONE, "O seu plano é: " + user.plan, ButtonType.OK)
+    var str:String ="O seu plano é:\n"
+    for(x <-user.plan.list){
+      str += x.category + ":  " + x.value +"€" +"\n"
+    }
+    str += "Tente não exceder estes valores. Boa sorte!!!"
+    val alert = new Alert(AlertType.NONE, str, ButtonType.OK)
     alert.showAndWait
   }
 
