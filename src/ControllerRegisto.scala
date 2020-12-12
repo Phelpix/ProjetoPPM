@@ -15,7 +15,7 @@ class ControllerRegisto {
   @FXML
   private var emailRegistoTF: TextField = _
   @FXML
-  private var backButton: Button = _
+  private var voltarButton: Button = _
 
   def onRegisterClicked2(): Unit = {
     val file = "CSVFiles/UserCredentials.csv"
@@ -26,10 +26,11 @@ class ControllerRegisto {
       writeFile(file,s,true)
       writeFile("CSVFiles/"+usernameRegistoTF.getText()+".csv","newUser"+"\n\n\n\n\n\nComida/0.0,Carro/0.0,Universidade/0.0,Casa/0.0",true)
     }
-    registerButton2.getScene().getWindow.hide()
   }
   def backClicked: Unit ={
-    backButton.getScene().getWindow.hide()
+    val fxmlLoader = new FXMLLoader(getClass.getResource("Controller.fxml"))
+    val mainViewRoot: Parent = fxmlLoader.load()
+    voltarButton.getScene.setRoot(mainViewRoot)
   }
 
 }

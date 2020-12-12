@@ -77,6 +77,8 @@ class ControllerTotal {
   def onVoltarClicked: Unit ={
     val fxmlLoader = new FXMLLoader(getClass.getResource("ControllerMenu.fxml"))
     val mainViewRoot: Parent = fxmlLoader.load()
+    val controller: ControllerMenu = fxmlLoader.getController
+    controller.setUser(tempUser)
     voltarButton.getScene.setRoot(mainViewRoot)
   }
 

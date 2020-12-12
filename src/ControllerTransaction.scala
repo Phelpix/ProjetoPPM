@@ -68,11 +68,11 @@ class ControllerTransaction {
     tipo.toString match{
       case "1" => {
         println("ENTREI")
-        parent.setUser(transaction(tempUser,tempUser.depositList,tipo))
+         tempUser = transaction(tempUser,tempUser.depositList,tipo)
       }
       case "2" => {
         println("ENTREI 2")
-        parent.setUser(transaction(tempUser,tempUser.expenseList,tipo))
+        tempUser = transaction(tempUser,tempUser.expenseList,tipo)
       }
     }
 

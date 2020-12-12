@@ -1,5 +1,5 @@
 import CSVFileReader.{readFile, readUser}
-import ExpenseTrackerUtils.{searchUser, searchUser2}
+import ExpenseTrackerUtils.{RegisterUser, searchUser, searchUser2}
 import IO.loginError
 import MenuUser.userLoop
 import javafx.fxml.{FXML, FXMLLoader}
@@ -44,13 +44,9 @@ class Controller {
   }
 
   def onRegisterClicked(): Unit = {
-    val secondStage: Stage = new Stage()
-    secondStage.initModality(Modality.APPLICATION_MODAL)
-    secondStage.initOwner(registerButton.getScene().getWindow)
+
     val fxmlLoader = new FXMLLoader(getClass.getResource("ControllerRegisto.fxml"))
     val mainViewRoot: Parent = fxmlLoader.load()
-    val scene = new Scene(mainViewRoot)
-    secondStage.setScene(scene)
-    secondStage.show()
+    registerButton.getScene.setRoot(mainViewRoot)
   }
 }

@@ -44,14 +44,16 @@ class ControllerNewCategory {
 
 
  def onOkClicked():Unit={
-  parent.setUser(addCategory(tempUser,novaCategoria.getText()))
-  okButton.getScene().getWindow.hide()
+  tempUser = addCategory(tempUser,novaCategoria.getText())
+  //okButton.getScene().getWindow.hide()
   println("OK CLICKED:"+parent.getUser().userCategories)
  }
 
  def onVoltarClicked: Unit ={
   val fxmlLoader = new FXMLLoader(getClass.getResource("ControllerMenu.fxml"))
   val mainViewRoot: Parent = fxmlLoader.load()
+  val controller: ControllerMenu = fxmlLoader.getController
+  controller.setUser(tempUser)
   voltarButton.getScene.setRoot(mainViewRoot)
  }
 

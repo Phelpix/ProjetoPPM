@@ -58,7 +58,7 @@
               </rowConstraints>
                <children>
                   <Button fx:id="registerButton2" mnemonicParsing="false" onMouseClicked="#onRegisterClicked2" text="Registar" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="TOP" />
-                  <Button fx:id="backButton" mnemonicParsing="false" onMouseClicked="#backClicked" stylesheets="@LogoutButton.css" text="Voltar" GridPane.halignment="CENTER" GridPane.valignment="TOP" />
+                  <Button fx:id="voltarButton" mnemonicParsing="false" onMouseClicked="#backClicked" stylesheets="@LogoutButton.css" text="Voltar" GridPane.halignment="CENTER" GridPane.valignment="TOP" />
                </children>
             </GridPane>
          </children>

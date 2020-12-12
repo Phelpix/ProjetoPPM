@@ -42,8 +42,7 @@ class ControllerPerfil {
   }
 
   def onConfirmButtonClicked():Unit={
-      parent.setUser(profile(tempUser))
-      confirmButton.getScene().getWindow.hide()
+      tempUser= (profile(tempUser))
   }
 
 
@@ -82,6 +81,8 @@ class ControllerPerfil {
   def onVoltarClicked: Unit ={
     val fxmlLoader = new FXMLLoader(getClass.getResource("ControllerMenu.fxml"))
     val mainViewRoot: Parent = fxmlLoader.load()
+    val controller: ControllerMenu = fxmlLoader.getController
+    controller.setUser(tempUser)
     voltarButton.getScene.setRoot(mainViewRoot)
   }
 

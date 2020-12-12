@@ -203,7 +203,7 @@ class ControllerHistorico {
           val n =tempUser.depositList.indexOf(x)
           val user = changeThings(tempUser,"1", n,x)
           println(tempUser.depositList.indexOf())
-          parent.setUser(user)
+          //parent.setUser(user)
           tempUser = user
         }
       }
@@ -213,7 +213,7 @@ class ControllerHistorico {
         if (x.id == str(0)) {
           val n = tempUser.depositList.indexOf(x)
           val user = changeThings(tempUser, "2", n, x)
-          parent.setUser(user)
+          //parent.setUser(user)
           tempUser = user
         }
       }
@@ -290,6 +290,8 @@ class ControllerHistorico {
  def onVoltarClicked: Unit ={
   val fxmlLoader = new FXMLLoader(getClass.getResource("ControllerMenu.fxml"))
   val mainViewRoot: Parent = fxmlLoader.load()
+   val controller: ControllerMenu = fxmlLoader.getController
+   controller.setUser(tempUser)
   voltarButton.getScene.setRoot(mainViewRoot)
  }
 
